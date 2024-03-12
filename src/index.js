@@ -5,13 +5,15 @@ import Home from './pages/index';
 import App from './pages/test/test';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import Login from './pages/auth/login';
+import TextInput from './components/Form/TextInput';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Home />
-      <App/>
+      <Login />
     </BrowserRouter>
   </React.StrictMode>
 );
