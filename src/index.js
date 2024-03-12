@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './pages/index';
+import App from './pages/test/test';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Home />
+      <App/>
     </BrowserRouter>
   </React.StrictMode>
 );
