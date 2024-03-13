@@ -4,8 +4,8 @@ import './index.css';
 import Home from './pages/index';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import Login from './pages/auth/login';
-import Footer from './components/layout/Footer';
+import Login from './pages/login';
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -5,7 +5,6 @@ function Home() {
   return (
     <div>
       <header>
-        <Link>안녕</Link>
       </header>
       <Routes>
         <Route></Route>
