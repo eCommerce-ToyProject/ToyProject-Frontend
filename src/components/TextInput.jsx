@@ -14,7 +14,6 @@ const TextInput = ({ onChange, value, placeholder}) => {
                 }
             },
             width: '100%',
-            margin: '0 auto'
         }} onChange={onChange} value={value} id='outlined-basic' variant='outlined' placeholder={placeholder}></TextField>
     )
 }
