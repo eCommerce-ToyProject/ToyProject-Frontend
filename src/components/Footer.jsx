@@ -34,7 +34,8 @@ const StyledP = styled.p`
 function Footer() {
 
     const style = {
-        position: 'absolute',
+        position: 'relative',
+        left: -2,
         bottom: 0,
         border: '1px solid rgb(247, 247, 247)',
         width: '100%',

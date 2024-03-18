@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { Box, Button, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import TextInput from '../components/TextInput';
 import CustomModal from '../components/CustomModal';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
@@ -16,6 +19,10 @@ const Login = () => {
 
     const closeModal = () => {
         setModal(false)
+    }
+
+    const navSignup = () => {
+        navigate('/signup')
     }
 
     return (
@@ -35,11 +42,11 @@ const Login = () => {
                 label="아이디 저장"
                 control={<Checkbox disableRipple sx={{
                     '&:hover': { bgcolor: 'transparent' },
-                }}/>}
+                }} />}
             />
 
             <Button sx={{ width: '100%', mb: 2 }} size='large' variant="contained" disableRipple onClick={Check}>로그인</Button>
-            <Button sx={{ width: '100%' }} size='large' variant="outlined" disableRipple>회원가입</Button>
+            <Button sx={{ width: '100%' }} size='large' variant="outlined" disableRipple onClick={navSignup}>회원가입</Button>
             {
                 modal && <CustomModal closeModal={closeModal} msg={"아이디 또는 비밀번호를 확인해주세요."} />
             }

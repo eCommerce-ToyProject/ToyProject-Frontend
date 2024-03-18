@@ -1,17 +1,19 @@
 import React from 'react'
 import styled from 'styled-components';
-import { BsSearch } from 'react-icons/bs';
+import { BsSearch, BsCart, BsFillPersonFill} from 'react-icons/bs';
 import { Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 
 const StyledInput = styled.input`
-    width: 24rem;
+    width: 22rem;
     font-size: 16px;
     outline: none;
     height: 2.2rem;
     border: none;
     padding: 5px;
+    padding-left: 8px;
     margin-left: 2px;
 `
 
@@ -32,7 +34,8 @@ const Header = () => {
     }
 
     return (
-        <Box sx={{ border: '1px solid black' }}>
+        <Box>
+            {/* 네비게이션 */}
             <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
                 <NavLink to="/signup" style={{
                     fontWeight: 'bold',
@@ -42,22 +45,29 @@ const Header = () => {
                 <NavLink to="/login" style={LinkStyle}>로그인</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                 <NavLink to="/" style={LinkStyle}>고객센터</NavLink>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', width: 900, m: 'auto', mt: 4, border: '1px solid black' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: 920, m: 'auto', mt: 4, mb: 9 }}>
 
-                사진
+                {/* 사진 */}
+                <NavLink to="/"><img src={logo} alt="logo" style={{
+                    width: '100px',
+                    height: '40px',
+                }} /></NavLink>
 
+                {/* 검색바 */}
                 <Box sx={{
-                    width: 430,
-                    border: '1px solid #1976d2',
+                    width: 405,
+                    border: '2px solid #1976d2',
                     borderRadius: '6px',
+                    m: 'auto'
                 }}>
                     <form>
                         <StyledInput type="text" placeholder="검색어를 입력해주세요" />
-                        <StyledButton><BsSearch size='14' /></StyledButton>
+                        <StyledButton><BsSearch size='16' /></StyledButton>
                     </form>
                 </Box>
 
-                마이인포
+                {/* 아이콘 */}
+                <NavLink to="/myinfo" style={{ color: 'black' }}><BsFillPersonFill size={45}/></NavLink>
             </Box>
         </Box>
     )
