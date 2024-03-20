@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Header />
-      <Box sx={{ width: 1000, m: 'auto', minHeight: '100vh' }}>
+      <Box sx={{ width: 1000, m: 'auto', minHeight: '80vh' }}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />

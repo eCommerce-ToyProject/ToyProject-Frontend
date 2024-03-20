@@ -35,7 +35,7 @@ const Header = () => {
 
     return (
         <Box>
-            {/* 네비게이션 */}
+            {/* 네비게이션 / 나중에 로그인 여부에따라 로그아웃으로 바꾸는 코드 작성(삼항 연산자 사용할 것) */}
             <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
                 <NavLink to="/signup" style={{
                     fontWeight: 'bold',
@@ -43,7 +43,7 @@ const Header = () => {
                     textDecoration: 'none',
                 }}>회원가입</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                 <NavLink to="/login" style={LinkStyle}>로그인</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
-                <NavLink to="/" style={LinkStyle}>고객센터</NavLink>
+                <NavLink to="/detail" style={LinkStyle}>고객센터</NavLink>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', width: 920, m: 'auto', mt: 4, mb: 9 }}>
 

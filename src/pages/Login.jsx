@@ -3,6 +3,7 @@ import { Box, Button, Checkbox, FormControlLabel, Stack, Typography } from '@mui
 import TextInput from '../components/TextInput';
 import CustomModal from '../components/CustomModal';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -11,10 +12,28 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
 
-    const Check = () => {
-        if (!id || !pwd) {
-            setModal(true);
-        }
+    // const customAxios = axios.create({
+    //     headers: {
+    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    //     }
+    // });
+
+    const Check = async (e) => {
+        e.preventDefault();
+            const res = await axios.post('localhost8080/members/sign-in', {
+                id,
+                pwd
+            })
+            .then(() => {
+                localStorage.setItem('access token', res.data.accessToken);
+            })
+            .catch((err) => {
+                console.log('login fail')
+            })
+            // const user = res.data;
+            // const jwtToken = user.accessToken;
+            // const { result, errorCause } = res.data;
+
     };
 
     const closeModal = () => {

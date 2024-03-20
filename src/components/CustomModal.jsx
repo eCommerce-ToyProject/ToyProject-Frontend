@@ -1,5 +1,6 @@
 import { Box, Modal, Typography, Button } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
