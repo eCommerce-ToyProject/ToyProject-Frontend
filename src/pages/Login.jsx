@@ -12,28 +12,26 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
 
-    // const customAxios = axios.create({
-    //     headers: {
-    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    //     }
-    // });
+    const customAxios = axios.create({
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        }
+    });
 
     const Check = async (e) => {
         e.preventDefault();
-            const res = await axios.post('localhost8080/members/sign-in', {
-                id,
-                pwd
-            })
-            .then(() => {
+        
+        await axios.post("members/sign-in", {
+            id: id,
+            password: pwd
+        })
+            .then((res) => {
                 localStorage.setItem('access token', res.data.accessToken);
+                navigate('/')
             })
             .catch((err) => {
-                console.log('login fail')
+                setModal(true)
             })
-            // const user = res.data;
-            // const jwtToken = user.accessToken;
-            // const { result, errorCause } = res.data;
-
     };
 
     const closeModal = () => {

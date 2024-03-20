@@ -13,9 +13,9 @@ const NavItem = ({ page, title }) => {
 
     return (
         <li style={location.pathname.split('/')[2] === page.split('/')[2] ? style : ''}>
-            <Link to={page}>
+            <Link style={{ textDecoration: 'none', color: 'black' }} to={page}>
                 <span>{title}</span>
-                <MdOutlineArrowForwardIos size='12' color='rgb(95, 0, 128)' />
+                <MdOutlineArrowForwardIos size='12'/>
             </Link>
         </li>
     )

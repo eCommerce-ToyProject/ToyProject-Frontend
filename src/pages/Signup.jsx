@@ -1,7 +1,8 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomModal from '../components/CustomModal';
 import TextInput from '../components/TextInput';
+import axios from 'axios';
 
 const Signup = () => {
     const [id, setId] = useState('');
@@ -9,11 +10,20 @@ const Signup = () => {
     const [pwdChk, setPwdChk] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
+    let [phone, setPhone] = useState('');
     const [modal, setModal] = useState(false);
     const [desc, setDesc] = useState('');
 
-    const Check = () => {
+    // 전화번호 자동 하이픈
+    useEffect(() => {
+        setPhone(
+            phone = phone
+                .replace(/-/g, '')
+                .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
+        );
+    }, [phone]);
+
+    const Check = async () => {
         if (!id || !pwd || !phone || !name) {
             setModal(true);
             setDesc("필수 정보들을 작성해주세요.");
@@ -21,6 +31,13 @@ const Signup = () => {
             setModal(true);
             setDesc("비밀번호가 일치하지 않습니다.");
         } else {
+            await axios.post('/members/sign-up', {
+                id: id,
+                password: pwd,
+                username: name,
+                phone: phone,
+                email: email
+            })
             setModal(true);
             setDesc("회원가입에 성공하였습니다!");
         }
@@ -54,8 +71,8 @@ const Signup = () => {
                         <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호를 입력해 주세요' />
                         <TextInput onChange={(e) => setPwdChk(e.target.value)} value={pwdChk} placeholder='비밀번호를 한번더 입력해 주세요' />
                         <TextInput onChange={(e) => setName(e.target.value)} value={name} placeholder='이름을 입력해 주세요' />
-                        <TextInput onChange={(e) => setPhone(e.target.value)} value={email} placeholder='숫자만 입력해 주세요' />
-                        <TextInput onChange={(e) => setEmail(e.target.value)} value={phone} placeholder='이메일을 입력해 주세요' />
+                        <TextInput onChange={(e) => setPhone(e.target.value)} value={phone} placeholder='숫자만 입력해 주세요' />
+                        <TextInput onChange={(e) => setEmail(e.target.value)} value={email} placeholder='이메일을 입력해 주세요' />
                     </Stack>
                 </Box>
                 <Box>
