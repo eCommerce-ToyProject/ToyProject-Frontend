@@ -13,6 +13,7 @@ const Signup = () => {
     let [phone, setPhone] = useState('');
     const [modal, setModal] = useState(false);
     const [desc, setDesc] = useState('');
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     // 전화번호 자동 하이픈
     useEffect(() => {
@@ -30,6 +31,10 @@ const Signup = () => {
         } else if (pwd !== pwdChk) {
             setModal(true);
             setDesc("비밀번호가 일치하지 않습니다.");
+        
+        } else if(!passwordRegex.test(pwd)){
+             setModal(true);
+             setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
         } else {
             await axios.post('/members/sign-up', {
                 id: id,

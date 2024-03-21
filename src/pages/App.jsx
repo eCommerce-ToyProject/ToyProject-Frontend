@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Login from './Login';
@@ -10,9 +10,11 @@ import Header from '../components/Header';
 import { Box } from '@mui/material';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Box sx={{ width: 1000, m: 'auto', minHeight: '80vh' }}>
         <Routes>
           <Route path='/' element={<Home />} />

@@ -4,9 +4,11 @@ import TextInput from '../components/TextInput';
 import CustomModal from '../components/CustomModal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [cookies, setCookie] = useCookies(['id']); 
 
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
@@ -26,7 +28,7 @@ const Login = () => {
             password: pwd
         })
             .then((res) => {
-                localStorage.setItem('access token', res.data.accessToken);
+                setCookie("accessToken", res.data.accessToken, {path: '/' });
                 navigate('/')
             })
             .catch((err) => {
