@@ -7,6 +7,7 @@ import logo from '../assets/logo.png';
 import Navlogout from './Navlogout';
 import Navlogin from './Navlogin';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 
 const StyledInput = styled.input`
@@ -29,7 +30,8 @@ const StyledButton = styled.button`
 `
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
-    const [cookies, removeCookie] = useCookies(['id']);
+    const [cookies, removeCookie] = useCookies(['accessToken']);
+    let name = '';
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -38,25 +40,30 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     const Logout = () => {
-        removeCookie('id');
+        removeCookie('accessToken')
         setIsLoggedIn(false)
     }
 
     useEffect(() => {
-        if (cookies.id) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      }, [cookies.id]);
+        axios.post('/members/loginCheck',
+            {
+                headers: {
+                    Authorization: 'Bearer ' + cookies.accessToken,
+                },
+            }
+        ).then((res) => {
+            name = res.data.name
+        })
+        cookies.accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false)
+    }, [cookies.accessToken]);
 
     return (
         <Box>
-            {/* 네비게이션 / 나중에 로그인 여부에따라 로그아웃으로 바꾸는 코드 작성(삼항 연산자 사용할 것) */}
             {
                 isLoggedIn
                     ? (
                         <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
+                            <label style={LinkStyle}>{name}님</label>&nbsp;&nbsp; | &nbsp;&nbsp;
                             <NavLink onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                             <NavLink to="/detail" style={LinkStyle}>고객센터</NavLink>
                         </Box >

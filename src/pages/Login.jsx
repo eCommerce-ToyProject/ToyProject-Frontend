@@ -8,17 +8,17 @@ import { useCookies } from 'react-cookie';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['id']); 
+    const [, setCookie] = useCookies(['id']); 
 
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
 
-    const customAxios = axios.create({
-        headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        }
-    });
+    // const customAxios = axios.create({
+    //     headers: {
+    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    //     }
+    // });
 
     const Check = async (e) => {
         e.preventDefault();
@@ -28,7 +28,7 @@ const Login = () => {
             password: pwd
         })
             .then((res) => {
-                setCookie("accessToken", res.data.accessToken, {path: '/' });
+                setCookie("accessToken", res.data.accessToken, { path: '/' });
                 navigate('/')
             })
             .catch((err) => {

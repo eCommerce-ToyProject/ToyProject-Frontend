@@ -2,7 +2,7 @@ import { Box, Button, NativeSelect, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Apple from '../assets/images.jpg';
 import CustomModal from '../components/CustomModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Prodetail = () => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Prodetail = () => {
     const Order = () => {
         setModal(true);
         setDesc(`상품 몇개 주문 완료했습니다!`);
-        // navigate('/');
+        navigate('/');
     }
 
     return (
@@ -26,10 +26,10 @@ const Prodetail = () => {
                 <img src={Apple} alt='사과' style={{ width: 400, height: 400 }} />
             </Box>
             <Box sx={{ ml: 7, width: 450 }}>
-                <Typography sx={{ wordBreak: 'break-all' }} variant='h5' component='h5'>엄청 맛있는 사과 3개</Typography>
-                <Typography sx={{ color: '#ae0000', mt: 3 }} variant='h5' component='h5'>12,000원</Typography>
+                <Typography sx={{ wordBreak: 'break-all' }} variant='h5' component='h5'>{}</Typography>
+                <Typography sx={{ color: '#ae0000', mt: 3 }} variant='h5' component='h5'>{}원</Typography>
 
-                <Box sx={{mt: 20 }}>
+                <Box sx={{ mt: 20 }}>
                     <NativeSelect>
                         <option value={10}>{ }</option>
                         <option value={20}>{ }</option>
@@ -40,7 +40,7 @@ const Prodetail = () => {
                         <option value={20}>{ }</option>
                         <option value={30}>{ }</option>
                     </NativeSelect><br />
-                    <form style={{ display: 'flex', marginTop: 40}}>
+                    <form style={{ display: 'flex', marginTop: 40 }}>
                         <TextField sx={{
                             '& .MuiInputBase-root': {
                                 "&:hover fieldset": {
