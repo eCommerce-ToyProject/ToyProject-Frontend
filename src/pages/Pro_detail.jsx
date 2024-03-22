@@ -10,6 +10,8 @@ import Apple from "../assets/images.jpg";
 import CustomModal from "../components/CustomModal";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import ProductDetails from "../components/ProductDetails";
+import OptionsSelect from "../components/OptionSelect";
 
 const Prodetail = () => {
   const navigate = useNavigate();
@@ -17,10 +19,8 @@ const Prodetail = () => {
   const [modal, setModal] = useState(false);
   const [desc, setDesc] = useState("");
   const param = useParams();
-  let list = {
-    optVal1: [],
-    optVal2: [],
-  };
+  const [optVal1, setOptVal1] = useState([]);
+  const [optVal2, setOptVal2] = useState([]);
 
   const [product, setProduct] = useState([]);
 
@@ -45,6 +45,16 @@ const Prodetail = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    if (product.length !== 0) {
+      const goodsItem = product[0].goodsItem;
+      const optVal1Array = goodsItem.map((item) => item.optVal1).filter((item) => item !== null);
+      const optVal2Array = goodsItem.map((item) => item.optVal2).filter((item) => item !== null);
+      setOptVal1(optVal1Array);
+      setOptVal2(optVal2Array);
+    }
+  }, [product]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
@@ -56,12 +66,8 @@ const Prodetail = () => {
           price={product.length === 0 ? undefined : product[0].gprice}
         />
         <Box sx={{ mt: 20 }}>
-          {product.length !== 0 && product[0].goodsItem.map((item) => {
-              list.optVal1.push(item.optVal1);
-              list.optVal2.push(item.optVal2);
-            })}
-          <OptionsSelect options={list.optVal1.filter((item) => item !== null)}/>
-          <OptionsSelect options={list.optVal2.filter((item) => item !== null)}/>
+          {optVal1.length > 0 && (<OptionsSelect options={optVal1} />)}
+          {optVal2.length > 0 && (<OptionsSelect options={optVal2} />)}
           <form style={{ display: "flex", marginTop: 40 }}>
             <TextField
               sx={{
