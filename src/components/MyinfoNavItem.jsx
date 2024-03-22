@@ -1,21 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
 
 
 const NavItem = ({ page, title }) => {
-    const location = useLocation();
-
-    const style = {
-        backgroundColor: 'rgb(250, 250, 250)',
-        fontWeight: '600'
-    }
-
     return (
-        <li style={location.pathname.split('/')[2] === page.split('/')[2] ? style : ''}>
+        <li style={{ fontWeight: '600' }}>
             <Link style={{ textDecoration: 'none', color: 'black', lineHeight: 2 }} to={page}>
                 <span>{title}</span>
-                <MdOutlineArrowForwardIos size='12'/>
+                <MdOutlineArrowForwardIos size='13' color='#1976d2'/>
             </Link>
         </li>
     )

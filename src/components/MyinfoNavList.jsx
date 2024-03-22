@@ -4,7 +4,7 @@ import MyinfoNavItem from "./MyinfoNavItem"
 const MyinfoNavList = () => {
 
     const Boxstyle = {
-        width: '25%',
+        width: '20%',
         display: 'flex',
         flexDirection: 'column',
     }

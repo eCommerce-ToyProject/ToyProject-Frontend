@@ -78,7 +78,7 @@ const Prodetail = () => {
             </NativeSelect>
           )}
           {list.optVal2.filter((item) => item !== null).length > 0 && (
-            <NativeSelect>
+            <NativeSelect sx={{ ml: 3 }}>
               {list.optVal2.map(
                 (item) => item && <option value={item}>{item}</option>
               )}

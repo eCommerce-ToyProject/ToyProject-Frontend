@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { BsSearch, BsCart, BsFillPersonFill } from 'react-icons/bs';
+import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png';
-import Navlogout from './Navlogout';
-import Navlogin from './Navlogin';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
@@ -31,7 +29,7 @@ const StyledButton = styled.button`
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     const [cookies, removeCookie] = useCookies(['accessToken']);
-    let name = '';
+    const [name, setName] = useState('');
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -52,7 +50,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                 // },
             }
         ).then((res) => {
-            name = res.data
+            setName(res.data.name)
         })
         cookies.accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false)
     }, [cookies.accessToken]);

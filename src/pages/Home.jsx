@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Grid } from '@mui/material';
 import ProductCard from '../components/ProductCard';
-import dress from '../assets/dress.jpg';
-import skirt from '../assets/skirt.jpg';
-import pants from '../assets/pants.jpg';
-import jeans from '../assets/jeans.jpg';
-import tshirt from '../assets/tshirt.jpg';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 const Home = () => {
