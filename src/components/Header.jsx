@@ -47,12 +47,12 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     useEffect(() => {
         axios.post('/members/loginCheck',
             {
-                headers: {
-                    Authorization: 'Bearer ' + cookies.accessToken,
-                },
+                // headers: {
+                //     Authorization: 'Bearer ' + cookies.accessToken,
+                // },
             }
         ).then((res) => {
-            name = res.data.name
+            name = res.data
         })
         cookies.accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false)
     }, [cookies.accessToken]);
