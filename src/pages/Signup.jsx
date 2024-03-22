@@ -48,6 +48,25 @@ const Signup = () => {
         }
     }
 
+    const idCheck = async () =>{
+        axios.get(`members/id/exists?id=${id}`)
+            .then(res =>{
+                if(res.data == false){
+                    setModal(true)
+                    setDesc('사용가능한 아이디입니다.')
+                    console.log(res)
+                }else if(res.data){
+                    setModal(true)
+                    setDesc('중복된 아이디입니다.')
+                    console.log(res)
+                }else{
+                    console.log('에러입니다')
+                }
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            })
+    }
+
     const closeModal = () => {
         setModal(false)
     }
@@ -82,7 +101,7 @@ const Signup = () => {
                 </Box>
                 <Box>
                     {/* onClick으로 아이디 중복확인하기 */}
-                    <Button sx={{ width: 100, height: 50, ml: 3, mt: 0.2 }} variant="outlined" disableRipple >중복확인</Button>
+                    <Button sx={{ width: 100, height: 50, ml: 3, mt: 0.2 }} variant="outlined" disableRipple onClick={idCheck}>중복확인</Button>
                 </Box>
             </Box>
             <Button sx={{ width: '100%', mt: 4 }} size='large' variant="contained" disableRipple onClick={Check}>가입하기</Button>
