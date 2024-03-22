@@ -51,39 +51,17 @@ const Prodetail = () => {
         <img src={Apple} alt="사과" style={{ width: 400, height: 400 }} />
       </Box>
       <Box sx={{ ml: 7, width: 450 }}>
-        <Typography sx={{ wordBreak: "break-all" }} variant="h5" component="h5">
-          {product.length === 0 ? undefined : product[0].gname}
-        </Typography>
-        <Typography
-          sx={{ color: "#ae0000", mt: 3 }}
-          variant="h5"
-          component="h5"
-        >
-          {product.length === 0 ? undefined : product[0].gprice}원
-        </Typography>
-
+        <ProductDetails
+          name={product.length === 0 ? undefined : product[0].gname}
+          price={product.length === 0 ? undefined : product[0].gprice}
+        />
         <Box sx={{ mt: 20 }}>
-          {product.length === 0
-            ? undefined
-            : product[0].goodsItem.map((item) => {
-                list.optVal1.push(item.optVal1);
-                list.optVal2.push(item.optVal2);
-              })}
-          {console.log(list.optVal1)}
-          {list.optVal1.filter((item) => item !== null).length > 0 && (
-            <NativeSelect>
-              {list.optVal1.map(
-                (item) => item && <option value={item}>{item}</option>
-              )}
-            </NativeSelect>
-          )}
-          {list.optVal2.filter((item) => item !== null).length > 0 && (
-            <NativeSelect sx={{ ml: 3 }}>
-              {list.optVal2.map(
-                (item) => item && <option value={item}>{item}</option>
-              )}
-            </NativeSelect>
-          )}
+          {product.length !== 0 && product[0].goodsItem.map((item) => {
+              list.optVal1.push(item.optVal1);
+              list.optVal2.push(item.optVal2);
+            })}
+          <OptionsSelect options={list.optVal1.filter((item) => item !== null)}/>
+          <OptionsSelect options={list.optVal2.filter((item) => item !== null)}/>
           <form style={{ display: "flex", marginTop: 40 }}>
             <TextField
               sx={{
@@ -99,16 +77,12 @@ const Prodetail = () => {
                 width: 55,
               }}
               value={qty}
-              onChange={(e) => setQty(Number(e.target.value))}
-            />
+              onChange={(e) => setQty(Number(e.target.value))}/>
             <Box sx={{ display: "grid", width: 65 }}>
               <Button
                 onClick={() => setQty(qty + 1)}
                 variant="contained"
-                disableRipple
-              >
-                ▲
-              </Button>
+                disableRipple>▲</Button>
               <Button
                 onClick={() => {
                   if (qty === 1) {
