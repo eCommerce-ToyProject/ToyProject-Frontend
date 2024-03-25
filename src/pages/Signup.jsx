@@ -13,6 +13,7 @@ const Signup = () => {
     let [phone, setPhone] = useState('');
     const [modal, setModal] = useState(false);
     const [desc, setDesc] = useState('');
+    const [checkId, SetCheckId] = useState(false);
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     // 전화번호 자동 하이픈
@@ -35,7 +36,10 @@ const Signup = () => {
         } else if(!passwordRegex.test(pwd)){
              setModal(true);
              setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
-        } else {
+        } else if(!checkId) {
+            setModal(true)
+            setDesc("아이디 중복체크를 해주세요.")
+        }else {
             await axios.post('/members/sign-up', {
                 id: id,
                 password: pwd,
@@ -54,13 +58,14 @@ const Signup = () => {
                 if(res.data == false){
                     setModal(true)
                     setDesc('사용가능한 아이디입니다.')
-                    console.log(res)
+                    SetCheckId(true);
                 }else if(res.data){
                     setModal(true)
                     setDesc('중복된 아이디입니다.')
-                    console.log(res)
+                    SetCheckId(false);
                 }else{
                     console.log('에러입니다')
+                    SetCheckId(false);
                 }
             }).catch(error => {
                 console.error('Error fetching data:', error);
