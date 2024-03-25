@@ -21,7 +21,7 @@ const Prodetail = () => {
   const param = useParams();
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
-
+  const [gImg, setGImg] = useState('')
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const Prodetail = () => {
       .get(`/goods/goodsList/goodsDetail?id=${param.id}`)
       .then((response) => {
         setProduct(response.data);
+        setGImg(response.data[0].gimg)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -54,11 +55,12 @@ const Prodetail = () => {
       setOptVal2(optVal2Array);
     }
   }, [product]);
+  // console.log(product)
 
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
-        <img src={Apple} alt="사과" style={{ width: 400, height: 400 }} />
+        <img src={`/assets/${gImg}`} alt="사과" style={{ width: 400, height: 400 }} />
       </Box>
       <Box sx={{ ml: 7, width: 450 }}>
         <ProductDetails

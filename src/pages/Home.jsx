@@ -24,7 +24,7 @@ const Home = () => {
                     const price = item.gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                     return (
                         <NavLink key={item.gno} style={{ textDecoration: 'none' }} to={`/detail/${item.gno}`}>
-                            <ProductCard title={item.gname} price={price} img={''}/>
+                            <ProductCard title={item.gname} price={price} img={item.gimg}/>
                         </NavLink>
                     )
                 }
