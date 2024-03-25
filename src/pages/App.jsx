@@ -5,9 +5,10 @@ import Login from './Login';
 import Home from './Home';
 import Signup from './Signup';
 import Myinfo from './Myinfo';
-import Prodetail from './Pro_detail';
+import ProDetail from './Pro_detail';
 import Header from '../components/Header';
 import { Box } from '@mui/material';
+import ProOrder from './Pro_order';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,7 +22,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/myinfo' element={<Myinfo />} />
-          <Route path='/detail/:id' element={<Prodetail />} />
+          <Route path='/productdetail/:id' element={<ProDetail />} />
+          <Route path='/productorder/:id' element={<ProOrder />} />
         </Routes>
       </Box>
       <Footer />

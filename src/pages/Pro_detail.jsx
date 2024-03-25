@@ -1,23 +1,17 @@
 import {
   Box,
   Button,
-  NativeSelect,
   TextField,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Apple from "../assets/images.jpg";
-import CustomModal from "../components/CustomModal";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
 
-const Prodetail = () => {
+const ProDetail = () => {
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
-  const [modal, setModal] = useState(false);
-  const [desc, setDesc] = useState("");
   const param = useParams();
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
@@ -36,14 +30,8 @@ const Prodetail = () => {
       });
   }, []);
 
-  const closeModal = () => {
-    setModal(false);
-  };
-
   const Order = () => {
-    setModal(true);
-    setDesc(`상품 몇개 주문 완료했습니다!`);
-    navigate("/");
+    navigate(`/productorder/${product[0].gno}`)
   };
 
   useEffect(() => {
@@ -60,12 +48,12 @@ const Prodetail = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
-        <img src={`/assets/${gImg}`} alt="사과" style={{ width: 400, height: 400 }} />
+        <img src={`/assets/${gImg}`} alt={gImg} style={{ width: 400, height: 400 }} />
       </Box>
       <Box sx={{ ml: 7, width: 450 }}>
         <ProductDetails
           name={product.length === 0 ? undefined : product[0].gname}
-          price={product.length === 0 ? undefined : product[0].gprice}
+          price={product.length === 0 ? undefined : product[0].gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         />
         <Box sx={{ mt: 20 }}>
           {optVal1.length > 0 && (<OptionsSelect options={optVal1} />)}
@@ -85,7 +73,7 @@ const Prodetail = () => {
                 width: 55,
               }}
               value={qty}
-              onChange={(e) => setQty(Number(e.target.value))}/>
+              onChange={(e) => setQty(Number(e.target.value))} />
             <Box sx={{ display: "grid", width: 65 }}>
               <Button
                 onClick={() => setQty(qty + 1)}
@@ -116,9 +104,8 @@ const Prodetail = () => {
           </form>
         </Box>
       </Box>
-      {modal && <CustomModal closeModal={closeModal} msg={desc} />}
     </Box>
   );
 };
 
-export default Prodetail;
+export default ProDetail;

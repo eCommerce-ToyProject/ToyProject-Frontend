@@ -3,7 +3,7 @@ import { NativeSelect } from "@mui/material";
 
 const OptionsSelect = ({ options }) => {
   return (
-    <NativeSelect>
+    <NativeSelect sx={{ mr: 4 }}>
       {options.map((item) => (
         <option key={item} value={item}>
           {item}
