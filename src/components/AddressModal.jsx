@@ -2,13 +2,13 @@ import { Box } from '@mui/material';
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
 
-const AddressModal = ({ setRoadAddress, setZipcode, setModal, modal }) => {
+const AddressModal = ({ setRoadAddress, setZipcode, setAddress }) => {
 
     const completeHandler = (data, state) => {
         console.log(data);
         setZipcode(data.zonecode); // 추가
         setRoadAddress(data.roadAddress); // 추가
-        setModal(false);
+        setAddress(false);
     }
 
     const postCodeStyle = {

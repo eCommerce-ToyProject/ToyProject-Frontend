@@ -7,6 +7,7 @@ import AddressModal from '../components/AddressModal';
 import { NavLink } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
+import OrderPayDetail from '../components/OrderPayDetail';
 
 const ProOrder = () => {
     const [zipCode, setZipcode] = useState("");
@@ -70,14 +71,17 @@ const ProOrder = () => {
                         <FormControlLabel value="BNK_ACC" control={<Radio />} label="계좌이체" />
                     </RadioGroup>
 
-                    <Button variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={() => {
+                    <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={() => {
 
                     }}>결제하기</Button>
                 </Box>
-                <OrderUserinfo />
+                <Box sx={{ width: '40%' }}>
+                    <OrderUserinfo />
+                    <OrderPayDetail />
+                </Box>
             </Box>
             {
-                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
+                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} /> : null
             }
             {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
