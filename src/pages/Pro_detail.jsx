@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,6 +16,7 @@ const ProDetail = () => {
   const [optVal2, setOptVal2] = useState([]);
   const [gImg, setGImg] = useState('')
   const [product, setProduct] = useState([]);
+  const [price, setPrice] = useState();
 
   useEffect(() => {
     axios
@@ -24,6 +24,7 @@ const ProDetail = () => {
       .then((response) => {
         setProduct(response.data);
         setGImg(response.data[0].gimg)
+        setPrice(response.data[0].gprice)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -44,7 +45,6 @@ const ProDetail = () => {
     }
   }, [product]);
   // console.log(product)
-
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
@@ -53,30 +53,31 @@ const ProDetail = () => {
       <Box sx={{ ml: 7, width: 450 }}>
         <ProductDetails
           name={product.length === 0 ? undefined : product[0].gname}
-          price={product.length === 0 ? undefined : product[0].gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          price={product.length === 0 ? undefined : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         />
         <Box sx={{ mt: 20 }}>
           {optVal1.length > 0 && (<OptionsSelect options={optVal1} />)}
           {optVal2.length > 0 && (<OptionsSelect options={optVal2} />)}
           <form style={{ display: "flex", marginTop: 40 }}>
-            <TextField
-              sx={{
-                "& .MuiInputBase-root": {
-                  "&:hover fieldset": {
-                    borderColor: "rgb(192, 192, 192);",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "black",
-                    border: "0.5px solid black",
-                  },
-                },
+            <input
+              style={{
                 width: 55,
+                textAlign: 'center',
+                fontSize: 20,
+                backgroundColor: 'white',
+                color: 'black',
+                border: '1px solid #DEDEDE'
               }}
               value={qty}
-              onChange={(e) => setQty(Number(e.target.value))} />
+              onChange={(e) => { 
+                setQty(Number(e.target.value))
+                }} disabled />
             <Box sx={{ display: "grid", width: 65 }}>
               <Button
-                onClick={() => setQty(qty + 1)}
+                onClick={() => {
+                  setQty(qty + 1);
+                  setPrice(price + product[0].gprice);
+                }}
                 variant="contained"
                 disableRipple>▲</Button>
               <Button
@@ -84,6 +85,7 @@ const ProDetail = () => {
                   if (qty === 1) {
                   } else {
                     setQty(qty - 1);
+                    setPrice(price - product[0].gprice)
                   }
                 }}
                 variant="contained"

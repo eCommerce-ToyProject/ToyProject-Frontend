@@ -57,27 +57,28 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
     return (
         <Box>
-            {
-                isLoggedIn
-                    ? (
-                        <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
-                            <label style={LinkStyle}>{name}님</label>&nbsp;&nbsp; | &nbsp;&nbsp;
-                            <NavLink onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
-                            <NavLink to="/detail" style={LinkStyle}>고객센터</NavLink>
-                        </Box >
-                    )
-                    : (
-                        <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
-                            <NavLink to="/signup" style={{
-                                fontWeight: 'bold',
-                                color: '#1976d2',
-                                textDecoration: 'none',
-                            }}>회원가입</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
-                            <NavLink to="/login" style={LinkStyle}>로그인</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
-                            <NavLink to="/detail" style={LinkStyle}>고객센터</NavLink>
-                        </Box>
-                    )
-            }
+            <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
+                {
+                    isLoggedIn
+                        ? (
+                            <>
+                                <label style={LinkStyle}>{name}님</label> & nbsp;&nbsp; | &nbsp;&nbsp;
+                                <NavLink onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
+                            </>
+                        )
+                        : (
+                            <>
+                                <NavLink to="/signup" style={{
+                                    fontWeight: 'bold',
+                                    color: '#1976d2',
+                                    textDecoration: 'none',
+                                }}>회원가입</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
+                                <NavLink to="/login" style={LinkStyle}>로그인</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
+                            </>
+                        )
+                }
+                <NavLink to="/detail" style={LinkStyle}>고객센터</NavLink>
+            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', width: 920, m: 'auto', mt: 4, mb: 9 }}>
 
                 {/* 사진 */}

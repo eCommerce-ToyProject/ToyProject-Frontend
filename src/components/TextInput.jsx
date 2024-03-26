@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const TextInput = ({ onChange, value, placeholder}) => {
+const TextInput = ({ onChange, value, placeholder, size}) => {
     return (
         <TextField sx={{
             '& .MuiInputBase-root': {
@@ -14,7 +14,7 @@ const TextInput = ({ onChange, value, placeholder}) => {
                 }
             },
             width: '100%',
-        }} onChange={onChange} value={value} id='outlined-basic' variant='outlined' placeholder={placeholder}></TextField>
+        }} size={size} onChange={onChange} value={value} id='outlined-basic' variant='outlined' placeholder={placeholder}></TextField>
     )
 }
 

@@ -9,6 +9,7 @@ import ProDetail from './Pro_detail';
 import Header from '../components/Header';
 import { Box } from '@mui/material';
 import ProOrder from './Pro_order';
+import NotFound from './404';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +25,7 @@ function App() {
           <Route path='/myinfo' element={<Myinfo />} />
           <Route path='/productdetail/:id' element={<ProDetail />} />
           <Route path='/productorder/:id' element={<ProOrder />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
       </Box>
       <Footer />
