@@ -11,7 +11,6 @@ const Myinfo = () => {
                 <Typography sx={{mb: 3}} variant='h5' fontWeight={600}>주문 내역</Typography>
                 <Grid sx={{ width: 700 }}>
                     <OrdersCard />
-                    <OrdersCard />
                 </Grid>
             </Box>
         </Box>

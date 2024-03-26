@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <Box sx={{ width: 1000, m: 'auto', minHeight: '80vh' }}>
+      <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} />

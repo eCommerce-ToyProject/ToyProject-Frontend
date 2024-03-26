@@ -5,16 +5,17 @@ import { Box, Typography } from '@mui/material';
 
 const OrdersCard = () => {
     return (
-        <Box sx={{ border: '1px solid #DEDEDE', borderRadius: 4, p: 2, boxShadow: 2, mb: 3 }}>
-            <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>{'2024.2.24'} 주문</Typography>
+        <Box sx={{ border: '1px solid #DEDEDE', borderRadius: 4, p: 2, boxShadow: 1, mb: 3 }}>
+            <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>{'order-date'} 주문</Typography>
             <Box sx={{ display: 'flex' }}>
-                <img src={dress} alt={dress} style={{ width: '150px', height: '150px' }} />
+                <img src={dress} alt={dress} style={{ width: '130px', height: '130px' }} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: 550 }}>
                     <Box sx={{ height: 100 }}>
-                        <Typography sx={{ ml: 3 }}>블랙 드레스</Typography>
+                        <Typography sx={{ ml: 3 }}>{"name"}</Typography>
                     </Box>
-                    <Box sx={{ ml: 3 }}>
-                        <Typography sx={{ color: 'gray' }}>{'32,000'}원 - {1}개</Typography>
+                    <Box sx={{ ml: 3, display: 'flex' }}>
+                        <Typography sx={{ color: 'gray', mr: 5 }}>{'price'}원 - {'qty'}개</Typography>
+                        <Typography sx={{ color: 'gray' }}>옵션: {'opt1'}{'opt2'}개</Typography>
                     </Box>
                 </Box>
             </Box>

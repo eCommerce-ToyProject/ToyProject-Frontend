@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import dress from '../assets/dress.jpg'
 import OptionsSelect from '../components/OptionSelect';
 import TextInput from '../components/TextInput';
 import AddressModal from '../components/AddressModal';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
 
 const ProOrder = () => {
+    const param = useParams();
     const [zipCode, setZipcode] = useState("");
     const [roadAddress, setRoadAddress] = useState("");
     const [detailAddress, setDetailAddress] = useState("");
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
+    const [pay, Setpay] = useState("");
     const [address, setAddress] = useState(false);
 
     const handleAddress = () => {
@@ -25,12 +27,27 @@ const ProOrder = () => {
         setModal(false)
     }
 
-    // const handleOrder = () => {
-    //     if(zipCode === "" || roadAddress === ""){
-    //         setModal(true);
-    //         setMsg("상품을 받을 주소를 정해주세요.");
-    //     }else if()
-    // }
+    const selectRadio = (e) => {
+        Setpay(e.target.value);
+        console.log(pay);
+    }
+
+    // useEffect(() => {
+
+    // })
+
+    const handleOrder = () => {
+        if(zipCode === "" || roadAddress === ""){
+            setModal(true);
+            setMsg("상품 배송지를 정해주세요.");
+        }else if(pay === ""){
+            setModal(true);
+            setMsg("결제방식을 선택해 주세요.");
+        }else{
+            setModal(true);
+            setMsg("결제성공.");
+        }
+    }
 
     return (
         <Box sx={{ width: 900, m: '0 auto' }}>
@@ -38,7 +55,7 @@ const ProOrder = () => {
                 결제하기
             </Typography>
 
-            {/* 구매할 제품 카트 */}
+            {/* 구매할 제품 카드 */}
             <Box sx={{ display: 'flex', mt: 3, width: '100%', border: '1px solid #DEDEDE', p: 3, borderRadius: 4 }}>
                 <img src={dress} alt={dress} style={{ width: 130, height: 130, borderRadius: 15 }} />
                 <Box sx={{ ml: 3 }}>
@@ -54,6 +71,7 @@ const ProOrder = () => {
             <Box sx={{ display: 'flex', mt: 7 }}>
                 <Box sx={{ width: '60%' }}>
                     <Typography variant='h5' fontWeight={600}>배송지</Typography>
+                    
                     {/* <OptionsSelect options={} /> */}
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Box sx={{ width: 400 }}>
@@ -64,16 +82,15 @@ const ProOrder = () => {
                         <Button variant="contained" disableRipple onClick={handleAddress}>주소찾기</Button>
                     </Box>
                     <Typography variant='h5' fontWeight={600} sx={{ mt: 3 }}>결제수단</Typography>
+                   
                     {/* 결제 수단 라디오 */}
                     <RadioGroup row sx={{ mt: 3 }}>
-                        <FormControlLabel value="CREDIT_CARD" control={<Radio />} label="카트결제" />
-                        <FormControlLabel value="KKO_PAY" control={<Radio />} label="카카오페이" />
-                        <FormControlLabel value="BNK_ACC" control={<Radio />} label="계좌이체" />
+                        <FormControlLabel value="CREDIT_CARD" control={<Radio />} onClick={selectRadio} label="카트결제" />
+                        <FormControlLabel value="KKO_PAY" control={<Radio />} onClick={selectRadio} label="카카오페이" />
+                        <FormControlLabel value="BNK_ACC" control={<Radio />} onClick={selectRadio} label="계좌이체" />
                     </RadioGroup>
 
-                    <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={() => {
-
-                    }}>결제하기</Button>
+                    <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={handleOrder}>결제하기</Button>
                 </Box>
                 <Box sx={{ width: '40%' }}>
                     <OrderUserinfo />
