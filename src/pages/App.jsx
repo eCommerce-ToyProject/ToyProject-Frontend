@@ -20,7 +20,7 @@ function App() {
       <Box sx={{ width: 1000, m: 'auto', minHeight: '80vh' }}>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/myinfo' element={<Myinfo />} />
           <Route path='/productdetail/:id' element={<ProDetail />} />

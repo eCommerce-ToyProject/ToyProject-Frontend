@@ -43,17 +43,20 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     useEffect(() => {
-        axios.post('/members/loginCheck',
-            {
-                // headers: {
-                //     Authorization: 'Bearer ' + cookies.accessToken,
-                // },
-            }
-        ).then((res) => {
-            setName(res.data.name)
-        })
-        cookies.accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false)
-    }, [cookies.accessToken]);
+        if (cookies.accessToken !== undefined) {
+            setIsLoggedIn(true);
+            axios.post('/members/loginCheck')
+                .then((res) => {
+                    setName(res.data);
+                })
+                .catch((error) => {
+                    console.error('Error checking login status:', error);
+                    setIsLoggedIn(false);
+                });
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, [cookies.accessToken, setIsLoggedIn]);
 
     return (
         <Box>
@@ -62,7 +65,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                     isLoggedIn
                         ? (
                             <>
-                                <label style={LinkStyle}>{name}님</label> & nbsp;&nbsp; | &nbsp;&nbsp;
+                                <label style={LinkStyle}>{name}님</label> &nbsp;&nbsp; | &nbsp;&nbsp;
                                 <NavLink onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                             </>
                         )

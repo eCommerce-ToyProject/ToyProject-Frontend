@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
     const [, setCookie] = useCookies(['id']); 
 
@@ -30,6 +30,7 @@ const Login = () => {
             .then((res) => {
                 setCookie("accessToken", res.data.accessToken, { path: '/' });
                 navigate('/')
+                setIsLoggedIn(true)
             })
             .catch((err) => {
                 setModal(true)
