@@ -2,9 +2,11 @@ import React from "react";
 import { NativeSelect } from "@mui/material";
 
 const OptionsSelect = ({ options }) => {
+  const uniqueOptions = [...new Set(options)];
+
   return (
-    <NativeSelect sx={{ mr: 4 }}>
-      {options.map((item) => (
+    <NativeSelect>
+      {uniqueOptions.map((item) => (
         <option key={item} value={item}>
           {item}
         </option>
