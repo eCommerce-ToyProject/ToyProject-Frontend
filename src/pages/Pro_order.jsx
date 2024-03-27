@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
-import dress from '../assets/dress.jpg'
-import OptionsSelect from '../components/OptionSelect';
 import TextInput from '../components/TextInput';
 import AddressModal from '../components/AddressModal';
 import { NavLink, useParams } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
+import DeliveryModal from '../components/DeliveryModal';
+import OrdersCard from '../components/OrdersCard';
 
 const ProOrder = () => {
     const param = useParams();
@@ -18,13 +18,22 @@ const ProOrder = () => {
     const [msg, setMsg] = useState("");
     const [pay, Setpay] = useState("");
     const [address, setAddress] = useState(false);
+    const [delModal, setDelModal] = useState(false);
 
     const handleAddress = () => {
         setAddress(true);
     };
 
+    const handleBringAddress = () => {
+        setDelModal(true)
+    }
+
     const closeModal = () => {
         setModal(false)
+    }
+
+    const closedelModal = () => {
+        setDelModal(false)
     }
 
     const selectRadio = (e) => {
@@ -33,13 +42,13 @@ const ProOrder = () => {
     }
 
     const handleOrder = () => {
-        if(zipCode === "" || roadAddress === ""){
+        if (zipCode === "" || roadAddress === "") {
             setModal(true);
             setMsg("상품 배송지를 정해주세요.");
-        }else if(pay === ""){
+        } else if (pay === "") {
             setModal(true);
             setMsg("결제방식을 선택해 주세요.");
-        }else{
+        } else {
             setModal(true);
             setMsg("결제성공.");
         }
@@ -52,33 +61,27 @@ const ProOrder = () => {
             </Typography>
 
             {/* 구매할 제품 카드 */}
-            <Box sx={{ display: 'flex', mt: 3, width: '100%', border: '1px solid #DEDEDE', p: 3, borderRadius: 4 }}>
-                <img src={dress} alt={dress} style={{ width: 130, height: 130, borderRadius: 15 }} />
-                <Box sx={{ ml: 3 }}>
-                    <NavLink style={{ textDecoration: 'none' }} to={`/productdetail/${1}`}>
-                        <Typography sx={{ lineHeight: 2, mt: 2, color: 'black' }}>블랙 드레스</Typography>
-                    </NavLink>
-                    <Typography sx={{ lineHeight: 2 }}>2개</Typography>
-                    <Typography sx={{ lineHeight: 2, fontSize: 20 }} fontWeight={600}>500원</Typography>
-                </Box>
-            </Box>
+            <OrdersCard />
 
             {/* 주문정보 작성 및 결제 공간 */}
             <Box sx={{ display: 'flex', mt: 7 }}>
                 <Box sx={{ width: '60%' }}>
-                    <Typography variant='h5' fontWeight={600}>배송지</Typography>
-                    
-                    {/* <OptionsSelect options={} /> */}
+                    <Box>
+                        <Typography variant='h5' fontWeight={600}>배송지</Typography>
+                    </Box>
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Box sx={{ width: 400 }}>
                             <TextInput size={"small"} onChange={(e) => setZipcode(e.target.value)} value={zipCode} placeholder="우편번호" />
                             <TextInput size={"small"} onChange={(e) => setRoadAddress(e.target.value)} value={roadAddress} placeholder="주소" />
                             <TextInput size={"small"} onChange={(e) => setDetailAddress(e.target.value)} value={detailAddress} placeholder="상세주소" />
                         </Box>
-                        <Button variant="contained" disableRipple onClick={handleAddress}>주소찾기</Button>
+                        <Box>
+                            <Button variant="contained" disableRipple sx={{ height: '50%' }} onClick={handleAddress}>주소찾기</Button>
+                            <Button variant="contained" disableRipple sx={{ height: '50%' }} onClick={handleBringAddress}>불러오기</Button>
+                        </Box>
                     </Box>
                     <Typography variant='h5' fontWeight={600} sx={{ mt: 3 }}>결제수단</Typography>
-                   
+
                     {/* 결제 수단 라디오 */}
                     <RadioGroup row sx={{ mt: 3 }}>
                         <FormControlLabel value="CREDIT_CARD" control={<Radio />} onClick={selectRadio} label="카트결제" />
@@ -94,10 +97,13 @@ const ProOrder = () => {
                 </Box>
             </Box>
             {
-                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} closeModal={closeModal} /> : null
+                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
             }
             {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
+            }
+            {
+                delModal ? <DeliveryModal delModal={delModal} closeModal={closedelModal} /> : null
             }
         </Box>
     )
