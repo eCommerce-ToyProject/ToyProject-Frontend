@@ -5,7 +5,7 @@ const OptionsSelect = ({ options }) => {
   const uniqueOptions = [...new Set(options)];
 
   return (
-    <NativeSelect sx={{ mr: 2 }}>
+    <NativeSelect>
       {uniqueOptions.map((item) => (
         <option key={item} value={item}>
           {item}

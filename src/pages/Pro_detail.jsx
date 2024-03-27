@@ -20,7 +20,7 @@ const ProDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`/goods/goodsList/goodsDetail?id=${param.id}`)
+      .get(`/goods/goodsList/goodsDetail?no=${param.id}`)
       .then((response) => {
         setProduct(response.data);
         setGImg(response.data[0].gimg)

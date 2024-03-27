@@ -19,6 +19,7 @@ const MyinfoNavList = () => {
             <Typography sx={{ fontSize: '1.6rem', fontWeight: 800, mb: 2 }}>My페이지</Typography>
             <Grid style={Navstyle}>
                 <MyinfoNavItem page={''} title={'주문 내역'} />
+                <MyinfoNavItem page={'/myinfo/delivery'} title={'배송지 추가'} />
                 <MyinfoNavItem page={''} title={'계좌 관리'} />
                 <MyinfoNavItem page={''} title={'찜한 상품'} />
                 <MyinfoNavItem page={''} title={'개인 정보 수정'} />

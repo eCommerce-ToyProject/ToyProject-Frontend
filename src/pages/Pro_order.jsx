@@ -32,10 +32,6 @@ const ProOrder = () => {
         console.log(pay);
     }
 
-    // useEffect(() => {
-
-    // })
-
     const handleOrder = () => {
         if(zipCode === "" || roadAddress === ""){
             setModal(true);
@@ -98,7 +94,7 @@ const ProOrder = () => {
                 </Box>
             </Box>
             {
-                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} /> : null
+                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} closeModal={closeModal} /> : null
             }
             {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
