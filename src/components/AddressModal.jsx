@@ -19,11 +19,11 @@ const AddressModal = ({ setRoadAddress, setZipcode, setAddress, address, closeMo
     const postCodeStyle = {
         display: "block",
         position: "absolute",
-        width: "50%",
+        width: "30%",
         height: "50%",
         top: "0",
         left: "0",
-        transform: "translate(50%, 50%)",
+        transform: "translate(115%, 50%)",
         zIndex: 100,
     };
     var themeObj = {
