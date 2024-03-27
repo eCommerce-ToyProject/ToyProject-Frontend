@@ -30,7 +30,6 @@ const Myinfo = () => {
                 });
         }
     }, []);
-    console.log(name)
     return (
         <Box sx={{ display: 'flex' }}>
             <MyinfoNavList />

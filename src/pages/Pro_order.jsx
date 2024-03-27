@@ -8,6 +8,7 @@ import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
 import DeliveryModal from '../components/DeliveryModal';
 import OrdersCard from '../components/OrdersCard';
+import axios from 'axios';
 
 const ProOrder = () => {
     const param = useParams();
@@ -19,6 +20,7 @@ const ProOrder = () => {
     const [pay, Setpay] = useState("");
     const [address, setAddress] = useState(false);
     const [delModal, setDelModal] = useState(false);
+    const [name, setName] = useState(undefined);
 
     const handleAddress = () => {
         setAddress(true);
@@ -40,6 +42,16 @@ const ProOrder = () => {
         Setpay(e.target.value);
         console.log(pay);
     }
+
+    useEffect(() => {
+        axios.post('/members/loginCheck')
+            .then((res) => {
+                setName(res.data);
+            })
+            .catch((error) => {
+                console.error('Error checking login status:', error);
+            });
+    });
 
     const handleOrder = () => {
         if (zipCode === "" || roadAddress === "") {
@@ -103,7 +115,7 @@ const ProOrder = () => {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
             }
             {
-                delModal ? <DeliveryModal delModal={delModal} closeModal={closedelModal} /> : null
+                delModal ? <DeliveryModal id={name!==undefined?name:null} delModal={delModal} closeModal={closedelModal} /> : null
             }
         </Box>
     )

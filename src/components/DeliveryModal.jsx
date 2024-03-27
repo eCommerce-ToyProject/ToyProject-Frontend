@@ -1,8 +1,24 @@
 import { Box, Button, Grid, Modal, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeliveryCard from './DeliveryCard';
+import axios from 'axios';
 
-const DeliveryModal = ({ delModal, closeModal }) => {
+const DeliveryModal = ({ id, delModal, closeModal }) => {
+    const [delivery, setDelivery] = useState([]);
+
+    useEffect(() => {
+        if (id !== undefined) {
+            axios.get(`/delivery/deliveryList?id=${id}`)
+                .then((res) => {
+                    setDelivery(res.data.content)
+                })
+                .catch((error) => {
+                    console.error('Error checking login status:', error);
+                });
+        }
+    }, []);
+
+
 
     const Close = () => {
         closeModal()
@@ -33,10 +49,7 @@ const DeliveryModal = ({ delModal, closeModal }) => {
                         display: 'none',
                     },
                 }}>
-                    <DeliveryCard />
-                    <DeliveryCard />
-                    <DeliveryCard />
-                    <DeliveryCard />
+                    {delivery.length > 0 ? <DeliveryCard props={delivery}/> : null}
                 </Grid>
                 <Button sx={{ width: '100%', fontWeightL: 900, mt: 2 }} size='large' variant="contained" disableRipple onClick={Close}>취소</Button>
             </Box>

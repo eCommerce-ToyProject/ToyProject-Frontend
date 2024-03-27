@@ -4,7 +4,6 @@ import { Box, Typography } from '@mui/material';
 
 
 const OrderListCard = ({ product }) => {
-    console.log(product)
     return (
         <div>
             {product.map((item) => {
