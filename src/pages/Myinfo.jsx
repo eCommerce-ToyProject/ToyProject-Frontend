@@ -1,7 +1,7 @@
 import { Grid, Typography, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import MyinfoNavList from '../components/MyinfoNavList';
-import OrdersCard from '../components/OrdersCard';
+import OrderListCard from '../components/OrderListCard';
 import axios from 'axios';
 
 
@@ -36,7 +36,7 @@ const Myinfo = () => {
             <Box>
                 <Typography sx={{mb: 3}} variant='h5' fontWeight={600}>주문 내역</Typography>
                 <Grid sx={{ width: 700 }}>
-                    {orders.length > 0? <OrdersCard product={orders}/>:null}
+                    {orders.length > 0? <OrderListCard product={orders}/>:null}
                 </Grid>
             </Box>
         </Box>
