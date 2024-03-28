@@ -7,11 +7,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
+import CustomModal from '../components/CustomModal';
 
 const ProDetail = () => {
   const navigate = useNavigate();
-  const [qty, setQty] = useState(1);
   const param = useParams();
+  const [modal, setModal] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
   const [gImg, setGImg] = useState('')
@@ -29,6 +32,33 @@ const ProDetail = () => {
     setSelectOpt2(e.target.value)
   }
 
+  const closeModal = () => {
+    setModal(false)
+  }
+
+  const Order = () => {
+    if (name === "" || name === undefined) {
+      navigate('/login')
+    } else if (selectOpt1 === '' || selectOpt2 === '') {
+      setModal(true);
+      setMsg('옵션을 선택해 주세요');
+    } else {
+      navigate(`/productorder/${product[0].gno}`,
+        {
+          state: {
+            price: price,
+            qty: qty,
+            name: product[0].gname,
+            img: gImg,
+            gno: product[0].gno,
+            opt1: selectOpt1,
+            opt2: selectOpt2
+          }
+        }
+      )
+    }
+  };
+
   useEffect(() => {
     axios
       .get(`/goods/goodsList/goodsDetail?no=${param.id}`)
@@ -40,7 +70,7 @@ const ProDetail = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [param.id]);
 
   useEffect(() => {
     axios.post('/members/loginCheck')
@@ -51,25 +81,6 @@ const ProDetail = () => {
         console.error('Error checking login status:', error);
       });
   })
-
-  const Order = () => {
-    if (name === "" || name === undefined) {
-      navigate('/login')
-    } else {
-      navigate(`/productorder/${product[0].gno}`,
-        {
-          state: {
-            price: price,
-            qty: qty,
-            name: product[0].gname,
-            img: gImg,
-            gno: product[0].gno,
-            opt1: selectOpt1
-          }
-        }
-      )
-    }
-  };
 
   useEffect(() => {
     if (product.length !== 0) {
@@ -92,8 +103,8 @@ const ProDetail = () => {
           price={product.length === 0 ? undefined : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         />
         <Box sx={{ mt: 20 }}>
-          {optVal1.length > 0 && (<OptionsSelect handleOpt1={handleOpt1} options={optVal1} />)}
-          {optVal2.length > 0 && (<OptionsSelect options={optVal2} />)}
+          {optVal1.length > 0 && (<OptionsSelect handleOpt={handleOpt1} handleOpt2={handleOpt2} options={optVal1} />)}
+          {optVal2.length > 0 && (<OptionsSelect handleOpt={handleOpt2} options={optVal2} />)}
           <form style={{ display: "flex", marginTop: 40 }}>
             <input
               style={{
@@ -142,6 +153,9 @@ const ProDetail = () => {
           </form>
         </Box>
       </Box>
+      {
+        modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
+      }
     </Box>
   );
 };

@@ -19,9 +19,11 @@ const ProOrder = () => {
     const img = location.state?.img;
     const gno = location.state?.gno;
     const opt1 = location.state?.opt1;
+    const opt2 = location.state?.opt2;
 
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
+    const [nav, setNav] = useState("");
     const [pay, Setpay] = useState("");
     const [address, setAddress] = useState(false);
     const [delModal, setDelModal] = useState(false);
@@ -75,22 +77,34 @@ const ProOrder = () => {
     });
 
     const handleOrder = () => {
-        if(zipCode === '' || roadAddress === '' || detailAddress === '') { 
+        if (zipCode === '' || roadAddress === '' || detailAddress === '') {
             setModal(true);
             setMsg("배송지를 입력해 주세요.");
-        } else if(pay === "") {
+        } else if (pay === "") {
             setModal(true);
             setMsg("결제방식을 선택해 주세요.");
         } else {
-            // axios.post('/orders/createOrder', {
-            //     memberId: name,
-            //     goodsId: gno,
-            //     optVal1: ,
-            //     optVal2: ,
-            //     quantity: qty,
-            //     paymn: pay,
-            // })
-            console.log(opt1)
+            axios.post('/orders/createOrder', {
+                memberId: name,
+                goodsId: gno,
+                optVal1: opt1,
+                optVal2: opt2,
+                quantity: qty,
+                paymn: pay,
+                delPlc: roadAddress,
+                zipCode: zipCode,
+                detailAddress: detailAddress,
+                designation: designation
+
+            })
+            .then(() => {
+                setModal(true);
+                setMsg('주문을 성공했습니다!');
+                setNav('/');
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }
     }
 
@@ -101,7 +115,7 @@ const ProOrder = () => {
             </Typography>
 
             {/* 구매할 제품 카드 */}
-            <OrdersCard price={price} title={title} img={img} qty={qty} />
+            <OrdersCard price={price} title={title} img={img} qty={qty} opt1={opt1} opt2={opt2} />
 
             {/* 주문정보 작성 및 결제 공간 */}
             <Box sx={{ display: 'flex', mt: 7 }}>
@@ -136,7 +150,7 @@ const ProOrder = () => {
                 </Box>
             </Box>
             {
-                modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
+                modal ? <CustomModal closeModal={closeModal} msg={msg} nav={nav} /> : null
             }
             {
                 address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
