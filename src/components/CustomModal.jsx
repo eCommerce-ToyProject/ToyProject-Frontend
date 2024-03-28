@@ -1,5 +1,6 @@
 import { Box, Modal, Typography, Button } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -13,12 +14,14 @@ const style = {
     p: 4,
 };
 
-const CustomModal = ({ closeModal, msg }) => {
+const CustomModal = ({ closeModal, msg, nav }) => {
+    const navigate = useNavigate();
     let [open, setOpen] = useState(true)
 
     const Close = () => {
         setOpen(false)
         closeModal();
+        navigate(nav)
     }
 
     return (

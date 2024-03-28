@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography } from "@mui/material";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
@@ -12,13 +12,13 @@ import DeliveryInput from '../components/DeliveryInput';
 import PayRadio from '../components/PayRadio';
 
 const ProOrder = () => {
-    const param = useParams();
-
     const location = useLocation();
     const price = location.state?.price;
     const title = location.state?.name;
     const qty = location.state?.qty;
     const img = location.state?.img;
+    const gno = location.state?.gno;
+    const opt1 = location.state?.opt1;
 
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
@@ -75,12 +75,22 @@ const ProOrder = () => {
     });
 
     const handleOrder = () => {
-        if (pay === "") {
+        if(zipCode === '' || roadAddress === '' || detailAddress === '') { 
+            setModal(true);
+            setMsg("배송지를 입력해 주세요.");
+        } else if(pay === "") {
             setModal(true);
             setMsg("결제방식을 선택해 주세요.");
         } else {
-            setModal(true);
-            setMsg("결제성공.");
+            // axios.post('/orders/createOrder', {
+            //     memberId: name,
+            //     goodsId: gno,
+            //     optVal1: ,
+            //     optVal2: ,
+            //     quantity: qty,
+            //     paymn: pay,
+            // })
+            console.log(opt1)
         }
     }
 

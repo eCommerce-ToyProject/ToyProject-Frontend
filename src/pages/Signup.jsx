@@ -13,6 +13,7 @@ const Signup = () => {
     let [phone, setPhone] = useState('');
     const [modal, setModal] = useState(false);
     const [desc, setDesc] = useState('');
+    const [nav, setNav] = useState('');
     const [checkId, SetCheckId] = useState(false);
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -49,6 +50,7 @@ const Signup = () => {
             })
             setModal(true);
             setDesc("회원가입에 성공하였습니다!");
+            setNav('/login')
         }
     }
 
@@ -111,7 +113,7 @@ const Signup = () => {
             </Box>
             <Button sx={{ width: '100%', mt: 4 }} size='large' variant="contained" disableRipple onClick={Check}>가입하기</Button>
             {
-                modal && <CustomModal closeModal={closeModal} msg={desc} />
+                modal && <CustomModal closeModal={closeModal} msg={desc} nav={nav} />
             }
         </Box>
     )

@@ -2,12 +2,11 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 
 const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, setDesignation, Close }) => {
-    console.log(props)
     return(
         <div>
-        {props.map((item)=>{
+        {props.map((item, key)=>{
             return(
-            <Box sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1 }} onClick={() => {
+            <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1 }} onClick={() => {
                 setZipcode(item.zcode);
                 setRoadAddress(item.delPlc);
                 setDetailAddress(item.detailAddress);

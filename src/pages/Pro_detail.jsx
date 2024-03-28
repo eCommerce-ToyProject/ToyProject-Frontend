@@ -18,6 +18,16 @@ const ProDetail = () => {
   const [product, setProduct] = useState([]);
   const [price, setPrice] = useState();
   const [name, setName] = useState('');
+  const [selectOpt1, setSelectOpt1] = useState('');
+  const [selectOpt2, setSelectOpt2] = useState('');
+
+  const handleOpt1 = (e) => {
+    setSelectOpt1(e.target.value)
+  }
+
+  const handleOpt2 = (e) => {
+    setSelectOpt2(e.target.value)
+  }
 
   useEffect(() => {
     axios
@@ -43,10 +53,21 @@ const ProDetail = () => {
   })
 
   const Order = () => {
-    if(name === "" || name === undefined){
+    if (name === "" || name === undefined) {
       navigate('/login')
-    }else{
-      navigate(`/productorder/${product[0].gno}`, { state: { price: price, qty: qty, name: product[0].gname, img: gImg } })
+    } else {
+      navigate(`/productorder/${product[0].gno}`,
+        {
+          state: {
+            price: price,
+            qty: qty,
+            name: product[0].gname,
+            img: gImg,
+            gno: product[0].gno,
+            opt1: selectOpt1
+          }
+        }
+      )
     }
   };
 
@@ -71,7 +92,7 @@ const ProDetail = () => {
           price={product.length === 0 ? undefined : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         />
         <Box sx={{ mt: 20 }}>
-          {optVal1.length > 0 && (<OptionsSelect options={optVal1} />)}
+          {optVal1.length > 0 && (<OptionsSelect handleOpt1={handleOpt1} options={optVal1} />)}
           {optVal2.length > 0 && (<OptionsSelect options={optVal2} />)}
           <form style={{ display: "flex", marginTop: 40 }}>
             <input
