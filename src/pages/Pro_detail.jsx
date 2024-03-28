@@ -38,24 +38,34 @@ const ProDetail = () => {
 
   const Order = () => {
     if (name === "" || name === undefined) {
-      navigate('/login')
-    } else if (selectOpt1 === '' || selectOpt2 === '') {
-      setModal(true);
-      setMsg('옵션을 선택해 주세요');
+      navigate('/login');
     } else {
-      navigate(`/productorder/${product[0].gno}`,
-        {
-          state: {
-            price: price,
-            qty: qty,
-            name: product[0].gname,
-            img: gImg,
-            gno: product[0].gno,
-            opt1: selectOpt1,
-            opt2: selectOpt2
+      let missingOptions = [];
+      if (optVal1.length > 0 && selectOpt1 === '') {
+        missingOptions.push('옵션1');
+      }
+      if (optVal2.length > 0 && selectOpt2 === '') {
+        missingOptions.push('옵션2');
+      }
+  
+      if (missingOptions.length > 0) {
+        setModal(true);
+        setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);
+      } else {
+        navigate(`/productorder/${product[0].gno}`,
+          {
+            state: {
+              price: price,
+              qty: qty,
+              name: product[0].gname,
+              img: gImg,
+              gno: product[0].gno,
+              opt1: selectOpt1,
+              opt2: selectOpt2
+            }
           }
-        }
-      )
+        )
+      }
     }
   };
 
