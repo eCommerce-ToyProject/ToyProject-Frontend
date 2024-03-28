@@ -17,6 +17,7 @@ const ProDetail = () => {
   const [gImg, setGImg] = useState('')
   const [product, setProduct] = useState([]);
   const [price, setPrice] = useState();
+  const [name, setName] = useState('');
 
   useEffect(() => {
     axios
@@ -31,8 +32,22 @@ const ProDetail = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios.post('/members/loginCheck')
+      .then((res) => {
+        setName(res.data);
+      })
+      .catch((error) => {
+        console.error('Error checking login status:', error);
+      });
+  })
+
   const Order = () => {
-    navigate(`/productorder/${product[0].gno}`, { state: { price: price, qty: qty, name: product[0].gname, img: gImg } })
+    if(name === "" || name === undefined){
+      navigate('/login')
+    }else{
+      navigate(`/productorder/${product[0].gno}`, { state: { price: price, qty: qty, name: product[0].gname, img: gImg } })
+    }
   };
 
   useEffect(() => {
@@ -69,9 +84,9 @@ const ProDetail = () => {
                 border: '1px solid #DEDEDE'
               }}
               value={qty}
-              onChange={(e) => { 
+              onChange={(e) => {
                 setQty(Number(e.target.value))
-                }} disabled />
+              }} disabled />
             <Box sx={{ display: "grid", width: 65 }}>
               <Button
                 onClick={() => {

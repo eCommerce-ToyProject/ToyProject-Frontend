@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -28,6 +28,7 @@ const StyledButton = styled.button`
 `
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+    const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies(['accessToken']);
     const [name, setName] = useState('');
 
@@ -38,8 +39,10 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     const Logout = () => {
+        navigate('/')
         removeCookie('accessToken')
         setIsLoggedIn(false)
+        setName('');
     }
 
     useEffect(() => {
@@ -104,7 +107,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                 </Box>
 
                 {/* 아이콘 */}
-                <NavLink to="/myinfo" style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
+                <NavLink to={name === '' ? '/login' : '/myinfo'} style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
             </Box>
         </Box>
     )

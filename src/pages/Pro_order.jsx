@@ -50,7 +50,6 @@ const ProOrder = () => {
 
     const selectRadio = (e) => {
         Setpay(e.target.value);
-        console.log(pay);
     }
 
     useEffect(() => {

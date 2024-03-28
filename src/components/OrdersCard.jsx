@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from "@mui/material";
 
 const OrdersCard = ({ price, title, img, qty }) => {
-    const _price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    // const _price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
     return (
         <Box sx={{ display: 'flex', mt: 3, width: '100%', border: '1px solid #DEDEDE', p: 3, borderRadius: 4 }}>
@@ -10,7 +10,7 @@ const OrdersCard = ({ price, title, img, qty }) => {
             <Box sx={{ ml: 3 }}>
                     <Typography sx={{ lineHeight: 2, mt: 2}}>{title}</Typography>
                 <Typography sx={{ lineHeight: 2 }}> {qty}개</Typography>
-                <Typography sx={{ lineHeight: 2, fontSize: 20 }} fontWeight={600}>{_price}원</Typography>
+                <Typography sx={{ lineHeight: 2, fontSize: 20 }} fontWeight={600}>{price}원</Typography>
             </Box>
         </Box>
     )

@@ -97,8 +97,8 @@ const Signup = () => {
                 <Box>
                     <Stack sx={{ width: 350 }} gap={2}>
                         <TextInput onChange={(e) => setId(e.target.value)} value={id} placeholder='아아디를 입력해 주세요' />
-                        <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호를 입력해 주세요' />
-                        <TextInput onChange={(e) => setPwdChk(e.target.value)} value={pwdChk} placeholder='비밀번호를 한번더 입력해 주세요' />
+                        <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호를 입력해 주세요' type='password' />
+                        <TextInput onChange={(e) => setPwdChk(e.target.value)} value={pwdChk} placeholder='비밀번호를 한번더 입력해 주세요' type='password' />
                         <TextInput onChange={(e) => setName(e.target.value)} value={name} placeholder='이름을 입력해 주세요' />
                         <TextInput onChange={(e) => setPhone(e.target.value)} value={phone} placeholder='숫자만 입력해 주세요' />
                         <TextInput onChange={(e) => setEmail(e.target.value)} value={email} placeholder='이메일을 입력해 주세요' />
