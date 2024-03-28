@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useLocation, useParams } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
@@ -7,15 +7,19 @@ import OrderPayDetail from '../components/OrderPayDetail';
 import OrdersCard from '../components/OrdersCard';
 import axios from 'axios';
 import DeliveryModal from '../components/DeliveryModal';
+import AddressModal from '../components/AddressModal';
 import DeliveryInput from '../components/DeliveryInput';
+import PayRadio from '../components/PayRadio';
 
 const ProOrder = () => {
     const param = useParams();
+
     const location = useLocation();
     const price = location.state?.price;
     const title = location.state?.name;
     const qty = location.state?.qty;
     const img = location.state?.img;
+
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
     const [pay, Setpay] = useState("");
@@ -23,6 +27,10 @@ const ProOrder = () => {
     const [delModal, setDelModal] = useState(false);
     const [name, setName] = useState(undefined);
     const [userData, setUserData] = useState([])
+    const [designation, setDesignation] = useState('');
+    const [zipCode, setZipcode] = useState("");
+    const [roadAddress, setRoadAddress] = useState("");
+    const [detailAddress, setDetailAddress] = useState("");
 
     const handleAddress = () => {
         setAddress(true);
@@ -36,7 +44,7 @@ const ProOrder = () => {
         setModal(false)
     }
 
-    const closedeModal = () => {
+    const closedelModal = () => {
         setDelModal(false)
     }
 
@@ -56,14 +64,14 @@ const ProOrder = () => {
     });
 
     useEffect(() => {
-        if(name !== undefined&&userData.length === 0){
+        if (name !== undefined && userData.length === 0) {
             axios.get(`/members/orderingMyinfo?id=${name}`)
-            .then((res) => {
-                setUserData(res.data);
-            })
-            .catch((error) => {
-                console.error('Error checking login status:', error);
-            });
+                .then((res) => {
+                    setUserData(res.data);
+                })
+                .catch((error) => {
+                    console.error('Error checking login status:', error);
+                });
         }
     });
 
@@ -92,20 +100,29 @@ const ProOrder = () => {
                     <Box>
                         <Typography variant='h5' fontWeight={600}>배송지</Typography>
                     </Box>
-                    <DeliveryInput />
+                    <DeliveryInput
+                        designation={designation}
+                        zipCode={zipCode}
+                        roadAddress={roadAddress}
+                        detailAddress={detailAddress}
+                        onDesignationChange={(e) => setDesignation(e.target.value)}
+                        onZipCodeChange={(e) => setZipcode(e.target.value)}
+                        onRoadAddressChange={(e) => setRoadAddress(e.target.value)}
+                        onDetailAddressChange={(e) => setDetailAddress(e.target.value)}
+                        onAddressSearch={handleAddress}
+                        onAddressBring={handleBringAddress}
+                    />
+
                     <Typography variant='h5' fontWeight={600} sx={{ mt: 3 }}>결제수단</Typography>
 
                     {/* 결제 수단 라디오 */}
-                    <RadioGroup row sx={{ mt: 3 }}>
-                        <FormControlLabel value="CREDIT_CARD" control={<Radio />} onClick={selectRadio} label="카트결제" />
-                        <FormControlLabel value="KKO_PAY" control={<Radio />} onClick={selectRadio} label="카카오페이" />
-                        <FormControlLabel value="BNK_ACC" control={<Radio />} onClick={selectRadio} label="계좌이체" />
-                    </RadioGroup>
+                    <PayRadio selectRadio={selectRadio} />
 
+                    {/* 결제 버튼 */}
                     <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={handleOrder}>결제하기</Button>
                 </Box>
                 <Box sx={{ width: '40%' }}>
-                    <OrderUserinfo userData={userData.length!==0?userData:null}/>
+                    <OrderUserinfo userData={userData.length !== 0 ? userData : null} />
                     <OrderPayDetail price={price} />
                 </Box>
             </Box>
@@ -113,7 +130,10 @@ const ProOrder = () => {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
             }
             {
-                delModal ? <DeliveryModal id={name !== undefined ? name : null} delModal={delModal} closeModal={closeModal} /> : null
+                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
+            }
+            {
+                delModal ? <DeliveryModal delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} /> : null
             }
         </Box>
     )

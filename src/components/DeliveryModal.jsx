@@ -1,9 +1,9 @@
-import { Box, Button, Grid, Modal, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import DeliveryCard from './DeliveryCard';
 import axios from 'axios';
 
-const DeliveryModal = ({ id, delModal, closeModal }) => {
+const DeliveryModal = ({ id, delModal, closeModal, setRoadAddress, setZipcode, setDetailAddress, setDesignation }) => {
     const [delivery, setDelivery] = useState([]);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const DeliveryModal = ({ id, delModal, closeModal }) => {
                         display: 'none',
                     },
                 }}>
-                    {delivery.length > 0 ? <DeliveryCard props={delivery}/> : null}
+                    {delivery.length > 0 ? <DeliveryCard props={delivery} Close={Close} setDetailAddress={setDetailAddress} setRoadAddress={setRoadAddress} setZipcode={setZipcode} setDesignation={setDesignation} /> : null}
                 </Grid>
                 <Button sx={{ width: '100%', fontWeightL: 900, mt: 2 }} size='large' variant="contained" disableRipple onClick={Close}>취소</Button>
             </Box>

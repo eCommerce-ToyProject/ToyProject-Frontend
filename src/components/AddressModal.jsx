@@ -5,7 +5,6 @@ import DaumPostcode from 'react-daum-postcode';
 const AddressModal = ({ setRoadAddress, setZipcode, setAddress, address }) => {
 
     const completeHandler = (data, state) => {
-        console.log(data);
         setZipcode(data.zonecode); // 추가
         setRoadAddress(data.roadAddress); // 추가
         setAddress(false);
