@@ -20,7 +20,7 @@ const Myinfo = () => {
     });
 
     useEffect(() => {
-        if (name !== undefined) {
+        if (name !== ''&&orders.length===0) {
             axios.get(`/orders/myOrderList?id=${name}`)
                 .then((res) => {
                     setOrders(res.data.content)
