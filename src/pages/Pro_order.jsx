@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
-import TextInput from '../components/TextInput';
-import AddressModal from '../components/AddressModal';
-import { NavLink, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import OrderUserinfo from '../components/OrderUserInfo';
 import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
-import DeliveryModal from '../components/DeliveryModal';
 import OrdersCard from '../components/OrdersCard';
 import axios from 'axios';
+import DeliveryModal from '../components/DeliveryModal';
+import DeliveryInput from '../components/DeliveryInput';
 
 const ProOrder = () => {
     const param = useParams();
-    const [zipCode, setZipcode] = useState("");
-    const [roadAddress, setRoadAddress] = useState("");
-    const [detailAddress, setDetailAddress] = useState("");
+    const location = useLocation();
+    const price = location.state?.price;
+    const title = location.state?.name;
+    const qty = location.state?.qty;
+    const img = location.state?.img;
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
     const [pay, Setpay] = useState("");
@@ -34,7 +35,7 @@ const ProOrder = () => {
         setModal(false)
     }
 
-    const closedelModal = () => {
+    const closedeModal = () => {
         setDelModal(false)
     }
 
@@ -54,10 +55,7 @@ const ProOrder = () => {
     });
 
     const handleOrder = () => {
-        if (zipCode === "" || roadAddress === "") {
-            setModal(true);
-            setMsg("상품 배송지를 정해주세요.");
-        } else if (pay === "") {
+        if (pay === "") {
             setModal(true);
             setMsg("결제방식을 선택해 주세요.");
         } else {
@@ -73,7 +71,7 @@ const ProOrder = () => {
             </Typography>
 
             {/* 구매할 제품 카드 */}
-            <OrdersCard />
+            <OrdersCard price={price} title={title} img={img} qty={qty} />
 
             {/* 주문정보 작성 및 결제 공간 */}
             <Box sx={{ display: 'flex', mt: 7 }}>
@@ -81,17 +79,7 @@ const ProOrder = () => {
                     <Box>
                         <Typography variant='h5' fontWeight={600}>배송지</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', mt: 3 }}>
-                        <Box sx={{ width: 400 }}>
-                            <TextInput size={"small"} onChange={(e) => setZipcode(e.target.value)} value={zipCode} placeholder="우편번호" />
-                            <TextInput size={"small"} onChange={(e) => setRoadAddress(e.target.value)} value={roadAddress} placeholder="주소" />
-                            <TextInput size={"small"} onChange={(e) => setDetailAddress(e.target.value)} value={detailAddress} placeholder="상세주소" />
-                        </Box>
-                        <Box>
-                            <Button variant="contained" disableRipple sx={{ height: '50%' }} onClick={handleAddress}>주소찾기</Button>
-                            <Button variant="contained" disableRipple sx={{ height: '50%' }} onClick={handleBringAddress}>불러오기</Button>
-                        </Box>
-                    </Box>
+                    <DeliveryInput />
                     <Typography variant='h5' fontWeight={600} sx={{ mt: 3 }}>결제수단</Typography>
 
                     {/* 결제 수단 라디오 */}
@@ -105,17 +93,14 @@ const ProOrder = () => {
                 </Box>
                 <Box sx={{ width: '40%' }}>
                     <OrderUserinfo />
-                    <OrderPayDetail />
+                    <OrderPayDetail price={price} />
                 </Box>
             </Box>
-            {
-                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
-            }
             {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} /> : null
             }
             {
-                delModal ? <DeliveryModal id={name!==undefined?name:null} delModal={delModal} closeModal={closedelModal} /> : null
+                delModal ? <DeliveryModal id={name !== undefined ? name : null} delModal={delModal} closeModal={closeModal} /> : null
             }
         </Box>
     )

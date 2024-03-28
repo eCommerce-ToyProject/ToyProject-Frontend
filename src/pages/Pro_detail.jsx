@@ -32,7 +32,7 @@ const ProDetail = () => {
   }, []);
 
   const Order = () => {
-    navigate(`/productorder/${product[0].gno}`)
+    navigate(`/productorder/${product[0].gno}`, { state: { price: price, qty: qty, name: product[0].gname, img: gImg } })
   };
 
   useEffect(() => {

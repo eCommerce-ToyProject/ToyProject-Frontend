@@ -29,14 +29,14 @@ const Myinfo = () => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, []);
+    }, [name]);
     return (
         <Box sx={{ display: 'flex' }}>
             <MyinfoNavList />
             <Box>
                 <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>주문 내역</Typography>
                 <Grid sx={{
-                    width: 700, 
+                    width: 700,
                     overflowY: 'auto', // 세로 스크롤바만 표시되도록 함
                     height: 800,
                     '&::-webkit-scrollbar': {

@@ -1,7 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-const OrderPayDetail = () => {
+const OrderPayDetail = ({ price }) => {
+    const _price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const total = (price + 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    
     return (
         <Box sx={{ border: '1px solid #1976d2', borderRadius: 2, p: 3, mt: 3, width: '100%' }}>
             <Typography variant='h6' fontWeight={600}>결제상세</Typography>
@@ -12,9 +15,9 @@ const OrderPayDetail = () => {
                     <Typography fontSize={20} fontWeight={600} sx={{ mt: 3 }}>총 주문금액</Typography>
                 </Box>
                 <Box sx={{ ml: 'auto', textAlign: 'right' }}>
-                    <Typography fontSize={17}>{}원</Typography>
-                    <Typography fontSize={17}>{}원</Typography>
-                    <Typography fontSize={20} fontWeight={600} sx={{ mt: 3, color: '#1976d2' }}>{}원</Typography>
+                    <Typography fontSize={17}>{_price}원</Typography>
+                    <Typography fontSize={17}>{'2,500'}원</Typography>
+                    <Typography fontSize={20} fontWeight={600} sx={{ mt: 3, color: '#1976d2' }}>{total}원</Typography>
                 </Box>
             </Box>
         </Box>
