@@ -21,7 +21,7 @@ const Myinfo = () => {
 
     useEffect(() => {
         if (name !== undefined) {
-            axios.get(`/orders/orderList?id=${name}`)
+            axios.get(`/orders/myOrderList?id=${name}`)
                 .then((res) => {
                     setOrders(res.data.content)
                 })

@@ -22,6 +22,7 @@ const ProOrder = () => {
     const [address, setAddress] = useState(false);
     const [delModal, setDelModal] = useState(false);
     const [name, setName] = useState(undefined);
+    const [userData, setUserData] = useState([])
 
     const handleAddress = () => {
         setAddress(true);
@@ -52,6 +53,18 @@ const ProOrder = () => {
             .catch((error) => {
                 console.error('Error checking login status:', error);
             });
+    });
+
+    useEffect(() => {
+        if(name !== undefined&&userData.length === 0){
+            axios.get(`/members/orderingMyinfo?id=${name}`)
+            .then((res) => {
+                setUserData(res.data);
+            })
+            .catch((error) => {
+                console.error('Error checking login status:', error);
+            });
+        }
     });
 
     const handleOrder = () => {
@@ -92,7 +105,7 @@ const ProOrder = () => {
                     <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={handleOrder}>결제하기</Button>
                 </Box>
                 <Box sx={{ width: '40%' }}>
-                    <OrderUserinfo />
+                    <OrderUserinfo userData={userData.length!==0?userData:null}/>
                     <OrderPayDetail price={price} />
                 </Box>
             </Box>
