@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, setDesignation, Close }) => {
+const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, setDesignation, setDelno, Close }) => {
     return(
         <div>
         {props.map((item, key)=>{
@@ -11,6 +11,7 @@ const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, set
                 setRoadAddress(item.delPlc);
                 setDetailAddress(item.detailAddress);
                 setDesignation(item.designation)
+                setDelno(item.delNo)
                 Close();
             }}>
             <Typography fontWeight={600} fontSize={20}>{item.designation}</Typography>

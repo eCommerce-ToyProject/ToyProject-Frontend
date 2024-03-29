@@ -47,7 +47,7 @@ const ProDetail = () => {
       if (optVal2.length > 0 && selectOpt2 === '') {
         missingOptions.push('옵션2');
       }
-  
+
       if (missingOptions.length > 0) {
         setModal(true);
         setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);

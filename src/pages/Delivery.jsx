@@ -14,6 +14,7 @@ const Delivery = () => {
     const [detailAddress, setDetailAddress] = useState('');
     const [designation, setDesignation] = useState('');
     const [address, setAddress] = useState('');
+    const [delno, setDelno] = useState();
     const [delModal, setDelModal] = useState(false);
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState(false);
@@ -67,6 +68,30 @@ const Delivery = () => {
         }
     }
 
+    const ModifyAddress = () => {
+        if (delno === undefined) {
+            setModal(true);
+            setMsg("추가하신 배송지를 수정해 주세요");
+        } else {
+            axios.put('/delivery/updateDelivery', {
+                delNo: delno,
+                delPlc: roadAddress,
+                zipCode: zipCode,
+                detailAddress: detailAddress,
+                designation: designation
+            })
+                .then(() => {
+                    setModal(true);
+                    setMsg("배송지를 수정했습니다");
+                })
+                .catch((err) => {
+                    setModal(true);
+                    setMsg("배송지 수정을 실패했습니다");
+                    console.log(err)
+                })
+        }
+    }
+
     useEffect(() => {
         axios.post('/members/loginCheck')
             .then((res) => {
@@ -82,9 +107,9 @@ const Delivery = () => {
             <MyinfoNavList />
             <Box>
                 <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>배송지 추가 / 수정</Typography>
-                
+
                 {/* 배송지 폼 컴포넌트 */}
-                <DeliveryInput 
+                <DeliveryInput
                     designation={designation}
                     zipCode={zipCode}
                     roadAddress={roadAddress}
@@ -98,7 +123,7 @@ const Delivery = () => {
                 />
 
                 <Button variant="contained" disableRipple sx={{ mt: 3, mr: 2 }} onClick={addAddress}>추가하기</Button>
-                <Button variant="contained" disableRipple sx={{ mt: 3 }}>수정하기</Button>
+                <Button variant="contained" disableRipple sx={{ mt: 3 }} onClick={ModifyAddress}>수정하기</Button>
             </Box>
             {
                 address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
@@ -108,7 +133,7 @@ const Delivery = () => {
             }
             {
                 delModal
-                    ? <DeliveryModal delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} />
+                    ? <DeliveryModal delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} setDelno={setDelno} />
                     : null
             }
         </Box>

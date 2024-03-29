@@ -14,12 +14,6 @@ const Login = ({ setIsLoggedIn }) => {
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
 
-    // const customAxios = axios.create({
-    //     headers: {
-    //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    //     }
-    // });
-
     const Check = async (e) => {
         e.preventDefault();
         

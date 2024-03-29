@@ -1,5 +1,4 @@
 import React from 'react';
-import dress from '../assets/dress.jpg';
 import { Box, Typography } from '@mui/material';
 
 
@@ -20,7 +19,7 @@ const OrderListCard = ({ product }) => {
                                 </Box>
                                 <Box sx={{ ml: 3, display: 'flex' }}>
                                     <Typography sx={{ color: 'gray', mr: 5 }}>{price}원 - {item.orderItems[0].ordQty}개</Typography>
-                                    <Typography sx={{ color: 'gray' }}>옵션: {item.orderItems[0].item_no.optVal1} - {item.orderItems[0].item_no.optVal2}</Typography>
+                                    <Typography sx={{ color: 'gray' }}>옵션: {item.orderItems[0].item_no.optVal1} {item.orderItems[0].item_no.optVal2 ? "- " + item.orderItems[0].item_no.optVal2 : ''}</Typography>
                                 </Box>
                             </Box>
                         </Box>
