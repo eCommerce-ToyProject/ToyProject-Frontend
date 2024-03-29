@@ -33,6 +33,7 @@ const ProOrder = () => {
     const [zipCode, setZipcode] = useState("");
     const [roadAddress, setRoadAddress] = useState("");
     const [detailAddress, setDetailAddress] = useState("");
+    const [delno, setDelno] = useState(false);
 
     const handleAddress = () => {
         setAddress(true);
@@ -156,7 +157,7 @@ const ProOrder = () => {
                 address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
             }
             {
-                delModal ? <DeliveryModal delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} /> : null
+                delModal ? <DeliveryModal setDelno={setDelno} delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} /> : null
             }
         </Box>
     )

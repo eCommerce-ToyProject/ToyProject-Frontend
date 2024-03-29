@@ -46,7 +46,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     useEffect(() => {
-        if (cookies.accessToken !== undefined) {
+        if (cookies.accessToken !== undefined && isLoggedIn) {
             setIsLoggedIn(true);
             axios.post('/members/loginCheck')
                 .then((res) => {
@@ -59,7 +59,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         } else {
             setIsLoggedIn(false);
         }
-    }, [cookies.accessToken, setIsLoggedIn]);
+    }, [cookies.accessToken, isLoggedIn, setIsLoggedIn]);
 
     return (
         <Box>

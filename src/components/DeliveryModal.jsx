@@ -16,7 +16,7 @@ const DeliveryModal = ({ id, delModal, closeModal, setRoadAddress, setZipcode, s
                     console.error('Error checking login status:', error);
                 });
         }
-    }, []);
+    }, [id]);
 
 
 

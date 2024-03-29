@@ -37,6 +37,8 @@ const Myinfo = () => {
                 <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>주문 내역</Typography>
                 <Grid sx={{
                     width: 700,
+                    pr: 3,
+                    pl: 3,
                     overflowY: 'auto', // 세로 스크롤바만 표시되도록 함
                     height: 800,
                     '&::-webkit-scrollbar': {

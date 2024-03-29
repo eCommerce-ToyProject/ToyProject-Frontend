@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
 
 const Login = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
-    const [, setCookie] = useCookies(['id']); 
+    const [, setCookie] = useCookies();
 
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
@@ -16,27 +16,26 @@ const Login = ({ setIsLoggedIn }) => {
 
     const Check = async (e) => {
         e.preventDefault();
-        
-        await axios.post("members/sign-in", {
-            id: id,
-            password: pwd
-        })
-            .then((res) => {
-                setCookie("accessToken", res.data.accessToken, { path: '/' });
-                navigate('/')
-                setIsLoggedIn(true)
-            })
-            .catch((err) => {
-                setModal(true)
-            })
+
+        try {
+            const res = await axios.post("members/sign-in", {
+                id: id,
+                password: pwd
+            });
+            setCookie("accessToken", res.data.accessToken, { path: '/' });
+            setIsLoggedIn(true);
+            navigate('/');
+        } catch (error) {
+            setModal(true);
+        }
     };
 
     const closeModal = () => {
-        setModal(false)
+        setModal(false);
     }
 
     const navSignup = () => {
-        navigate('/signup')
+        navigate('/signup');
     }
 
     return (
@@ -48,7 +47,7 @@ const Login = ({ setIsLoggedIn }) => {
         }}>
             <Typography sx={{ textAlign: 'center', mb: 4, fontWeight: 500 }} variant='h5' component="h5">로그인</Typography>
             <Stack sx={{ mb: 1 }} gap={2}>
-                <TextInput onChange={(e) => setId(e.target.value)} value={id} placeholder='아아디' />
+                <TextInput onChange={(e) => setId(e.target.value)} value={id} placeholder='아이디' />
                 <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호' type='password' />
             </Stack>
 

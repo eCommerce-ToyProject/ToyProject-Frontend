@@ -1,25 +1,28 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 
 const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, setDesignation, setDelno, Close }) => {
-    return(
-        <div>
-        {props.map((item, key)=>{
-            return(
-            <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1 }} onClick={() => {
-                setZipcode(item.zcode);
-                setRoadAddress(item.delPlc);
-                setDetailAddress(item.detailAddress);
-                setDesignation(item.designation)
-                setDelno(item.delNo)
-                Close();
-            }}>
-            <Typography fontWeight={600} fontSize={20}>{item.designation}</Typography>
-            <Typography>{item.zcode}</Typography>
-            <Typography>{item.delPlc}</Typography>
-            </Box>
-        )})}
-        </div>
+    return (
+        <Box>
+            {props.map((item, key) => {
+                return (
+                    <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1 }} onClick={() => {
+                        setZipcode(item.zcode);
+                        setRoadAddress(item.delPlc);
+                        setDetailAddress(item.detailAddress);
+                        setDesignation(item.designation)
+                        setDelno(item.delNo)
+                        Close();
+                    }}>
+                        <Box>
+                            <Typography fontWeight={600} fontSize={20}>{item.designation}</Typography>
+                            <Typography>{item.zcode}</Typography>
+                            <Typography>{item.delPlc}</Typography>
+                        </Box>
+                    </Box>
+                )
+            })}
+        </Box>
     )
 }
 

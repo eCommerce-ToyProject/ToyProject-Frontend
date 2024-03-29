@@ -3,6 +3,7 @@ import { Box, Grid } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import SoldOutCard from '../components/SoldOutCard';
 
 const Home = () => {
     const [product, setProduct] = useState([]);
@@ -19,12 +20,13 @@ const Home = () => {
 
     return (
         <Box>
-            <Grid container direction="row" justifyContent="center">
+            <Grid container direction="row" justifyContent="center" gap={2}>
                 {product.map(item => {
                     const price = item.gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                     return (
                         <NavLink key={item.gno} style={{ textDecoration: 'none', marginBottom: 70 }} to={`/productdetail/${item.gno}`}>
-                            <ProductCard title={item.gname} price={price} img={item.gimg}/>
+                            <ProductCard title={item.gname} price={price} img={item.gimg} />
+                            <SoldOutCard title={item.gname} price={price} img={item.gimg} />
                         </NavLink>
                     )
                 }

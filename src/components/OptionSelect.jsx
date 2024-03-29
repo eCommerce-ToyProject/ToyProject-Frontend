@@ -6,7 +6,7 @@ const OptionsSelect = ({ options, handleOpt }) => {
 
   return (
     <NativeSelect onChange={handleOpt} sx={{ mr: 2 }}>
-      <option value={''} selected >
+      <option defaultValue={''} >
         선택
       </option>
       {uniqueOptions.map((item, index) => (
