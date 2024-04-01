@@ -24,10 +24,11 @@ const Home = () => {
                 {product.map(item => {
                     const price = item.gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                     return (
-                        <NavLink key={item.gno} style={{ textDecoration: 'none', marginBottom: 70 }} to={`/productdetail/${item.gno}`}>
-                            <ProductCard title={item.gname} price={price} img={item.gimg} />
-                            <SoldOutCard title={item.gname} price={price} img={item.gimg} />
-                        </NavLink>
+                        item.totQty === 0
+                            ? <SoldOutCard key={item.gno} title={item.gname} img={item.gimg} />
+                            : <NavLink key={item.gno} style={{ textDecoration: 'none', marginBottom: 70 }} to={`/productdetail/${item.gno}`}>
+                                <ProductCard title={item.gname} price={price} img={item.gimg} />
+                            </NavLink>
                     )
                 }
                 )}

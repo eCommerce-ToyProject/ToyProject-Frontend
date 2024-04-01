@@ -10,7 +10,7 @@ const Signup = () => {
     const [pwdChk, setPwdChk] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
-    let [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState('');
     const [modal, setModal] = useState(false);
     const [desc, setDesc] = useState('');
     const [nav, setNav] = useState('');
@@ -20,7 +20,7 @@ const Signup = () => {
     // 전화번호 자동 하이픈
     useEffect(() => {
         setPhone(
-            phone = phone
+            phone
                 .replace(/-/g, '')
                 .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
         );
@@ -33,14 +33,14 @@ const Signup = () => {
         } else if (pwd !== pwdChk) {
             setModal(true);
             setDesc("비밀번호가 일치하지 않습니다.");
-        
-        } else if(!passwordRegex.test(pwd)){
-             setModal(true);
-             setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
-        } else if(!checkId) {
+
+        } else if (!passwordRegex.test(pwd)) {
+            setModal(true);
+            setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
+        } else if (!checkId) {
             setModal(true)
             setDesc("아이디 중복체크를 해주세요.")
-        }else {
+        } else {
             await axios.post('/members/sign-up', {
                 id: id,
                 password: pwd,
@@ -54,18 +54,18 @@ const Signup = () => {
         }
     }
 
-    const idCheck = async () =>{
+    const idCheck = async () => {
         axios.get(`members/id/exists?id=${id}`)
-            .then(res =>{
-                if(res.data == false){
+            .then(res => {
+                if (res.data === false) {
                     setModal(true)
                     setDesc('사용가능한 아이디입니다.')
                     SetCheckId(true);
-                }else if(res.data){
+                } else if (res.data) {
                     setModal(true)
                     setDesc('중복된 아이디입니다.')
                     SetCheckId(false);
-                }else{
+                } else {
                     console.log('에러입니다')
                     SetCheckId(false);
                 }
@@ -98,12 +98,12 @@ const Signup = () => {
                 </Box>
                 <Box>
                     <Stack sx={{ width: 350 }} gap={2}>
-                        <TextInput onChange={(e) => setId(e.target.value)} value={id} placeholder='아아디를 입력해 주세요' />
-                        <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호를 입력해 주세요' type='password' />
-                        <TextInput onChange={(e) => setPwdChk(e.target.value)} value={pwdChk} placeholder='비밀번호를 한번더 입력해 주세요' type='password' />
-                        <TextInput onChange={(e) => setName(e.target.value)} value={name} placeholder='이름을 입력해 주세요' />
-                        <TextInput onChange={(e) => setPhone(e.target.value)} value={phone} placeholder='숫자만 입력해 주세요' />
-                        <TextInput onChange={(e) => setEmail(e.target.value)} value={email} placeholder='이메일을 입력해 주세요' />
+                        <TextInput id={"id"} onChange={(e) => setId(e.target.value)} value={id} placeholder='아아디를 입력해 주세요' />
+                        <TextInput id={"pwd"} onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호를 입력해 주세요' type='password' />
+                        <TextInput id={"pwdChk"} onChange={(e) => setPwdChk(e.target.value)} value={pwdChk} placeholder='비밀번호를 한번더 입력해 주세요' type='password' />
+                        <TextInput id={"name"} onChange={(e) => setName(e.target.value)} value={name} placeholder='이름을 입력해 주세요' />
+                        <TextInput id={"phone"} onChange={(e) => setPhone(e.target.value)} value={phone} placeholder='숫자만 입력해 주세요' />
+                        <TextInput id={"email"} onChange={(e) => setEmail(e.target.value)} value={email} placeholder='이메일을 입력해 주세요' />
                     </Stack>
                 </Box>
                 <Box>

@@ -10,7 +10,7 @@ const Myinfo = () => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.post('/members/loginCheck')
+        axios.get('/members/loginCheck')
             .then((res) => {
                 setName(res.data);
             })
@@ -29,12 +29,12 @@ const Myinfo = () => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, [name]);
+    }, [name, orders.length]);
     return (
         <Box sx={{ display: 'flex' }}>
             <MyinfoNavList />
             <Box>
-                <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>주문 내역</Typography>
+                <Typography sx={{ mb: 3, ml: 3 }} variant='h5' fontWeight={600}>주문 내역</Typography>
                 <Grid sx={{
                     width: 700,
                     pr: 3,

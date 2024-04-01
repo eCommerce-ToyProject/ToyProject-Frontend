@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 
 
-const SoldOutCard = ({ title, price, img }) => {
+const SoldOutCard = ({ title, img }) => {
     return (
         <Box sx={{ width: 170, height: 220, wordBreak: 'break-all', cursor: 'pointer', mr: 3, textDecoration: 'none'}}>
             <img src={`/assets/${img}`} alt={img} style={{ width: '170px', height: '170px', filter: 'grayscale(100%)' }} />

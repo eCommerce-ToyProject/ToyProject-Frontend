@@ -4,7 +4,7 @@ import DaumPostcode from 'react-daum-postcode';
 
 const AddressModal = ({ setRoadAddress, setZipcode, setAddress, address }) => {
 
-    const completeHandler = (data, state) => {
+    const completeHandler = (data) => {
         setZipcode(data.zonecode); // 추가
         setRoadAddress(data.roadAddress); // 추가
         setAddress(false);
@@ -22,7 +22,7 @@ const AddressModal = ({ setRoadAddress, setZipcode, setAddress, address }) => {
         left: "0",
         transform: "translate(115%, 50%)",
     };
-    
+
     return (
         <Modal open={address} onClose={Close}>
             <Box>

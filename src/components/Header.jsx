@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -28,7 +28,6 @@ const StyledButton = styled.button`
 `
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
-    const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies(['accessToken']);
     const [name, setName] = useState('');
 
@@ -39,27 +38,24 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     const Logout = () => {
-        navigate('/')
         removeCookie('accessToken')
         setIsLoggedIn(false)
         setName('');
     }
 
     useEffect(() => {
-        if (cookies.accessToken !== undefined && isLoggedIn) {
-            setIsLoggedIn(true);
-            axios.post('/members/loginCheck')
+        cookies.accessToken
+            ? axios.get('/members/loginCheck')
                 .then((res) => {
                     setName(res.data);
+                    setIsLoggedIn(true);
                 })
-                .catch((error) => {
-                    console.error('Error checking login status:', error);
+                .catch(() => {
                     setIsLoggedIn(false);
-                });
-        } else {
+                })
+            :
             setIsLoggedIn(false);
-        }
-    }, [cookies.accessToken, isLoggedIn, setIsLoggedIn]);
+    }, [cookies.accessToken, setIsLoggedIn]);
 
     return (
         <Box>
@@ -69,7 +65,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                         ? (
                             <>
                                 <label style={LinkStyle}>{name}님</label> &nbsp;&nbsp; | &nbsp;&nbsp;
-                                <NavLink onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
+                                <NavLink to='/' onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                             </>
                         )
                         : (

@@ -47,8 +47,8 @@ const Login = ({ setIsLoggedIn }) => {
         }}>
             <Typography sx={{ textAlign: 'center', mb: 4, fontWeight: 500 }} variant='h5' component="h5">로그인</Typography>
             <Stack sx={{ mb: 1 }} gap={2}>
-                <TextInput onChange={(e) => setId(e.target.value)} value={id} placeholder='아이디' />
-                <TextInput onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호' type='password' />
+                <TextInput id={"id"} onChange={(e) => setId(e.target.value)} value={id} placeholder='아이디' />
+                <TextInput id={"pwd"} onChange={(e) => setPwd(e.target.value)} value={pwd} placeholder='비밀번호' type='password' />
             </Stack>
 
             <FormControlLabel

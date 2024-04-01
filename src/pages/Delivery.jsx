@@ -93,7 +93,7 @@ const Delivery = () => {
     }
 
     useEffect(() => {
-        axios.post('/members/loginCheck')
+        axios.get('/members/loginCheck')
             .then((res) => {
                 setName(res.data);
             })

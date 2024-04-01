@@ -56,7 +56,7 @@ const ProOrder = () => {
     }
 
     useEffect(() => {
-        axios.post('/members/loginCheck')
+        axios.get('/members/loginCheck')
             .then((res) => {
                 setName(res.data);
             })
@@ -96,7 +96,6 @@ const ProOrder = () => {
                 zipCode: zipCode,
                 detailAddress: detailAddress,
                 designation: designation
-
             })
             .then(() => {
                 setModal(true);
@@ -157,7 +156,7 @@ const ProOrder = () => {
                 address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
             }
             {
-                delModal ? <DeliveryModal setDelno={setDelno} delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} /> : null
+                delModal ? <DeliveryModal delno={delno} setDelno={setDelno} delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} /> : null
             }
         </Box>
     )

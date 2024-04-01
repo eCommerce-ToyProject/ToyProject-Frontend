@@ -83,7 +83,7 @@ const ProDetail = () => {
   }, [param.id]);
 
   useEffect(() => {
-    axios.post('/members/loginCheck')
+    axios.get('/members/loginCheck')
       .then((res) => {
         setName(res.data);
       })
@@ -101,7 +101,7 @@ const ProDetail = () => {
       setOptVal2(optVal2Array);
     }
   }, [product]);
-  // console.log(product)
+
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
