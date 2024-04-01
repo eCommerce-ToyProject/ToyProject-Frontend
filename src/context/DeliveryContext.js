@@ -1,7 +1,7 @@
 // DeliveryContext.js
 import React, { createContext, useContext, useState } from 'react';
 
-const DeliveryContext = createContext(null);
+const DeliveryContext = createContext();
 
 export const DeliveryProvider = ({ children }) => {
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ export const DeliveryProvider = ({ children }) => {
   const [delno, setDelno] = useState();
   const [delModal, setDelModal] = useState(false);
   const [modal, setModal] = useState(false);
-  const [addModal, setAddModal] = useState(false);
+  const [address, setAddress] = useState(false);
   const [msg, setMsg] = useState(false);
 
   return (
@@ -33,8 +33,8 @@ export const DeliveryProvider = ({ children }) => {
       setDelModal,
       modal,
       setModal,
-      addModal,
-      setAddModal,
+      address,
+      setAddress,
       msg,
       setMsg
     }}>

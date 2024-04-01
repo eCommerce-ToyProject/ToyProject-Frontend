@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Login from './Login';
@@ -14,15 +14,13 @@ import Delivery from './Delivery';
 import { DeliveryProvider } from '../context/DeliveryContext';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header />
       <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/myinfo' element={<Myinfo />} />
           <Route path='/myinfo/delivery' element={<DeliveryProvider><Delivery /></DeliveryProvider>} />

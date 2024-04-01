@@ -1,23 +1,34 @@
-import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
 import MyinfoNavList from '../components/MyinfoNavList';
-import axios from 'axios';
 import DeliveryInput from '../components/DeliveryInput';
 import AddressModal from '../components/AddressModal';
 import DeliveryModal from '../components/DeliveryModal';
 import CustomModal from '../components/CustomModal';
+import { useDeliveryContext } from '../context/DeliveryContext';
+import axios from 'axios';
 
 const Delivery = () => {
     const [name, setName] = useState('');
-    const [zipCode, setZipcode] = useState('');
-    const [roadAddress, setRoadAddress] = useState('');
-    const [detailAddress, setDetailAddress] = useState('');
-    const [designation, setDesignation] = useState('');
-    const [address, setAddress] = useState('');
-    const [delno, setDelno] = useState();
-    const [delModal, setDelModal] = useState(false);
-    const [modal, setModal] = useState(false);
-    const [msg, setMsg] = useState(false);
+    const {
+        zipCode,
+        setZipcode,
+        roadAddress,
+        setRoadAddress,
+        detailAddress,
+        setDetailAddress,
+        designation,
+        setDesignation,
+        address,
+        setAddress,
+        delno,
+        delModal,
+        setDelModal,
+        modal,
+        setModal,
+        msg,
+        setMsg
+    } = useDeliveryContext();
 
     const closeModal = () => {
         setModal(false)
@@ -126,14 +137,14 @@ const Delivery = () => {
                 <Button variant="contained" disableRipple sx={{ mt: 3 }} onClick={ModifyAddress}>수정하기</Button>
             </Box>
             {
-                address ? <AddressModal setRoadAddress={setRoadAddress} setZipcode={setZipcode} setAddress={setAddress} address={address} /> : null
+                address ? <AddressModal /> : null
             }
             {
                 modal ? <CustomModal msg={msg} closeModal={closeModal} /> : null
             }
             {
                 delModal
-                    ? <DeliveryModal delModal={delModal} closeModal={closedelModal} id={name !== undefined ? name : null} setZipcode={setZipcode} setRoadAddress={setRoadAddress} setDetailAddress={setDetailAddress} setDesignation={setDesignation} setDelno={setDelno} />
+                    ? <DeliveryModal closeModal={closedelModal} id={name !== undefined ? name : null} />
                     : null
             }
         </Box>

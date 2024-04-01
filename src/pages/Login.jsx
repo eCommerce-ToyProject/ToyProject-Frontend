@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = () => {
     const navigate = useNavigate();
     const [, setCookie] = useCookies();
-
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const [modal, setModal] = useState(false);
@@ -17,17 +16,12 @@ const Login = ({ setIsLoggedIn }) => {
     const Check = async (e) => {
         e.preventDefault();
 
-        try {
-            const res = await axios.post("members/sign-in", {
-                id: id,
-                password: pwd
-            });
-            setCookie("accessToken", res.data.accessToken, { path: '/' });
-            setIsLoggedIn(true);
-            navigate('/');
-        } catch (error) {
-            setModal(true);
-        }
+        const res = await axios.post("members/sign-in", {
+            id: id,
+            password: pwd
+        });
+        setCookie("accessToken", res.data.accessToken, { path: '/' });
+        navigate('/');
     };
 
     const closeModal = () => {

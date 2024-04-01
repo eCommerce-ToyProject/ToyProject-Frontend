@@ -2,17 +2,24 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { MdDelete } from "react-icons/md";
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDeliveryContext } from '../context/DeliveryContext';
 
-const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, setDesignation, setDelno, Close, delno }) => {
-    const [del, setDel] = useState();
-
+const DeliveryCard = ({ props, Close }) => {
+    const {
+        setZipcode,
+        setRoadAddress,
+        setDetailAddress,
+        setDesignation,
+        setDelno,
+    } = useDeliveryContext();
     return (
         <Box>
             {props.map((item, key) => {
                 const deleteAddress = () => {
-                    axios.delete(`/delivery/deleteDelivery/${item.delNo}`) // delno 상태 직접 사용
+                    axios.put(`/delivery/deleteDelivery/${item.delNo}`, {
+                        deleted: true
+                    })
                         .then((res) => {
-                            setDel(res.data)
                             Close();
                         })
                         .catch((err) => {
@@ -20,9 +27,8 @@ const DeliveryCard = ({ props, setZipcode, setRoadAddress, setDetailAddress, set
                             Close();
                         });
                 };
-
                 return (
-                    del ? (
+                    item.deleted === false ? (
                         <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1, display: 'flex' }}>
                             <Box onClick={() => {
                                 setZipcode(item.zcode);

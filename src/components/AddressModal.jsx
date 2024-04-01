@@ -1,8 +1,15 @@
 import { Box, Modal } from '@mui/material';
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
+import { useDeliveryContext } from '../context/DeliveryContext';
 
-const AddressModal = ({ setRoadAddress, setZipcode, setAddress, address }) => {
+const AddressModal = () => {
+    const {
+      setZipcode,
+      setRoadAddress,
+      address,
+      setAddress,
+    } = useDeliveryContext();
 
     const completeHandler = (data) => {
         setZipcode(data.zonecode); // 추가

@@ -2,9 +2,19 @@ import { Box, Button, Grid, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import DeliveryCard from './DeliveryCard';
 import axios from 'axios';
+import { useDeliveryContext } from '../context/DeliveryContext';
 
-const DeliveryModal = ({ id, delModal, closeModal, setRoadAddress, setZipcode, setDetailAddress, setDesignation, setDelno, delno }) => {
+const DeliveryModal = ({ id, closeModal }) => {
     const [delivery, setDelivery] = useState([]);
+    const {
+      setZipcode,
+      setRoadAddress,
+      setDetailAddress,
+      setDesignation,
+      delno,
+      setDelno,
+      delModal,
+    } = useDeliveryContext();
 
     useEffect(() => {
         if (id !== undefined) {

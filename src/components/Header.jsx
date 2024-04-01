@@ -27,8 +27,9 @@ const StyledButton = styled.button`
     cursor: pointer;
 `
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header = () => {
     const [cookies, removeCookie] = useCookies(['accessToken']);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState('');
 
     const LinkStyle = {
@@ -44,7 +45,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     useEffect(() => {
-        cookies.accessToken
+        cookies.accessToken !== undefined
             ? axios.get('/members/loginCheck')
                 .then((res) => {
                     setName(res.data);
