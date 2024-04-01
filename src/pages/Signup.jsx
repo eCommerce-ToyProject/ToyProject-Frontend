@@ -16,6 +16,7 @@ const Signup = () => {
     const [nav, setNav] = useState('');
     const [checkId, SetCheckId] = useState(false);
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
     // 전화번호 자동 하이픈
     useEffect(() => {
@@ -37,6 +38,9 @@ const Signup = () => {
         } else if (!passwordRegex.test(pwd)) {
             setModal(true);
             setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
+        } else if(email !== '' && !emailRegex.test(email)) {
+            setModal(true)
+            setDesc("이메일 형식에 맞춰 작성해주세요.")
         } else if (!checkId) {
             setModal(true)
             setDesc("아이디 중복체크를 해주세요.")
