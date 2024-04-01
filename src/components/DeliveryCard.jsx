@@ -1,6 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import { MdDelete } from "react-icons/md";
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useDeliveryContext } from '../context/DeliveryContext';
 

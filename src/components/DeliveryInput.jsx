@@ -1,8 +1,5 @@
 import { Box, Button } from "@mui/material";
 import TextInput from "./TextInput";
-import { useState } from "react";
-import DeliveryModal from "./DeliveryModal";
-import AddressModal from "./AddressModal";
 
 const DeliveryInput = ({ designation, zipCode, roadAddress, detailAddress, onDesignationChange, onZipCodeChange, onRoadAddressChange, onDetailAddressChange, onAddressSearch, onAddressBring }) => {
     return (

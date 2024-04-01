@@ -25,7 +25,7 @@ function App() {
           <Route path='/myinfo' element={<Myinfo />} />
           <Route path='/myinfo/delivery' element={<DeliveryProvider><Delivery /></DeliveryProvider>} />
           <Route path='/productdetail/:id' element={<ProDetail />} />
-          <Route path='/productorder/:id' element={<ProOrder />} />
+          <Route path='/productorder/:id' element={<DeliveryProvider><ProOrder /></DeliveryProvider>} />
           <Route path='/*' element={<NotFound />} />
         </Routes>
       </Box>

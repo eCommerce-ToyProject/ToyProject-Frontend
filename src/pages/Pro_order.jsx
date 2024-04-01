@@ -10,6 +10,7 @@ import DeliveryModal from '../components/DeliveryModal';
 import AddressModal from '../components/AddressModal';
 import DeliveryInput from '../components/DeliveryInput';
 import PayRadio from '../components/PayRadio';
+import { useDeliveryContext } from '../context/DeliveryContext';
 
 const ProOrder = () => {
     const location = useLocation();
@@ -21,18 +22,29 @@ const ProOrder = () => {
     const opt1 = location.state?.opt1;
     const opt2 = location.state?.opt2;
 
-    const [modal, setModal] = useState(false);
-    const [msg, setMsg] = useState("");
     const [nav, setNav] = useState("");
     const [pay, Setpay] = useState("");
-    const [address, setAddress] = useState(false);
-    const [delModal, setDelModal] = useState(false);
-    const [name, setName] = useState(undefined);
     const [userData, setUserData] = useState([])
-    const [designation, setDesignation] = useState('');
-    const [zipCode, setZipcode] = useState("");
-    const [roadAddress, setRoadAddress] = useState("");
-    const [detailAddress, setDetailAddress] = useState("");
+    const {
+        name,
+        setName,
+        zipCode,
+        setZipcode,
+        roadAddress,
+        setRoadAddress,
+        detailAddress,
+        setDetailAddress,
+        designation,
+        setDesignation,
+        delModal,
+        setDelModal,
+        modal,
+        setModal,
+        address,
+        setAddress,
+        msg,
+        setMsg
+      } = useDeliveryContext();
 
     const handleAddress = () => {
         setAddress(true);
@@ -97,14 +109,14 @@ const ProOrder = () => {
                 designation: designation
 
             })
-            .then(() => {
-                setModal(true);
-                setMsg('주문을 성공했습니다!');
-                setNav('/');
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+                .then(() => {
+                    setModal(true);
+                    setMsg('주문을 성공했습니다!');
+                    setNav('/');
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
     }
 
@@ -156,7 +168,7 @@ const ProOrder = () => {
                 address ? <AddressModal /> : null
             }
             {
-                delModal ? <DeliveryModal closeModal={closedelModal} id={name !== undefined ? name : null}  /> : null
+                delModal ? <DeliveryModal closeModal={closedelModal} id={name !== undefined ? name : null} /> : null
             }
         </Box>
     )
