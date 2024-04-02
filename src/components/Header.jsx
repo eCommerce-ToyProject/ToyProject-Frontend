@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { useSearchContext } from '../context/SearchContext';
 
 
 const StyledInput = styled.input`
@@ -27,11 +28,18 @@ const StyledButton = styled.button`
     cursor: pointer;
 `
 
-const Header = ({ search, setSearch, setProduct }) => {
+const Header = () => {
+    const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies(['accessToken']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState('');
-    const [searchVal, setSearchVal] = useState('');
+    const {
+        search,
+        setSearch,
+        setProduct,
+        searchVal,
+        setSearchVal
+    } = useSearchContext();
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -52,6 +60,8 @@ const Header = ({ search, setSearch, setProduct }) => {
                 .then((res) => {
                     setProduct(res.data.content);
                     setSearch(searchVal)
+                    navigate('/');
+                    console.log(search)
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);

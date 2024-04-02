@@ -28,7 +28,7 @@ const OrderListCard = ({ product }) => {
                             </Box>
                             <Box sx={{ borderLeft: '1px solid #DEDEDE', pl: 2 }}>
                                 <Typography>{item.delivery.zipCode}</Typography>
-                                <Typography>{item.delivery.delPlc}</Typography>
+                                <Typography>{item.delivery.dlivPlc}</Typography>
                                 <Typography>{item.delivery.detailAddress}</Typography>
                             </Box>
                         </Box>

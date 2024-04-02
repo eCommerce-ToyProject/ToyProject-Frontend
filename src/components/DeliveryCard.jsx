@@ -12,14 +12,15 @@ const DeliveryCard = ({ props, Close }) => {
         setDesignation,
         setDelno,
     } = useDeliveryContext();
+
     return (
         <Box>
             {props.map((item, key) => {
                 const deleteAddress = () => {
-                    axios.put(`/delivery/deleteDelivery/${item.delNo}`, {
+                    axios.put(`/delivery/deleteDelivery/${item.dlivNo}`, {
                         deleted: true
                     })
-                        .then((res) => {
+                        .then(() => {
                             Close();
                         })
                         .catch((err) => {
@@ -27,21 +28,22 @@ const DeliveryCard = ({ props, Close }) => {
                             Close();
                         });
                 };
+                
                 return (
                     item.deleted === false ? (
                         <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1, display: 'flex' }}>
                             <Box onClick={() => {
                                 setZipcode(item.zcode);
-                                setRoadAddress(item.delPlc);
+                                setRoadAddress(item.dlivPlc);
                                 setDetailAddress(item.detailAddress);
                                 setDesignation(item.designation)
-                                setDelno(item.delNo)
+                                setDelno(item.dlivNo)
                                 Close();
                             }}>
                                 <Box>
                                     <Typography fontWeight={600} fontSize={20}>{item.designation}</Typography>
                                     <Typography>{item.zcode}</Typography>
-                                    <Typography>{item.delPlc}</Typography>
+                                    <Typography>{item.dlivPlc}</Typography>
                                 </Box>
                             </Box>
                             <IconButton aria-label="delete" size="small" sx={{ ml: 'auto' }} onClick={deleteAddress}>

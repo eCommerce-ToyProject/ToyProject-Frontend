@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Login from './Login';
@@ -13,29 +13,32 @@ import NotFound from './404';
 import Delivery from './Delivery';
 import { DeliveryProvider } from '../context/DeliveryContext';
 import { AuthProvider } from '../context/AuthContext';
+import { SearchProvider } from '../context/SearchContext';
 
 function App() {
-  const [search, setSearch] = useState('');
-  const [product, setProduct] = useState([]);
-
   return (
-    <>
-      <Header search={search} setSearch={setSearch} setProduct={setProduct} />
-      <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
-        <Routes>
-          <Route path='/' element={<Home search={search} product={product} setProduct={setProduct} />} />
-          <Route path='/login' element={<AuthProvider><Login /></AuthProvider>} />
-          <Route path='/signup' element={<AuthProvider><Signup /></AuthProvider>} />
-          <Route path='/myinfo' element={<Myinfo />} />
-          <Route path='/myinfo/delivery' element={<DeliveryProvider><Delivery /></DeliveryProvider>} />
-          <Route path='/productdetail/:id' element={<ProDetail />} />
-          <Route path='/productorder/:id' element={<DeliveryProvider><ProOrder /></DeliveryProvider>} />
-          <Route path='/*' element={<NotFound />} />
-        </Routes>
-      </Box>
-      <Footer />
-    </>
+    <AuthProvider>
+      <SearchProvider>
+        <DeliveryProvider>
+            <Header />
+            <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/myinfo' element={<Myinfo />} />
+                <Route path='/myinfo/delivery' element={<Delivery />} />
+                <Route path='/productdetail/:id' element={<ProDetail />} />
+                <Route path='/productorder/:id' element={<ProOrder />} />
+                <Route path='/*' element={<NotFound />} />
+              </Routes>
+            </Box>
+            <Footer />
+        </DeliveryProvider>
+      </SearchProvider>
+    </AuthProvider>
   );
 }
+
 
 export default App;

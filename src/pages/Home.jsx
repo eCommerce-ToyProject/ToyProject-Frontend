@@ -4,8 +4,14 @@ import ProductCard from '../components/ProductCard';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import SoldOutCard from '../components/SoldOutCard';
+import { useSearchContext } from '../context/SearchContext';
 
-const Home = ({ search, setProduct, product }) => {
+const Home = () => {
+    const {
+        search,
+        product,
+        setProduct,
+    } = useSearchContext();
 
     useEffect(() => {
         if (search === '') {
