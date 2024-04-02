@@ -22,7 +22,7 @@ const OrderListCard = ({ product }) => {
                                     <Typography sx={{ ml: 3 }}>{item.orderItem[0].goods_no.gname}</Typography>
                                 </Box>
                                 <Box sx={{ ml: 3, display: 'flex' }}>
-                                    <Typography sx={{ color: 'gray', mr: 5 }}>{price}원 - {item.orderItem[0].ordQty}개</Typography>
+                                    <Typography sx={{ color: 'gray', mr: 3 }}>{price}원 - {item.orderItem[0].ordQty}개</Typography>
                                     <Typography sx={{ color: 'gray' }}>옵션: {item.orderItem[0].item_no.optVal1} {item.orderItem[0].item_no.optVal2 ? "- " + item.orderItem[0].item_no.optVal2 : null}</Typography>
                                 </Box>
                             </Box>

@@ -20,7 +20,7 @@ const Myinfo = () => {
     });
 
     useEffect(() => {
-        if (name !== ''&&orders.length===0) {
+        if (name !== '' && orders.length === 0) {
             axios.get(`/orders/myOrderList?id=${name}`)
                 .then((res) => {
                     setOrders(res.data.content)
@@ -40,7 +40,7 @@ const Myinfo = () => {
                     pr: 3,
                     pl: 3,
                     overflowY: 'auto', // 세로 스크롤바만 표시되도록 함
-                    height: 800,
+                    height: 700,
                     '&::-webkit-scrollbar': {
                         width: '0.4em' // 스크롤바 너비 조정
                     },

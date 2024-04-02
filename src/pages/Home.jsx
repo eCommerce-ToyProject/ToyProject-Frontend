@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Grid } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import SoldOutCard from '../components/SoldOutCard';
 
-const Home = () => {
-    const [product, setProduct] = useState([]);
+const Home = ({ search, setProduct, product }) => {
 
     useEffect(() => {
-        axios.get('/goods/goodsList')
-            .then(response => {
-                setProduct(response.data.content);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+        if (search === '') {
+            axios.get('/goods/goodsList')
+                .then(response => {
+                    setProduct(response.data.content);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        } else {
+            axios.get(`/goods/goodsList?values=${encodeURIComponent(search)}`)
+                .then((res) => {
+                    setProduct(res.data.content);
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    }, [search, setProduct]);
 
     return (
         <Box>

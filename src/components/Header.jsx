@@ -27,10 +27,11 @@ const StyledButton = styled.button`
     cursor: pointer;
 `
 
-const Header = () => {
+const Header = ({ search, setSearch, setProduct }) => {
     const [cookies, removeCookie] = useCookies(['accessToken']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState('');
+    const [searchVal, setSearchVal] = useState('');
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -43,6 +44,23 @@ const Header = () => {
         setIsLoggedIn(false)
         setName('');
     }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchVal !== '') {
+            axios.get(`/goods/goodsList?values=${encodeURIComponent(search)}`)
+                .then((res) => {
+                    setProduct(res.data.content);
+                    setSearch(searchVal)
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                });
+        } else {
+            setSearch('');
+        }
+        setSearch('')
+    };
 
     useEffect(() => {
         cookies.accessToken !== undefined
@@ -85,10 +103,16 @@ const Header = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', width: 920, m: 'auto', mt: 4, mb: 9 }}>
 
                 {/* 사진 */}
-                <NavLink to="/"><img src={logo} alt="logo" style={{
-                    width: '100px',
-                    height: '40px',
-                }} /></NavLink>
+                <Box onClick={() => {
+                    setSearch('');
+                    setSearchVal('');
+                }}>
+                    <NavLink to="/" ><img src={logo} alt="logo"
+                        style={{
+                            width: '100px',
+                            height: '40px',
+                        }} /></NavLink>
+                </Box>
 
                 {/* 검색바 */}
                 <Box sx={{
@@ -98,8 +122,8 @@ const Header = () => {
                     m: 'auto'
                 }}>
                     <form>
-                        <StyledInput type="text" placeholder="검색어를 입력해주세요" />
-                        <StyledButton><BsSearch size='16' /></StyledButton>
+                        <StyledInput onChange={e => setSearchVal(e.target.value)} value={searchVal} type="text" placeholder="검색어를 입력해주세요" />
+                        <StyledButton onClick={handleSearch}><BsSearch size='16' /></StyledButton>
                     </form>
                 </Box>
 
