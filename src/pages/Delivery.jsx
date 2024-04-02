@@ -34,7 +34,6 @@ const Delivery = () => {
         setModal(false)
     }
 
-    // 배송지 인풋에 사용되는 모달 함수들
     const handleBringAddress = () => {
         setDelModal(true)
     }
@@ -62,7 +61,7 @@ const Delivery = () => {
             setMsg("상세주소를 입력해 주세요");
         } else {
             await axios.post("/delivery/createDelivery", {
-                delPlc: roadAddress,
+                dlivPlc: roadAddress,
                 memberId: name,
                 zipCode: zipCode,
                 detailAddress: detailAddress,
@@ -85,8 +84,8 @@ const Delivery = () => {
             setMsg("추가하신 배송지를 수정해 주세요");
         } else {
             axios.put('/delivery/updateDelivery', {
-                delNo: delno,
-                delPlc: roadAddress,
+                dlivNo: delno,
+                dlivPlc: roadAddress,
                 zipCode: zipCode,
                 detailAddress: detailAddress,
                 designation: designation

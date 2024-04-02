@@ -103,11 +103,11 @@ const ProOrder = () => {
                 optVal2: opt2,
                 quantity: qty,
                 paymn: pay,
-                delPlc: roadAddress,
+                dlivPlc: roadAddress,
                 zipCode: zipCode,
                 detailAddress: detailAddress,
-                designation: designation
-
+                designation: designation,
+                dlivFee: 2500
             })
                 .then(() => {
                     setModal(true);
