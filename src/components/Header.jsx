@@ -61,7 +61,6 @@ const Header = () => {
                     setProduct(res.data.content);
                     setSearch(searchVal)
                     navigate('/');
-                    console.log(search)
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
