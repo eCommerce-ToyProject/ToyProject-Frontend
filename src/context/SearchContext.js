@@ -7,6 +7,9 @@ export const SearchProvider = ({ children }) => {
     const [search, setSearch] = useState('');
     const [product, setProduct] = useState([]);
     const [searchVal, setSearchVal] = useState('');
+    const [totalItems, setTotalItems] = useState(0);
+    const [page, setPage] = useState(0);
+    const [lastPage, setLastPage] = useState(1);
 
     return (
         <SearchContext.Provider value={{
@@ -15,7 +18,13 @@ export const SearchProvider = ({ children }) => {
             product,
             setProduct,
             searchVal,
-            setSearchVal
+            setSearchVal,
+            totalItems,
+            setTotalItems,
+            page,
+            setPage,
+            lastPage,
+            setLastPage
         }}>
             {children}
         </SearchContext.Provider>

@@ -38,7 +38,7 @@ const Header = () => {
         setSearch,
         setProduct,
         searchVal,
-        setSearchVal
+        setSearchVal,
     } = useSearchContext();
 
     const LinkStyle = {

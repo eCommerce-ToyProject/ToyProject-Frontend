@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { NavLink } from 'react-router-dom';
@@ -9,9 +9,16 @@ import '../utill/Paging.css';
 import { useSearchContext } from '../context/SearchContext';
 
 const Home = () => {
-    const [page, setPage] = useState(0);
-    const [lastPage, setLastPage] = useState(1);
-    const { search, product, setProduct } = useSearchContext();
+    const { 
+        search, 
+        product, 
+        setProduct, 
+        setPage,
+        page,
+        setLastPage,
+        lastPage,
+        setTotalItems
+    } = useSearchContext();
 
     const handlePageChange = (pageNumber) => {
         setPage(pageNumber - 1);
@@ -25,19 +32,20 @@ const Home = () => {
                 if (search === '') {
                     response = await axios.get(`/goods/goodsList?page=${page}&size=15`);
                 } else {
-                    response = await axios.get(`/goods/goodsList?page=${page}&values=${encodeURIComponent(search)}`);
-                    setLastPage(Math.ceil(response.data.totalPages))
-                    console.log(lastPage)
+                    response = await axios.get(`/goods/goodsList?page=${page}&size=15&values=${encodeURIComponent(search)}`);
+                    const totalElements = response.data.totalElements;
+                    setLastPage(Math.ceil(totalElements / 15));
+                    setTotalItems(totalElements);
                 }
                 setProduct(response.data.content);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchData();
-    }, [page, search, setProduct, setPage, setLastPage]);
+    }, [page, search, setProduct, setLastPage, setTotalItems]);
 
+    
     return (
         <Box sx={{ height: 950 }}>
             <Grid container direction="row" justifyContent="center" gap={2}>
