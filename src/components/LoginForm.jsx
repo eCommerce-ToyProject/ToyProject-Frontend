@@ -20,7 +20,7 @@ const LoginForm = ({ Check, navSignup }) => {
           setLoginId(cookies.rememberUserId);
           setIsRemember(true);
         }
-      }, [cookies.rememberUserId,setIsRemember,setLoginId]);
+      }, [cookies.rememberUserId, setLoginId, setIsRemember]);
     
     
     const handleOnChange = (e) => {

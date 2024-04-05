@@ -23,6 +23,7 @@ const Home = () => {
         setTotalItems
     } = useSearchContext();
 
+
     const handlePageChange = (pageNumber) => {
         setPage(pageNumber - 1);
         window.scrollTo(0, 0);

@@ -48,15 +48,14 @@ const Header = () => {
     }
 
     const Logout = () => {
-        removeCookie('accessToken')
+        removeCookie("accessToken");
         setIsLoggedIn(false)
         setName('');
     }
 
     useEffect(() => {
-        cookies.accessToken === undefined
-            ? setIsLoggedIn(false)
-            : axios.get('/members/loginCheck')
+        cookies.accessToken !== undefined
+            ? axios.get('/members/loginCheck')
             .then((res) => {
                 setName(res.data);
                 setIsLoggedIn(true);
@@ -64,7 +63,7 @@ const Header = () => {
             .catch(() => {
                 setIsLoggedIn(false);
             })
-            setIsLoggedIn(false);
+            : setIsLoggedIn(false) 
     }, [cookies.accessToken, setIsLoggedIn]);
 
     useEffect(() => {

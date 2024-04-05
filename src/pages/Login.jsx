@@ -9,7 +9,7 @@ import { useAuthContext } from '../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [, setCookie] = useCookies();
+    const [, setCookie] = useCookies(["accessToken"]);
     const {
         loginId,
         setLoginId,
@@ -29,6 +29,7 @@ const Login = () => {
             })
             setCookie("accessToken", res.data.accessToken, { path: '/' });
             navigate('/');
+            
         } catch (error) {
             setModal(true)
         }

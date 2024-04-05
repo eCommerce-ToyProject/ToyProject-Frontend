@@ -8,21 +8,27 @@ import axios from "axios";
 import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
 import CustomModal from '../components/CustomModal';
+import { useDeliveryContext } from "../context/DeliveryContext";
 
 const ProDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
-  const [modal, setModal] = useState(false);
-  const [msg, setMsg] = useState('');
   const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
   const [gImg, setGImg] = useState('')
   const [product, setProduct] = useState([]);
   const [price, setPrice] = useState();
-  const [name, setName] = useState('');
   const [selectOpt1, setSelectOpt1] = useState('');
   const [selectOpt2, setSelectOpt2] = useState('');
+  const {
+    name,
+    setName,
+    modal,
+    setModal,
+    msg,
+    setMsg
+  } = useDeliveryContext();
 
   const handleOpt1 = (e) => {
     setSelectOpt1(e.target.value)
@@ -70,6 +76,16 @@ const ProDetail = () => {
   };
 
   useEffect(() => {
+    axios.get('/members/loginCheck')
+      .then((res) => {
+        setName(res.data);
+      })
+      .catch((error) => {
+        console.error('Error checking login status:', error);
+      });
+  });
+
+  useEffect(() => {
     axios
       .get(`/goods/goodsList/goodsDetail?no=${param.id}`)
       .then((response) => {
@@ -81,16 +97,6 @@ const ProDetail = () => {
         console.error("Error fetching data:", error);
       });
   }, [param.id]);
-
-  useEffect(() => {
-    axios.get('/members/loginCheck')
-      .then((res) => {
-        setName(res.data);
-      })
-      .catch((error) => {
-        console.error('Error checking login status:', error);
-      });
-  })
 
   useEffect(() => {
     if (product.length !== 0) {
