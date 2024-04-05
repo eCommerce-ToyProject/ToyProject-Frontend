@@ -30,7 +30,7 @@ const StyledButton = styled.button`
 
 const Header = () => {
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies(['accessToken']);
+    const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState('');
     const {
@@ -53,6 +53,25 @@ const Header = () => {
         setName('');
     }
 
+    useEffect(() => {
+        cookies.accessToken === undefined
+            ? setIsLoggedIn(false)
+            : axios.get('/members/loginCheck')
+            .then((res) => {
+                setName(res.data);
+                setIsLoggedIn(true);
+            })
+            .catch(() => {
+                setIsLoggedIn(false);
+            })
+            setIsLoggedIn(false);
+    }, [cookies.accessToken, setIsLoggedIn]);
+
+    useEffect(() => {
+        // SameSite 속성을 설정하여 쿠키 보호
+        setCookie('accessToken', cookies.accessToken, { sameSite: 'none', secure: true });
+    }, [cookies.accessToken, setCookie]);
+
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchVal !== '') {
@@ -71,32 +90,20 @@ const Header = () => {
         setSearch('')
     };
 
-    useEffect(() => {
-        cookies.accessToken !== undefined
-            ? axios.get('/members/loginCheck')
-                .then((res) => {
-                    setName(res.data);
-                    setIsLoggedIn(true);
-                })
-                .catch(() => {
-                    setIsLoggedIn(false);
-                })
-            :
-            setIsLoggedIn(false);
-    }, [cookies.accessToken, setIsLoggedIn]);
-
     return (
         <Box>
             <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
                 {
                     isLoggedIn
                         ? (
+                            // 로그인 된 상태
                             <>
                                 <label style={LinkStyle}>{name}님</label> &nbsp;&nbsp; | &nbsp;&nbsp;
                                 <NavLink to='/' onClick={Logout} style={LinkStyle}>로그아웃</NavLink>&nbsp;&nbsp; | &nbsp;&nbsp;
                             </>
                         )
                         : (
+                            // 로그인 안된 상태
                             <>
                                 <NavLink to="/signup" style={{
                                     fontWeight: 'bold',

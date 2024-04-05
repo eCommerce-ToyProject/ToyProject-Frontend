@@ -6,6 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [loginId, setLoginId] = useState('');
     const [loginPwd, setLoginPwd] = useState('');
+    const [isRemember, setIsRemember] = useState(false);
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const [pwdChk, setPwdChk] = useState('');
@@ -23,6 +24,8 @@ export const AuthProvider = ({ children }) => {
             setLoginId,
             loginPwd,
             setLoginPwd,
+            isRemember,
+            setIsRemember,
             id,
             setId,
             pwd,

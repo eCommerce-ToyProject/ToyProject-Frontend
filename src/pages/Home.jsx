@@ -8,11 +8,14 @@ import Paging from '../utill/Paging'
 import '../utill/Paging.css';
 import { useSearchContext } from '../context/SearchContext';
 
+// Math.floor() : 소수점 이하를 버림한다.
+// Math.ceil() : 소수점 이하를 올림한다.
+// Math.round() : 소수점 이하를 반올림한다.
 const Home = () => {
-    const { 
-        search, 
-        product, 
-        setProduct, 
+    const {
+        search,
+        product,
+        setProduct,
         setPage,
         page,
         setLastPage,
@@ -45,7 +48,7 @@ const Home = () => {
         fetchData();
     }, [page, search, setProduct, setLastPage, setTotalItems]);
 
-    
+
     return (
         <Box sx={{ height: 950 }}>
             <Grid container direction="row" justifyContent="center" gap={2}>
@@ -62,6 +65,7 @@ const Home = () => {
             </Grid>
 
             <Paging page={page} onChange={handlePageChange} lastPage={lastPage} setLastPage={setLastPage} />
+        
         </Box>
     )
 }

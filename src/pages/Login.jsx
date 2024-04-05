@@ -12,7 +12,9 @@ const Login = () => {
     const [, setCookie] = useCookies();
     const {
         loginId,
+        setLoginId,
         loginPwd,
+        setLoginPwd,
         modal,
         setModal,
     } = useAuthContext();
@@ -30,6 +32,8 @@ const Login = () => {
         } catch (error) {
             setModal(true)
         }
+        setLoginId('');
+        setLoginPwd('');
     };
 
     const closeModal = () => {
