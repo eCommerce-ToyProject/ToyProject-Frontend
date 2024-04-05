@@ -112,6 +112,10 @@ const ProOrder = () => {
                 .then(() => {
                     setModal(true);
                     setMsg('주문을 성공했습니다!');
+                    setDetailAddress("");
+                    setZipcode("");
+                    setRoadAddress("");
+                    setDesignation("");
                     setNav('/');
                 })
                 .catch((err) => {

@@ -68,6 +68,10 @@ const Delivery = () => {
                 designation: designation
             })
                 .then(() => {
+                    setDetailAddress("");
+                    setZipcode("");
+                    setRoadAddress("");
+                    setDesignation("");
                     setModal(true);
                     setMsg("배송지를 추가했습니다");
                 })

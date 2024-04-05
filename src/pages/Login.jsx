@@ -27,7 +27,7 @@ const Login = () => {
                 id: loginId,
                 password: loginPwd
             })
-            setCookie("accessToken", res.data.accessToken, { path: '/' });
+            setCookie("accessToken", res.data.accessToken, { path: '/', expires: new Date(Date.now() + 86400 * 1000) });
             navigate('/');
             
         } catch (error) {

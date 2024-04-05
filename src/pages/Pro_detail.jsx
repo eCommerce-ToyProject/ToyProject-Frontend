@@ -9,10 +9,12 @@ import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
 import CustomModal from '../components/CustomModal';
 import { useDeliveryContext } from "../context/DeliveryContext";
+import { useCookies } from "react-cookie";
 
 const ProDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
+  const [cookies] = useCookies(["accessToken"]);
   const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
@@ -22,13 +24,46 @@ const ProDetail = () => {
   const [selectOpt1, setSelectOpt1] = useState('');
   const [selectOpt2, setSelectOpt2] = useState('');
   const {
-    name,
-    setName,
+    // name,
+    // setName,
     modal,
     setModal,
     msg,
     setMsg
   } = useDeliveryContext();
+
+  // useEffect(() => {
+  //   axios.get('/members/loginCheck')
+  //     .then((res) => {
+  //       setName(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error checking login status:', error);
+  //     });
+  // });
+
+  useEffect(() => {
+    axios
+      .get(`/goods/goodsList/goodsDetail?no=${param.id}`)
+      .then((response) => {
+        setProduct(response.data);
+        setGImg(response.data[0].gimg)
+        setPrice(response.data[0].gprice)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [param.id]);
+
+  useEffect(() => {
+    if (product.length !== 0) {
+      const goodsItem = product[0].goodsItem;
+      const optVal1Array = goodsItem.map((item) => item.optVal1).filter((item) => item !== null);
+      const optVal2Array = goodsItem.map((item) => item.optVal2).filter((item) => item !== null);
+      setOptVal1(optVal1Array);
+      setOptVal2(optVal2Array);
+    }
+  }, [product]);
 
   const handleOpt1 = (e) => {
     setSelectOpt1(e.target.value)
@@ -43,7 +78,7 @@ const ProDetail = () => {
   }
 
   const Order = () => {
-    if (name === "" || name === undefined) {
+    if (cookies.accessToken === undefined || cookies.accessToken === '') {
       navigate('/login');
     } else {
       let missingOptions = [];
@@ -74,39 +109,6 @@ const ProDetail = () => {
       }
     }
   };
-
-  useEffect(() => {
-    axios.get('/members/loginCheck')
-      .then((res) => {
-        setName(res.data);
-      })
-      .catch((error) => {
-        console.error('Error checking login status:', error);
-      });
-  });
-
-  useEffect(() => {
-    axios
-      .get(`/goods/goodsList/goodsDetail?no=${param.id}`)
-      .then((response) => {
-        setProduct(response.data);
-        setGImg(response.data[0].gimg)
-        setPrice(response.data[0].gprice)
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [param.id]);
-
-  useEffect(() => {
-    if (product.length !== 0) {
-      const goodsItem = product[0].goodsItem;
-      const optVal1Array = goodsItem.map((item) => item.optVal1).filter((item) => item !== null);
-      const optVal2Array = goodsItem.map((item) => item.optVal2).filter((item) => item !== null);
-      setOptVal1(optVal1Array);
-      setOptVal2(optVal2Array);
-    }
-  }, [product]);
 
   return (
     <Box sx={{ display: "flex" }}>

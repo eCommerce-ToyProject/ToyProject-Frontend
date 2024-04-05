@@ -63,7 +63,7 @@ const Header = () => {
             .catch(() => {
                 setIsLoggedIn(false);
             })
-            : setIsLoggedIn(false) 
+            : setIsLoggedIn(false);
     }, [cookies.accessToken, setIsLoggedIn]);
 
     useEffect(() => {
