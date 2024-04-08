@@ -7,6 +7,8 @@ import logo from '../assets/logo.png';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useSearchContext } from '../context/SearchContext';
+import { useAuthContext } from '../context/AuthContext';
+import CustomModal from './CustomModal';
 
 
 const StyledInput = styled.input`
@@ -40,6 +42,7 @@ const Header = () => {
         searchVal,
         setSearchVal,
     } = useSearchContext();
+    const { modal, setModal } = useAuthContext();
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -53,22 +56,33 @@ const Header = () => {
         setName('');
     }
 
+    const closeModal = () => {
+        setModal(false);
+    }
+
     useEffect(() => {
         cookies.accessToken !== undefined
-            ? axios.get('/members/loginCheck')
+            ? axios.get('/members/loginCheck', {
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                }
+            })
                 .then((res) => {
                     setName(res.data);
                     setIsLoggedIn(true);
                 })
                 .catch((err) => {
-                    if(err.response.status === 403){
+                    if (err.response.status === 403) {
                         setIsLoggedIn(false);
-                    } else if(err.response.status === 400){
-                        axios.post('/members/reissuanceAccessToken',{
+                    } else if (err.response.status === 400) {
+                        axios.post('/members/reissuanceAccessToken', {
                             refreshToken: cookies.refreshToken
                         })
-                    } else{
-                        console.log("다른 에러")
+                    } else if (err.response.status === 401) {
+                        setIsLoggedIn(false);
+                    } else {
+                        console.log("500 에러")
                     }
                 })
             : setIsLoggedIn(false);
@@ -153,6 +167,9 @@ const Header = () => {
                 {/* 아이콘 */}
                 <NavLink to={name === '' ? '/login' : '/myinfo'} style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
             </Box>
+            {
+                modal && <CustomModal closeModal={closeModal} msg={"세션이 만료되었습니다."} />
+            }
         </Box>
     )
 }
