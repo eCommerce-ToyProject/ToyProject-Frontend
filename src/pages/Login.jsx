@@ -9,7 +9,7 @@ import { useAuthContext } from '../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [, setCookie] = useCookies(["accessToken"]);
+    const [, setCookie] = useCookies(["accessToken", "refreshToken"]);
     const {
         loginId,
         setLoginId,
@@ -27,7 +27,9 @@ const Login = () => {
                 id: loginId,
                 password: loginPwd
             })
+            console.log(res.data)
             setCookie("accessToken", res.data.accessToken, { path: '/', expires: new Date(Date.now() + 86400 * 1000) });
+            setCookie("refreshToken", res.data.refreshToken, { path: '/'});
             navigate('/');
             
         } catch (error) {

@@ -56,19 +56,27 @@ const Header = () => {
     useEffect(() => {
         cookies.accessToken !== undefined
             ? axios.get('/members/loginCheck')
-            .then((res) => {
-                setName(res.data);
-                setIsLoggedIn(true);
-            })
-            .catch(() => {
-                setIsLoggedIn(false);
-            })
+                .then((res) => {
+                    setName(res.data);
+                    setIsLoggedIn(true);
+                })
+                .catch((err) => {
+                    if(err.response.status === 403){
+                        setIsLoggedIn(false);
+                    } else if(err.response.status === 400){
+                        axios.post('/members/reissuanceAccessToken',{
+                            refreshToken: cookies.refreshToken
+                        })
+                    } else{
+                        console.log("다른 에러")
+                    }
+                })
             : setIsLoggedIn(false);
-    }, [cookies.accessToken, setIsLoggedIn]);
+    }, [cookies.accessToken, cookies.refreshToken, setIsLoggedIn]);
 
     useEffect(() => {
         // SameSite 속성을 설정하여 쿠키 보호
-        setCookie('accessToken', cookies.accessToken, { sameSite: 'none', secure: true });
+        setCookie("accessToken", cookies.accessToken, { sameSite: 'none', secure: true });
     }, [cookies.accessToken, setCookie]);
 
     const handleSearch = (e) => {
