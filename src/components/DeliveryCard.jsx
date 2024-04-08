@@ -3,8 +3,10 @@ import { MdDelete } from "react-icons/md";
 import React from 'react';
 import axios from 'axios';
 import { useDeliveryContext } from '../context/DeliveryContext';
+import { useCookies } from 'react-cookie';
 
 const DeliveryCard = ({ props, Close }) => {
+    const [cookies] = useCookies(['accessToken']);
     const {
         setZipcode,
         setRoadAddress,
@@ -19,7 +21,13 @@ const DeliveryCard = ({ props, Close }) => {
                 const deleteAddress = () => {
                     axios.put(`/delivery/deleteDelivery/${item.dlivNo}`, {
                         deleted: true
-                    })
+                    },
+                        {
+                            withCredentials: false,
+                            headers: {
+                                Authorization: `Bearer ${cookies.accessToken}`
+                            }
+                        })
                         .then(() => {
                             Close();
                         })
@@ -28,7 +36,7 @@ const DeliveryCard = ({ props, Close }) => {
                             Close();
                         });
                 };
-                
+
                 return (
                     item.deleted === false ? (
                         <Box key={key} sx={{ border: '1px solid #DEDEDE', borderRadius: 2, p: 2, mb: 1, display: 'flex' }}>

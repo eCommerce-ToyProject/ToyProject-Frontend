@@ -53,6 +53,7 @@ const Header = () => {
 
     const Logout = () => {
         removeCookie("accessToken");
+        removeCookie("refreshToken");
         dispatch(logout());
     }
 
@@ -61,7 +62,7 @@ const Header = () => {
     }
 
     useEffect(() => {
-        cookies.accessToken !== undefined
+        cookies.accessToken
             ? axios.get('/members/loginCheck', {
                 withCredentials: false,
                 headers: {
