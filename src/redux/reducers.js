@@ -2,7 +2,7 @@ import { LOGIN_SUCCESS, LOGOUT } from './login';
 
 const initialState = {
     isLoggedIn: false,
-    name: null,
+    name: undefined,
 };
 
 const reducer = (state = initialState, action) => {

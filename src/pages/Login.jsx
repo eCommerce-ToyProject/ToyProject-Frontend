@@ -22,15 +22,15 @@ const Login = () => {
     const Check = async (e) => {
         e.preventDefault();
 
-        try{
+        try {
             const res = await axios.post("members/sign-in", {
                 id: loginId,
                 password: loginPwd
             })
-            setCookie("accessToken", res.data.accessToken, { path: '/', expires: new Date(Date.now() + 86400 * 1000) });
-            setCookie("refreshToken", res.data.refreshToken, { path: '/'});
+            setCookie("accessToken", res.data.accessToken, { path: '/' });
+            setCookie("refreshToken", res.data.refreshToken, { path: '/' });
             navigate('/');
-            
+
         } catch (error) {
             setModal(true)
         }
@@ -54,9 +54,9 @@ const Login = () => {
             height: '400px'
         }}>
             <Typography sx={{ textAlign: 'center', mb: 4, fontWeight: 500 }} variant='h5' component="h5">로그인</Typography>
-            
-            <LoginForm  navSignup={navSignup} Check={Check} />
-            
+
+            <LoginForm navSignup={navSignup} Check={Check} />
+
             {
                 modal && <CustomModal closeModal={closeModal} msg={"아이디 또는 비밀번호를 확인해주세요."} />
             }

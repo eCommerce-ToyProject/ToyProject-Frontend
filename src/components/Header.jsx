@@ -79,11 +79,16 @@ const Header = () => {
                             refreshToken: cookies.refreshToken
                         })
                             .then(res => {
-                                setCookie("accessToken", res.data.accessToken, { path: '/', expires: new Date(Date.now() + 86400 * 1000) });
+                                console.log(res.data)
+                                removeCookie("accessToken");
+                                removeCookie("refreshToken");
+                                setCookie("accessToken", res.data.accessToken, { path: '/' });
                                 setCookie("refreshToken", res.data.refreshToken, { path: '/' });
                             })
                             .catch(err => {
-                                console.log(err)
+                                if (err.response.status === 400) {
+                                    console.log("잘못보냄")
+                                }
                             })
                     } else {
                         console.log("다른 에러")
@@ -91,7 +96,7 @@ const Header = () => {
                     console.log(err)
                 })
             : dispatch(logout());
-    }, [cookies.accessToken, cookies.refreshToken, dispatch, setCookie]);
+    }, [cookies, dispatch, setCookie, removeCookie]);
 
     useEffect(() => {
         // SameSite 속성을 설정하여 쿠키 보호

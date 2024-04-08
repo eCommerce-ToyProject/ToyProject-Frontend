@@ -10,10 +10,12 @@ import OptionsSelect from "../components/OptionSelect";
 import CustomModal from '../components/CustomModal';
 import { useDeliveryContext } from "../context/DeliveryContext";
 import { useCookies } from "react-cookie";
+import { useSelector } from "react-redux";
 
 const ProDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
+  const name = useSelector(state => state.name);
   const [cookies] = useCookies(["accessToken"]);
   const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
@@ -24,23 +26,11 @@ const ProDetail = () => {
   const [selectOpt1, setSelectOpt1] = useState('');
   const [selectOpt2, setSelectOpt2] = useState('');
   const {
-    // name,
-    // setName,
     modal,
     setModal,
     msg,
     setMsg
   } = useDeliveryContext();
-
-  // useEffect(() => {
-  //   axios.get('/members/loginCheck')
-  //     .then((res) => {
-  //       setName(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error checking login status:', error);
-  //     });
-  // });
 
   useEffect(() => {
     axios
@@ -89,23 +79,27 @@ const ProDetail = () => {
         missingOptions.push('옵션2');
       }
 
-      if (missingOptions.length > 0) {
-        setModal(true);
-        setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);
-      } else {
-        navigate(`/productorder/${product[0].gno}`,
-          {
-            state: {
-              price: price,
-              qty: qty,
-              name: product[0].gname,
-              img: gImg,
-              gno: product[0].gno,
-              opt1: selectOpt1,
-              opt2: selectOpt2
+      if(name !== undefined){
+        if (missingOptions.length > 0) {
+          setModal(true);
+          setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);
+        } else {
+          navigate(`/productorder/${product[0].gno}`,
+            {
+              state: {
+                price: price,
+                qty: qty,
+                name: product[0].gname,
+                img: gImg,
+                gno: product[0].gno,
+                opt1: selectOpt1,
+                opt2: selectOpt2
+              }
             }
-          }
-        )
+          )
+        }
+      }else{
+        navigate('/login')
       }
     }
   };

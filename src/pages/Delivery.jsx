@@ -64,16 +64,19 @@ const Delivery = () => {
             setMsg("상세주소를 입력해 주세요");
         } else {
             await axios.post("/delivery/createDelivery", {
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                },
                 dlivPlc: roadAddress,
                 memberId: name,
                 zipCode: zipCode,
                 detailAddress: detailAddress,
                 designation: designation
-            })
+            },
+                {
+                    withCredentials: false,
+                    headers: {
+                        Authorization: `Bearer ${cookies.accessToken}`
+                    },
+                }
+            )
                 .then(() => {
                     setDetailAddress("");
                     setZipcode("");
@@ -95,14 +98,17 @@ const Delivery = () => {
             setMsg("추가하신 배송지를 수정해 주세요");
         } else {
             axios.put('/delivery/updateDelivery', {
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                },
                 dlivNo: delno,
                 dlivPlc: roadAddress,
                 zipCode: zipCode,
                 detailAddress: detailAddress,
                 designation: designation
+            },
+            {
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                },
             })
                 .then(() => {
                     setModal(true);

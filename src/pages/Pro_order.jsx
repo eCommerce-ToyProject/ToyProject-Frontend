@@ -88,6 +88,12 @@ const ProOrder = () => {
                 detailAddress: detailAddress,
                 designation: designation,
                 dlivFee: 2500
+            },
+            {
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                },
             })
                 .then(() => {
                     setModal(true);
