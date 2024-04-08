@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import MyinfoNavList from '../components/MyinfoNavList';
 import DeliveryInput from '../components/DeliveryInput';
@@ -7,9 +7,12 @@ import DeliveryModal from '../components/DeliveryModal';
 import CustomModal from '../components/CustomModal';
 import { useDeliveryContext } from '../context/DeliveryContext';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 
 const Delivery = () => {
-    const [name, setName] = useState('');
+    const name = useSelector(state => state.name);
+    const [cookies] = useCookies(['accessToken']);
     const {
         zipCode,
         setZipcode,
@@ -61,6 +64,10 @@ const Delivery = () => {
             setMsg("상세주소를 입력해 주세요");
         } else {
             await axios.post("/delivery/createDelivery", {
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                },
                 dlivPlc: roadAddress,
                 memberId: name,
                 zipCode: zipCode,
@@ -88,6 +95,9 @@ const Delivery = () => {
             setMsg("추가하신 배송지를 수정해 주세요");
         } else {
             axios.put('/delivery/updateDelivery', {
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                },
                 dlivNo: delno,
                 dlivPlc: roadAddress,
                 zipCode: zipCode,
@@ -105,16 +115,6 @@ const Delivery = () => {
                 })
         }
     }
-
-    useEffect(() => {
-        axios.get('/members/loginCheck')
-            .then((res) => {
-                setName(res.data);
-            })
-            .catch((error) => {
-                console.error('Error checking login status:', error);
-            });
-    });
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -147,7 +147,7 @@ const Delivery = () => {
             }
             {
                 delModal
-                    ? <DeliveryModal closeModal={closedelModal} id={name !== undefined ? name : null} />
+                    ? <DeliveryModal closeModal={closedelModal} />
                     : null
             }
         </Box>

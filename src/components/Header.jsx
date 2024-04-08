@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
@@ -9,7 +9,8 @@ import axios from 'axios';
 import { useSearchContext } from '../context/SearchContext';
 import { useAuthContext } from '../context/AuthContext';
 import CustomModal from './CustomModal';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess, logout } from '../redux/login';
 
 const StyledInput = styled.input`
     width: 22rem;
@@ -32,9 +33,9 @@ const StyledButton = styled.button`
 
 const Header = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [name, setName] = useState('');
+    const dispatch = useDispatch();
+    const name = useSelector(state => state.name);
+    const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "refreshToken"]);
     const {
         search,
         setSearch,
@@ -52,8 +53,7 @@ const Header = () => {
 
     const Logout = () => {
         removeCookie("accessToken");
-        setIsLoggedIn(false)
-        setName('');
+        dispatch(logout());
     }
 
     const closeModal = () => {
@@ -69,24 +69,29 @@ const Header = () => {
                 }
             })
                 .then((res) => {
-                    setName(res.data);
-                    setIsLoggedIn(true);
+                    dispatch(loginSuccess(res.data));
                 })
                 .catch((err) => {
                     if (err.response.status === 403) {
-                        setIsLoggedIn(false);
-                    } else if (err.response.status === 400) {
+                        console.log("아이디를 찾을 수 없음")
+                    } else if (err.response.status === 401) {
                         axios.post('/members/reissuanceAccessToken', {
                             refreshToken: cookies.refreshToken
                         })
-                    } else if (err.response.status === 401) {
-                        setIsLoggedIn(false);
+                            .then(res => {
+                                setCookie("accessToken", res.data.accessToken, { path: '/', expires: new Date(Date.now() + 86400 * 1000) });
+                                setCookie("refreshToken", res.data.refreshToken, { path: '/' });
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
                     } else {
-                        console.log("500 에러")
+                        console.log("다른 에러")
                     }
+                    console.log(err)
                 })
-            : setIsLoggedIn(false);
-    }, [cookies.accessToken, cookies.refreshToken, setIsLoggedIn]);
+            : dispatch(logout());
+    }, [cookies.accessToken, cookies.refreshToken, dispatch, setCookie]);
 
     useEffect(() => {
         // SameSite 속성을 설정하여 쿠키 보호
@@ -115,7 +120,7 @@ const Header = () => {
         <Box>
             <Box sx={{ fontSize: '0.8rem', color: 'lightgrey', textAlign: 'right', width: 900, m: 'auto', mt: 2 }}>
                 {
-                    isLoggedIn
+                    name
                         ? (
                             // 로그인 된 상태
                             <>

@@ -3,25 +3,23 @@ import React, { useEffect, useState } from 'react';
 import MyinfoNavList from '../components/MyinfoNavList';
 import OrderListCard from '../components/OrderListCard';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 
 
 const Myinfo = () => {
-    const [name, setName] = useState('');
+    const name = useSelector(state => state.name);
+    const [cookies] = useCookies(['accessToken']);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.get('/members/loginCheck')
-            .then((res) => {
-                setName(res.data);
-            })
-            .catch((error) => {
-                console.error('Error checking login status:', error);
-            });
-    });
-
-    useEffect(() => {
         if (name !== '' && orders.length === 0) {
-            axios.get(`/orders/myOrderList?id=${name}`)
+            axios.get(`/orders/myOrderList?id=${name}`, {
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                }
+            })
                 .then((res) => {
                     setOrders(res.data.content)
                 })
@@ -29,7 +27,8 @@ const Myinfo = () => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, [name, orders.length]);
+    }, [name, orders.length, cookies.accessToken]);
+
     return (
         <Box sx={{ display: 'flex' }}>
             <MyinfoNavList />

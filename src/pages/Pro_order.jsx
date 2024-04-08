@@ -11,6 +11,8 @@ import AddressModal from '../components/AddressModal';
 import DeliveryInput from '../components/DeliveryInput';
 import PayRadio from '../components/PayRadio';
 import { useDeliveryContext } from '../context/DeliveryContext';
+import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 
 const ProOrder = () => {
     const location = useLocation();
@@ -25,9 +27,9 @@ const ProOrder = () => {
     const [nav, setNav] = useState("");
     const [pay, Setpay] = useState("");
     const [userData, setUserData] = useState([])
+    const [cookies] = useCookies(['accessToken']);
+    const name = useSelector(state => state.name);
     const {
-        name,
-        setName,
         zipCode,
         setZipcode,
         roadAddress,
@@ -44,7 +46,7 @@ const ProOrder = () => {
         setAddress,
         msg,
         setMsg
-      } = useDeliveryContext();
+    } = useDeliveryContext();
 
     const handleAddress = () => {
         setAddress(true);
@@ -65,28 +67,6 @@ const ProOrder = () => {
     const selectRadio = (e) => {
         Setpay(e.target.value);
     }
-
-    useEffect(() => {
-        axios.get('/members/loginCheck')
-            .then((res) => {
-                setName(res.data);
-            })
-            .catch((error) => {
-                console.error('Error checking login status:', error);
-            });
-    });
-
-    useEffect(() => {
-        if (name !== undefined && userData.length === 0) {
-            axios.get(`/members/orderingMyinfo?id=${name}`)
-                .then((res) => {
-                    setUserData(res.data);
-                })
-                .catch((error) => {
-                    console.error('Error checking login status:', error);
-                });
-        }
-    });
 
     const handleOrder = () => {
         if (zipCode === '' || roadAddress === '' || detailAddress === '') {
@@ -123,6 +103,23 @@ const ProOrder = () => {
                 })
         }
     }
+
+    useEffect(() => {
+        if(name){
+            axios.get(`/members/orderingMyinfo?id=${name}`,{
+                withCredentials: false,
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                }
+            })
+            .then((response) => {
+                setUserData(response.data);
+            })
+            .catch((err) => {
+                console.error('Error checking login status:', err);
+            })
+        }
+    }, [name, cookies.accessToken]);
 
     return (
         <Box sx={{ width: 900, m: '0 auto' }}>
