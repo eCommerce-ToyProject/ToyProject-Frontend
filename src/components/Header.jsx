@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { BsSearch, BsFillPersonFill } from 'react-icons/bs';
 import { Box } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useSearchContext } from '../context/SearchContext';
@@ -37,9 +36,7 @@ const Header = () => {
     const name = useSelector(state => state.name);
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "refreshToken"]);
     const {
-        search,
         setSearch,
-        setProduct,
         searchVal,
         setSearchVal,
     } = useSearchContext();
@@ -61,6 +58,33 @@ const Header = () => {
         setModal(false);
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchVal !== '') {
+            setSearch(searchVal)
+            navigate('/');
+        } else {
+            setSearch('');
+        }
+    };
+
+    const RefreshToken = () => {
+        axios.post('/members/reissuanceAccessToken', {
+            refreshToken: cookies.refreshToken
+        })
+            .then(res => {
+                console.log(res.data)
+                dispatch(logout());
+                setCookie("accessToken", res.data.accessToken, { path: '/' });
+                setCookie("refreshToken", res.data.refreshToken, { path: '/' });
+            })
+            .catch(err => {
+                if (err.response.status === 400) {
+                    console.log("잘못보냄")
+                }
+            })
+    }
+
     useEffect(() => {
         cookies.accessToken
             ? axios.get('/members/loginCheck', {
@@ -76,51 +100,20 @@ const Header = () => {
                     if (err.response.status === 403) {
                         console.log("아이디를 찾을 수 없음")
                     } else if (err.response.status === 401) {
-                        axios.post('/members/reissuanceAccessToken', {
-                            refreshToken: cookies.refreshToken
-                        })
-                            .then(res => {
-                                console.log(res.data)
-                                removeCookie("accessToken");
-                                removeCookie("refreshToken");
-                                setCookie("accessToken", res.data.accessToken, { path: '/' });
-                                setCookie("refreshToken", res.data.refreshToken, { path: '/' });
-                            })
-                            .catch(err => {
-                                if (err.response.status === 400) {
-                                    console.log("잘못보냄")
-                                }
-                            })
+                        RefreshToken()
                     } else {
                         console.log("다른 에러")
                     }
                     console.log(err)
                 })
             : dispatch(logout());
-    }, [cookies, dispatch, setCookie, removeCookie]);
+    }, [cookies]);
+
 
     useEffect(() => {
         // SameSite 속성을 설정하여 쿠키 보호
         setCookie("accessToken", cookies.accessToken, { sameSite: 'none', secure: true });
     }, [cookies.accessToken, setCookie]);
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (searchVal !== '') {
-            axios.get(`/goods/goodsList?values=${encodeURIComponent(search)}`)
-                .then((res) => {
-                    setProduct(res.data.content);
-                    setSearch(searchVal)
-                    navigate('/');
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });
-        } else {
-            setSearch('');
-        }
-        setSearch('')
-    };
 
     return (
         <Box>
@@ -155,7 +148,7 @@ const Header = () => {
                     setSearch('');
                     setSearchVal('');
                 }}>
-                    <NavLink to="/" ><img src={logo} alt="logo"
+                    <NavLink to="/" ><img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="logo"
                         style={{
                             width: '100px',
                             height: '40px',
@@ -176,7 +169,7 @@ const Header = () => {
                 </Box>
 
                 {/* 아이콘 */}
-                <NavLink to={name === '' ? '/login' : '/myinfo'} style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
+                <NavLink to={name === '' ? '/login' : '/myinfo/orderlist'} style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
             </Box>
             {
                 modal && <CustomModal closeModal={closeModal} msg={"세션이 만료되었습니다."} />

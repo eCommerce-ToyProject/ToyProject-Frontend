@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState } from 'react';
 const DeliveryContext = createContext();
 
 export const DeliveryProvider = ({ children }) => {
-  const [name, setName] = useState('');
   const [zipCode, setZipcode] = useState('');
   const [roadAddress, setRoadAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
@@ -17,8 +16,6 @@ export const DeliveryProvider = ({ children }) => {
 
   return (
     <DeliveryContext.Provider value={{
-      name,
-      setName,
       zipCode,
       setZipcode,
       roadAddress,

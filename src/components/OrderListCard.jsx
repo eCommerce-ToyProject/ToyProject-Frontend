@@ -16,7 +16,7 @@ const OrderListCard = ({ product }) => {
                             <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2, ml: 45 }}>배송지</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', border: '1px solid #DEDEDE', borderRadius: 4, p: 2 }}>
-                            <img src={`assets/${item.orderItem[0].goods_no.gimg}`} alt={`assets/${item.orderItem[0].goods_no.gimg}`} style={{ width: '130px', height: '130px' }} />
+                            <img src={`${process.env.PUBLIC_URL}/assets/${item.orderItem[0].goods_no.gimg}`} alt={`assets/${item.orderItem[0].goods_no.gimg}`} style={{ width: '130px', height: '130px' }} />
                             <Box sx={{ display: 'flex', flexDirection: 'column', width: 300 }}>
                                 <Box sx={{ height: 100 }}>
                                     <Typography sx={{ ml: 3 }}>{item.orderItem[0].goods_no.gname}</Typography>

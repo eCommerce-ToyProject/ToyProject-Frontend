@@ -1,14 +1,10 @@
-import {
-  Box,
-  Button,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
 import CustomModal from '../components/CustomModal';
-import { useDeliveryContext } from "../context/DeliveryContext";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 
@@ -25,12 +21,8 @@ const ProDetail = () => {
   const [price, setPrice] = useState();
   const [selectOpt1, setSelectOpt1] = useState('');
   const [selectOpt2, setSelectOpt2] = useState('');
-  const {
-    modal,
-    setModal,
-    msg,
-    setMsg
-  } = useDeliveryContext();
+  const [modal, setModal] = useState(false)
+  const [msg, setMsg] = useState("")
 
   useEffect(() => {
     axios

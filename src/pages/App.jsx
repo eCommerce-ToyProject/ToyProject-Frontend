@@ -1,42 +1,24 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Footer from '../components/Footer';
-import Login from './Login';
-import Home from './Home';
-import Signup from './Signup';
-import Myinfo from './Myinfo';
-import ProDetail from './Pro_detail';
 import Header from '../components/Header';
 import { Box } from '@mui/material';
-import ProOrder from './Pro_order';
-import NotFound from './404';
-import Delivery from './Delivery';
-import { DeliveryProvider } from '../context/DeliveryContext';
 import { AuthProvider } from '../context/AuthContext';
 import { SearchProvider } from '../context/SearchContext';
 
 function App() {
   return (
-    <AuthProvider>
-      <SearchProvider>
-        <DeliveryProvider>
-            <Header />
-            <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/signup' element={<Signup />} />
-                <Route path='/myinfo' element={<Myinfo />} />
-                <Route path='/myinfo/delivery' element={<Delivery />} />
-                <Route path='/productdetail/:id' element={<ProDetail />} />
-                <Route path='/productorder/:id' element={<ProOrder />} />
-                <Route path='/*' element={<NotFound />} />
-              </Routes>
-            </Box>
-            <Footer />
-        </DeliveryProvider>
-      </SearchProvider>
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <SearchProvider>
+          <Header />
+        </SearchProvider>
+      </AuthProvider>
+      <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
+        <Outlet />
+      </Box>
+      <Footer />
+    </>
   );
 }
 

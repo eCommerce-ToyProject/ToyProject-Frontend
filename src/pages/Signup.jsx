@@ -36,7 +36,7 @@ const Signup = () => {
             setDesc("비밀번호가 일치하지 않습니다.");
         } else if (!passwordRegex.test(pwd)) {
             setModal(true);
-            setDesc("영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
+            setDesc("비밀번호에 영문, 숫자, 특수문자를 포함하여 8자 이상을 작성해주세요.")
         } else if (email !== '' && !emailRegex.test(email)) {
             setModal(true)
             setDesc("이메일 형식에 맞춰 작성해주세요.")

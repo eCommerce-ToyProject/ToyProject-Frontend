@@ -7,13 +7,13 @@ import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
 
-const Myinfo = () => {
+const OrderList = () => {
     const name = useSelector(state => state.name);
     const [cookies] = useCookies(['accessToken']);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        if (name !== '' && orders.length === 0) {
+        if (name !== '' && orders) {
             axios.get(`/orders/myOrderList?id=${name}`, {
                 withCredentials: false,
                 headers: {
@@ -27,7 +27,7 @@ const Myinfo = () => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, [name, orders.length, cookies.accessToken]);
+    }, [name, setOrders, cookies.accessToken]);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -47,11 +47,11 @@ const Myinfo = () => {
                         backgroundColor: 'rgba(0, 0, 0, 0.1)' // 스크롤바 색상 조정
                     }
                 }}>
-                    {orders.length > 0 ? <OrderListCard product={orders} /> : null}
+                    {orders ? <OrderListCard product={orders} /> : null}
                 </Grid>
             </Box>
         </Box>
     )
 }
 
-export default Myinfo;
+export default OrderList;
