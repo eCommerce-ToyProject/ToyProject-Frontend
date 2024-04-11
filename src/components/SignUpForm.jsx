@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material"
 import TextInput from "./TextInput";
-import { useAuthContext } from "../context/AuthContext";
+import { useLoginContext } from "../context/LoginContext";
 import { useEffect } from "react";
 
 const SignUpForm = ({ Check, idCheck }) => {
@@ -17,7 +17,7 @@ const SignUpForm = ({ Check, idCheck }) => {
         setName,
         phone,
         setPhone,
-    } = useAuthContext();
+    } = useLoginContext();
 
     // 전화번호 자동 하이픈
     useEffect(() => {

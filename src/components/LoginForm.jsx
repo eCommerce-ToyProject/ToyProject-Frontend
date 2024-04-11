@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControlLabel, Stack } from "@mui/material"
 import TextInput from "./TextInput"
-import { useAuthContext } from "../context/AuthContext";
+import { useLoginContext } from "../context/LoginContext";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 
@@ -13,7 +13,7 @@ const LoginForm = ({ Check, navSignup }) => {
         setLoginPwd,
         isRemember,
         setIsRemember
-    } = useAuthContext();
+    } = useLoginContext();
 
     useEffect(() => {
         if (cookies.rememberUserId !== undefined) {

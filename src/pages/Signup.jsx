@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React from 'react'
 import CustomModal from '../components/CustomModal';
 import axios from 'axios';
-import { useAuthContext } from '../context/AuthContext';
+import { useLoginContext } from '../context/LoginContext';
 import SignUpForm from '../components/SignUpForm';
 
 const Signup = () => {
@@ -21,7 +21,7 @@ const Signup = () => {
         setNav,
         checkId,
         SetCheckId
-    } = useAuthContext();
+    } = useLoginContext();
 
     const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,25}$/;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;

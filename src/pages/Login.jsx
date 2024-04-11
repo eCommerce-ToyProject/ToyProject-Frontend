@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import LoginForm from '../components/LoginForm';
-import { useAuthContext } from '../context/AuthContext';
+import { useLoginContext } from '../context/LoginContext';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = () => {
         setLoginPwd,
         modal,
         setModal,
-    } = useAuthContext();
+    } = useLoginContext();
 
     const Check = async (e) => {
         e.preventDefault();
@@ -27,8 +27,8 @@ const Login = () => {
                 id: loginId,
                 password: loginPwd
             })
-            setCookie("accessToken", res.data.accessToken, { path: '/' });
-            setCookie("refreshToken", res.data.refreshToken, { path: '/' });
+            setCookie("accessToken", res.data.accessToken, { path: '/', httpOnly: true });
+            setCookie("refreshToken", res.data.refreshToken, { path: '/', httpOnly: true });
             navigate('/');
 
         } catch (error) {

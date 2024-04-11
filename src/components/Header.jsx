@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useSearchContext } from '../context/SearchContext';
-import { useAuthContext } from '../context/AuthContext';
+import { useLoginContext } from '../context/LoginContext';
 import CustomModal from './CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logout } from '../redux/login';
@@ -40,7 +40,7 @@ const Header = () => {
         searchVal,
         setSearchVal,
     } = useSearchContext();
-    const { modal, setModal } = useAuthContext();
+    const { modal, setModal } = useLoginContext();
 
     const LinkStyle = {
         fontWeight: 'bold',
@@ -73,7 +73,6 @@ const Header = () => {
             refreshToken: cookies.refreshToken
         })
             .then(res => {
-                console.log(res.data)
                 dispatch(logout());
                 setCookie("accessToken", res.data.accessToken, { path: '/' });
                 setCookie("refreshToken", res.data.refreshToken, { path: '/' });
@@ -86,28 +85,26 @@ const Header = () => {
     }
 
     useEffect(() => {
-        cookies.accessToken
-            ? axios.get('/members/loginCheck', {
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                }
+        axios.get('/members/loginCheck', {
+            withCredentials: false,
+            headers: {
+                Authorization: `Bearer ${cookies.accessToken}`
+            }
+        })
+            .then((res) => {
+                dispatch(loginSuccess(res.data));
             })
-                .then((res) => {
-                    dispatch(loginSuccess(res.data));
-                })
-                .catch((err) => {
-                    if (err.response.status === 403) {
-                        console.log("아이디를 찾을 수 없음")
-                    } else if (err.response.status === 401) {
-                        RefreshToken()
-                    } else {
-                        console.log("다른 에러")
-                    }
-                    console.log(err)
-                })
-            : dispatch(logout());
-    }, [cookies]);
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    console.log("아이디를 찾을 수 없음")
+                } else if (err.response.status === 401) {
+                    RefreshToken()
+                } else {
+                    console.log("다른 에러")
+                }
+                console.log(err)
+            })
+    }, [cookies.accessToken]);
 
 
     useEffect(() => {

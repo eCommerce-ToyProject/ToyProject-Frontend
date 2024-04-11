@@ -1,9 +1,9 @@
 // DeliveryContext.js
 import React, { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext();
+const LoginContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const LoginProvider = ({ children }) => {
     const [loginId, setLoginId] = useState('');
     const [loginPwd, setLoginPwd] = useState('');
     const [isRemember, setIsRemember] = useState(false);
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     const [checkId, SetCheckId] = useState(false);
 
     return (
-        <AuthContext.Provider value={{
+        <LoginContext.Provider value={{
             loginId,
             setLoginId,
             loginPwd,
@@ -48,8 +48,8 @@ export const AuthProvider = ({ children }) => {
             SetCheckId
         }}>
             {children}
-        </AuthContext.Provider>
+        </LoginContext.Provider>
     );
 };
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useLoginContext = () => useContext(LoginContext);

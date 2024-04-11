@@ -10,7 +10,7 @@ import Myinfo from '../pages/Orderlist';
 import ProDetail from '../pages/Pro_detail';
 import { DeliveryProvider } from "../context/DeliveryContext";
 import { SearchProvider } from "../context/SearchContext";
-import { AuthProvider } from "../context/AuthContext";
+import { LoginProvider } from "../context/LoginContext";
 
 export const router = createBrowserRouter([
     {
@@ -24,11 +24,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "login",
-                element: <AuthProvider><Login /></AuthProvider>,
+                element: <LoginProvider><Login /></LoginProvider>,
             },
             {
                 path: "signup",
-                element: <AuthProvider><Signup /></AuthProvider>,
+                element: <LoginProvider><Signup /></LoginProvider>,
             },
             {
                 path: "myinfo",
