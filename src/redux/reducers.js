@@ -1,8 +1,10 @@
 import { LOGIN_SUCCESS, LOGOUT } from './login';
+import { SEARCH } from './serach';
 
 const initialState = {
     isLoggedIn: false,
     name: undefined,
+    searchVal: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +21,11 @@ const reducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 name: undefined,
             };
+        case SEARCH:
+            return{
+                ...state,
+                searchVal: action.payload,
+            }
         default:
             return state;
     }

@@ -104,12 +104,12 @@ const Delivery = () => {
                 detailAddress: detailAddress,
                 designation: designation
             },
-            {
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                },
-            })
+                {
+                    withCredentials: false,
+                    headers: {
+                        Authorization: `Bearer ${cookies.accessToken}`
+                    },
+                })
                 .then(() => {
                     setModal(true);
                     setMsg("배송지를 수정했습니다");
@@ -126,10 +126,13 @@ const Delivery = () => {
         <Box sx={{ display: 'flex' }}>
             <MyinfoNavList />
             <Box>
-                <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>배송지 추가 / 수정</Typography>
+                <Typography sx={{ mb: 3 }} variant='h5' fontWeight={600}>
+                    배송지 추가 / 수정
+                    <Button variant="contained" disableRipple sx={{ ml: 3 }} onClick={handleBringAddress}>추가하기</Button>
+                </Typography>
 
                 {/* 배송지 폼 컴포넌트 */}
-                <DeliveryInput
+                {/* <DeliveryInput
                     designation={designation}
                     zipCode={zipCode}
                     roadAddress={roadAddress}
@@ -143,7 +146,23 @@ const Delivery = () => {
                 />
 
                 <Button variant="contained" disableRipple sx={{ mt: 3, mr: 2 }} onClick={addAddress}>추가하기</Button>
-                <Button variant="contained" disableRipple sx={{ mt: 3 }} onClick={ModifyAddress}>수정하기</Button>
+                <Button variant="contained" disableRipple sx={{ mt: 3 }} onClick={ModifyAddress}>수정하기</Button> */}
+
+                {/* orderkListCard 수정해서 만들기 */}
+                <Box sx={{ borderRadius: 4, p: 2, boxShadow: 5 }}>
+                    <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>집</Typography>
+                    <Box sx={{ display: 'flex', border: '1px solid #DEDEDE', borderRadius: 4, p: 2 }}>
+                        <Box sx={{ width: 300 }}>
+                            <Box sx={{ height: 100 }}>
+                                <Typography sx={{ fontSize: 19 }}>05043</Typography>
+                                <Typography sx={{ fontSize: 19 }}>광진구 자양로22길 73-4</Typography>
+                                <Typography sx={{ fontSize: 19 }}>102호</Typography>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+
+
             </Box>
             {
                 address ? <AddressModal /> : null

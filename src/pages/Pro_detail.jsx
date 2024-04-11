@@ -5,14 +5,12 @@ import axios from "axios";
 import ProductDetails from "../components/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
 import CustomModal from '../components/CustomModal';
-import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 
 const ProDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
   const name = useSelector(state => state.name);
-  const [cookies] = useCookies(["accessToken"]);
   const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
@@ -60,9 +58,7 @@ const ProDetail = () => {
   }
 
   const Order = () => {
-    if (cookies.accessToken === undefined || cookies.accessToken === '') {
-      navigate('/login');
-    } else {
+    if (name !== undefined) {
       let missingOptions = [];
       if (optVal1.length > 0 && selectOpt1 === '') {
         missingOptions.push('옵션1');
@@ -70,31 +66,28 @@ const ProDetail = () => {
       if (optVal2.length > 0 && selectOpt2 === '') {
         missingOptions.push('옵션2');
       }
-
-      if(name !== undefined){
-        if (missingOptions.length > 0) {
-          setModal(true);
-          setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);
-        } else {
-          navigate(`/productorder/${product[0].gno}`,
-            {
-              state: {
-                price: price,
-                qty: qty,
-                name: product[0].gname,
-                img: gImg,
-                gno: product[0].gno,
-                opt1: selectOpt1,
-                opt2: selectOpt2
-              }
+      if (missingOptions.length > 0) {
+        setModal(true);
+        setMsg(`${missingOptions.join('과 ')}을(를) 선택해 주세요.`);
+      } else {
+        navigate(`/productorder/${product[0].gno}`,
+          {
+            state: {
+              price: price,
+              qty: qty,
+              name: product[0].gname,
+              img: gImg,
+              gno: product[0].gno,
+              opt1: selectOpt1,
+              opt2: selectOpt2
             }
-          )
-        }
-      }else{
-        navigate('/login')
+          }
+        )
       }
+    } else {
+      navigate('/login')
     }
-  };
+  }
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -10,7 +10,7 @@ import { useCookies } from 'react-cookie';
 const OrderList = () => {
     const name = useSelector(state => state.name);
     const [cookies] = useCookies(['accessToken']);
-    const [fetching, setFetching] = useState(false); // 추가 데이터를 fetch하는 중인지 아닌지 확인하는 역할
+    // const [fetching, setFetching] = useState(false); // 추가 데이터를 fetch하는 중인지 아닌지 확인하는 역할
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const OrderList = () => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, [name, setOrders, cookies.accessToken]);
+    }, []);
 
     return (
         <Box sx={{ display: 'flex' }}>

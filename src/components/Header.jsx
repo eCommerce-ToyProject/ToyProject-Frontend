@@ -10,6 +10,7 @@ import { useLoginContext } from '../context/LoginContext';
 import CustomModal from './CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logout } from '../redux/login';
+import { search } from '../redux/serach';
 
 const StyledInput = styled.input`
     width: 22rem;
@@ -61,10 +62,10 @@ const Header = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchVal !== '') {
-            setSearch(searchVal)
+            dispatch(search(searchVal));
             navigate('/');
         } else {
-            setSearch('');
+            dispatch(search(searchVal));
         }
     };
 
@@ -73,12 +74,13 @@ const Header = () => {
             refreshToken: cookies.refreshToken
         })
             .then(res => {
-                dispatch(logout());
+                Logout();
                 setCookie("accessToken", res.data.accessToken, { path: '/' });
                 setCookie("refreshToken", res.data.refreshToken, { path: '/' });
             })
             .catch(err => {
                 if (err.response.status === 400) {
+                    Logout();
                     console.log("잘못보냄")
                 }
             })
@@ -101,6 +103,7 @@ const Header = () => {
                     RefreshToken()
                 } else {
                     console.log("다른 에러")
+                    Logout();
                 }
                 console.log(err)
             })
@@ -110,6 +113,7 @@ const Header = () => {
     useEffect(() => {
         // SameSite 속성을 설정하여 쿠키 보호
         setCookie("accessToken", cookies.accessToken, { sameSite: 'none', secure: true });
+        setCookie("refreshToken", cookies.accessToken, { sameSite: 'none', secure: true });
     }, [cookies.accessToken, setCookie]);
 
     return (

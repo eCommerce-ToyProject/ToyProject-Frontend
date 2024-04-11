@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import Pagination from 'react-js-pagination';
 import './Paging.css';
 import { useSearchContext } from '../context/SearchContext';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const Paging = ({ onChange }) => {
+    const searchVal = useSelector(state => state.searchVal);
     const {
         product,
         setTotalItems,
@@ -12,17 +14,16 @@ const Paging = ({ onChange }) => {
         lastPage,
         page,
         totalItems,
-        search
     } = useSearchContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 let response;
-                if (search === '') {
+                if (searchVal === '') {
                     response = await axios.get('/goods/goodsList');
                 } else {
-                    response = await axios.get(`/goods/goodsList?values=${encodeURIComponent(search)}`);
+                    response = await axios.get(`/goods/goodsList?values=${encodeURIComponent(searchVal)}`);
                 }
                 const totalElements = response.data.totalElements;
                 setTotalItems(totalElements);
@@ -33,7 +34,7 @@ const Paging = ({ onChange }) => {
         };
     
         fetchData();
-    }, [setLastPage, setTotalItems, search, product]);
+    }, [setLastPage, setTotalItems, searchVal, product]);
     
     return (
         <Pagination

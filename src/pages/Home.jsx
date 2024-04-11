@@ -6,14 +6,15 @@ import axios from 'axios';
 import SoldOutCard from '../components/SoldOutCard';
 import Paging from '../utill/Paging'
 import '../utill/Paging.css';
+import { useSelector } from 'react-redux';
 import { useSearchContext } from '../context/SearchContext';
 
 // Math.floor() : 소수점 이하를 버림한다.
 // Math.ceil() : 소수점 이하를 올림한다.
 // Math.round() : 소수점 이하를 반올림한다.
 const Home = () => {
+    const searchVal = useSelector(state => state.searchVal);
     const {
-        search,
         product,
         setProduct,
         setPage,
@@ -33,10 +34,10 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 let response;
-                if (search === '') {
+                if (searchVal === '') {
                     response = await axios.get(`/goods/goodsList?page=${page}&size=15`);
                 } else {
-                    response = await axios.get(`/goods/goodsList?page=${page}&size=15&values=${encodeURIComponent(search)}`);
+                    response = await axios.get(`/goods/goodsList?page=${page}&size=15&values=${encodeURIComponent(searchVal)}`);
                     const totalElements = response.data.totalElements;
                     setLastPage(Math.ceil(totalElements / 15));
                     setTotalItems(totalElements);
@@ -47,7 +48,7 @@ const Home = () => {
             }
         };
         fetchData();
-    }, [page, search, setProduct, setLastPage, setTotalItems]);
+    }, [page, searchVal, setProduct, setLastPage, setTotalItems]);
 
 
     return (
