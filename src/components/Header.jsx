@@ -35,7 +35,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const name = useSelector(state => state.name);
-    const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "refreshToken"]);
+    const [cookies] = useCookies("accessToken");
     const {
         setSearch,
         searchVal,
@@ -50,9 +50,13 @@ const Header = () => {
     }
 
     const Logout = () => {
-        removeCookie("accessToken");
-        removeCookie("refreshToken");
-        dispatch(logout());
+        axios.post('/members/logout')
+            .then(() => {
+                dispatch(logout());
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const closeModal = () => {
@@ -70,14 +74,7 @@ const Header = () => {
     };
 
     const RefreshToken = () => {
-        axios.post('/members/reissuanceAccessToken', {
-            refreshToken: cookies.refreshToken
-        })
-            .then(res => {
-                Logout();
-                setCookie("accessToken", res.data.accessToken, { path: '/' });
-                setCookie("refreshToken", res.data.refreshToken, { path: '/' });
-            })
+        axios.post('/members/reissuanceAccessToken')
             .catch(err => {
                 if (err.response.status === 400) {
                     Logout();
@@ -87,12 +84,7 @@ const Header = () => {
     }
 
     useEffect(() => {
-        axios.get('/members/loginCheck', {
-            withCredentials: false,
-            headers: {
-                Authorization: `Bearer ${cookies.accessToken}`
-            }
-        })
+        axios.get('/members/loginCheck')
             .then((res) => {
                 dispatch(loginSuccess(res.data));
             })
@@ -107,14 +99,7 @@ const Header = () => {
                 }
                 console.log(err)
             })
-    }, [cookies.accessToken]);
-
-
-    useEffect(() => {
-        // SameSite 속성을 설정하여 쿠키 보호
-        setCookie("accessToken", cookies.accessToken, { sameSite: 'none', secure: true });
-        setCookie("refreshToken", cookies.accessToken, { sameSite: 'none', secure: true });
-    }, [cookies.accessToken, setCookie]);
+    }, [name]);
 
     return (
         <Box>

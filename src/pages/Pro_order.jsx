@@ -6,13 +6,12 @@ import CustomModal from '../components/CustomModal';
 import OrderPayDetail from '../components/OrderPayDetail';
 import OrdersCard from '../components/OrdersCard';
 import axios from 'axios';
-import DeliveryModal from '../components/DeliveryModal';
+import BringDeliModal from '../components/BringDeliModal';
 import AddressModal from '../components/AddressModal';
 import DeliveryInput from '../components/DeliveryInput';
 import PayRadio from '../components/PayRadio';
 import { useDeliveryContext } from '../context/DeliveryContext';
 import { useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
 
 const ProOrder = () => {
     const location = useLocation();
@@ -27,7 +26,6 @@ const ProOrder = () => {
     const [nav, setNav] = useState("");
     const [pay, Setpay] = useState("");
     const [userData, setUserData] = useState([])
-    const [cookies] = useCookies(['accessToken']);
     const name = useSelector(state => state.name);
     const {
         zipCode,
@@ -88,12 +86,6 @@ const ProOrder = () => {
                 detailAddress: detailAddress,
                 designation: designation,
                 dlivFee: 2500
-            },
-            {
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                },
             })
                 .then(() => {
                     setModal(true);
@@ -112,12 +104,7 @@ const ProOrder = () => {
 
     useEffect(() => {
         if(name){
-            axios.get(`/members/orderingMyinfo?id=${name}`,{
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                }
-            })
+            axios.get(`/members/orderingMyinfo?id=${name}`)
             .then((response) => {
                 setUserData(response.data);
             })
@@ -125,7 +112,7 @@ const ProOrder = () => {
                 console.error('Error checking login status:', err);
             })
         }
-    }, [name, cookies.accessToken]);
+    }, [name]);
 
     return (
         <Box sx={{ width: 900, m: '0 auto' }}>
@@ -175,7 +162,7 @@ const ProOrder = () => {
                 address ? <AddressModal /> : null
             }
             {
-                delModal ? <DeliveryModal closeModal={closedelModal} id={name !== undefined ? name : null} /> : null
+                delModal ? <BringDeliModal closeModal={closedelModal} id={name !== undefined ? name : null} /> : null
             }
         </Box>
     )

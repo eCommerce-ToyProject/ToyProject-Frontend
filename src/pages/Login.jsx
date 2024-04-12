@@ -2,14 +2,15 @@ import React from 'react'
 import { Box, Typography } from '@mui/material';
 import CustomModal from '../components/CustomModal';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import LoginForm from '../components/LoginForm';
 import { useLoginContext } from '../context/LoginContext';
+import { loginSuccess } from '../redux/login';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [, setCookie] = useCookies(["accessToken", "refreshToken"]);
+    const dispatch = useDispatch();
     const {
         loginId,
         setLoginId,
@@ -21,16 +22,15 @@ const Login = () => {
 
     const Check = async (e) => {
         e.preventDefault();
-
         try {
-            const res = await axios.post("members/sign-in", {
+            await axios.post("members/sign-in", {
                 id: loginId,
                 password: loginPwd
             })
-            setCookie("accessToken", res.data.accessToken, { path: '/', httpOnly: true });
-            setCookie("refreshToken", res.data.refreshToken, { path: '/', httpOnly: true });
-            navigate('/');
-
+            .then(res => {
+                dispatch(loginSuccess(res.data))
+                navigate('/');
+            })
         } catch (error) {
             setModal(true)
         }

@@ -16,7 +16,7 @@ const style = {
 
 const CustomModal = ({ closeModal, msg, nav }) => {
     const navigate = useNavigate();
-    let [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(true)
 
     const Close = () => {
         setOpen(false)

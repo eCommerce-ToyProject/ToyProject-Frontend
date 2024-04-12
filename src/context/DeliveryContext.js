@@ -10,6 +10,8 @@ export const DeliveryProvider = ({ children }) => {
   const [designation, setDesignation] = useState('');
   const [delno, setDelno] = useState();
   const [delModal, setDelModal] = useState(false);
+  const [addDelModal, setAddDelModal] = useState(false);
+  const [modDelModal, setModDelModal] = useState(false);
   const [modal, setModal] = useState(false);
   const [address, setAddress] = useState(false);
   const [msg, setMsg] = useState(false);
@@ -28,6 +30,10 @@ export const DeliveryProvider = ({ children }) => {
       setDelno,
       delModal,
       setDelModal,
+      addDelModal,
+      setAddDelModal,
+      modDelModal,
+      setModDelModal,
       modal,
       setModal,
       address,

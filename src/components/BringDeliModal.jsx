@@ -4,22 +4,15 @@ import DeliveryCard from './DeliveryCard';
 import axios from 'axios';
 import { useDeliveryContext } from '../context/DeliveryContext';
 import { useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
 
-const DeliveryModal = ({ closeModal }) => {
+const BringDeliModal = ({ closeModal }) => {
     const name = useSelector(state => state.name);
-    const [cookies] = useCookies(['accessToken']);
     const [delivery, setDelivery] = useState([]);
     const { delModal } = useDeliveryContext();
 
     useEffect(() => {
         if (name !== undefined) {
-            axios.get(`/delivery/deliveryList?id=${name}`,{
-                withCredentials: false,
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                }
-            })
+            axios.get(`/delivery/deliveryList?id=${name}`)
                 .then((res) => {
                     setDelivery(res.data.content)
                 })
@@ -27,7 +20,7 @@ const DeliveryModal = ({ closeModal }) => {
                     console.error('Error checking login status:', error);
                 });
         }
-    }, [name, cookies.accessToken]);
+    }, [name]);
 
 
 
@@ -68,4 +61,4 @@ const DeliveryModal = ({ closeModal }) => {
     )
 }
 
-export default DeliveryModal;
+export default BringDeliModal;
