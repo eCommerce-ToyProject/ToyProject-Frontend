@@ -4,13 +4,15 @@ import NotFound from "../pages/404";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Delivery from '../pages/Delivery';
-import ProOrder from '../pages/Pro_order';
+import ProOrder from '../pages/ProOrder';
 import Signup from '../pages/Signup';
 import Myinfo from '../pages/Orderlist';
-import ProDetail from '../pages/Pro_detail';
+import ProDetail from '../pages/ProDetail';
+import Live from "../pages/Live";
 import { DeliveryProvider } from "../context/DeliveryContext";
 import { SearchProvider } from "../context/SearchContext";
 import { LoginProvider } from "../context/LoginContext";
+import Cart from "../pages/Cart";
 
 export const router = createBrowserRouter([
     {
@@ -27,8 +29,16 @@ export const router = createBrowserRouter([
                 element: <LoginProvider><Login /></LoginProvider>,
             },
             {
+                path: "live",
+                element: <LoginProvider><Live /></LoginProvider>,
+            },
+            {
                 path: "signup",
                 element: <LoginProvider><Signup /></LoginProvider>,
+            },
+            {
+              path: "cart",
+              element: <LoginProvider><Cart /></LoginProvider>
             },
             {
                 path: "myinfo",
@@ -44,11 +54,11 @@ export const router = createBrowserRouter([
                 ]
             },
             {
-                path: "productdetail/:id",
+                path: "proDetail/:id",
                 element: <ProDetail />,
             },
             {
-                path: "productorder/:id",
+                path: "proOrder/:id",
                 element: <DeliveryProvider><ProOrder /></DeliveryProvider>,
             },
         ]

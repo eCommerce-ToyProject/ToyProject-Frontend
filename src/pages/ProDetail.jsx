@@ -2,15 +2,17 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ProductDetails from "../components/ProductDetails";
+import ProductDetails from "../components/product/ProductDetails";
 import OptionsSelect from "../components/OptionSelect";
-import CustomModal from '../components/CustomModal';
+import CustomModal from '../components/modal/CustomModal';
 import { useSelector } from "react-redux";
+import useBasketStore from "../stores/basket";
 
 const ProDetail = () => {
   const navigate = useNavigate();
   const param = useParams();
   const name = useSelector(state => state.name);
+  const { setBasket, basket } = useBasketStore()
   const [qty, setQty] = useState(1);
   const [optVal1, setOptVal1] = useState([]);
   const [optVal2, setOptVal2] = useState([]);
@@ -57,6 +59,12 @@ const ProDetail = () => {
     setModal(false)
   }
 
+  const addCart = () => {
+    const newItem= { ...product, gImg, price, qty }
+    setBasket({ ...basket, newItem })
+    navigate('/')
+  }
+
   const Order = () => {
     if (name !== undefined) {
       let missingOptions = [];
@@ -90,7 +98,7 @@ const ProDetail = () => {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", margin: 'auto' }}>
       <Box>
         <img src={`/assets/${gImg}`} alt={gImg} style={{ width: 400, height: 400 }} />
       </Box>
@@ -139,13 +147,22 @@ const ProDetail = () => {
               </Button>
             </Box>
             <Button
-              sx={{ width: "70%", height: 55, ml: 3 }}
+              sx={{ width: "80%", height: 55, ml: 3 }}
               onClick={Order}
               size="large"
               variant="contained"
               disableRipple
             >
-              구매하기
+              바로구매
+            </Button>
+            <Button
+                sx={{ width: "80%", height: 55, ml: 3 }}
+                onClick={addCart}
+                size="large"
+                variant="contained"
+                disableRipple
+            >
+              장바구니 담기
             </Button>
           </form>
         </Box>

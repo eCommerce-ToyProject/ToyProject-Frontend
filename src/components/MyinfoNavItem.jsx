@@ -1,14 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
 
 
 const NavItem = ({ page, title }) => {
+    const LinkStyle = {
+        fontWeight: 'bold',
+        color: 'black',
+        textDecoration: 'none',
+    }
+
     return (
-        <Link style={{ textDecoration: 'none', color: 'black', lineHeight: 2, fontWeight: '600' }} to={page}>
-            <span>{title}</span>&nbsp;
-            <MdOutlineArrowForwardIos size='13' color='#1976d2' />
-        </Link>
+        <div style={{ textDecoration: 'none', color: 'black', lineHeight: 2, fontWeight: '600' }}>
+            <NavLink to={page} style={LinkStyle}>
+                <span>{title}</span>&nbsp;
+                <MdOutlineArrowForwardIos size='13' color='#1976d2' />
+            </NavLink>
+        </div>
     )
 }
 

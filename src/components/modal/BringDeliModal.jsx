@@ -1,8 +1,8 @@
 import { Box, Button, Grid, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import DeliveryCard from './DeliveryCard';
+import DeliveryCard from '../DeliveryCard';
 import axios from 'axios';
-import { useDeliveryContext } from '../context/DeliveryContext';
+import { useDeliveryContext } from '../../context/DeliveryContext';
 import { useSelector } from 'react-redux';
 
 const BringDeliModal = ({ closeModal }) => {

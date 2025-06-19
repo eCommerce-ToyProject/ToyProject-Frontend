@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material';
-import CustomModal from '../components/CustomModal';
+import CustomModal from '../components/modal/CustomModal';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';

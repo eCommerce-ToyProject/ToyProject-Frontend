@@ -1,7 +1,7 @@
 import { Grid, Typography, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import MyinfoNavList from '../components/MyinfoNavList';
-import OrderListCard from '../components/OrderListCard';
+import OrderListCard from '../components/order/OrderListCard';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 

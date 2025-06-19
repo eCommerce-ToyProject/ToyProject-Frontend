@@ -1,7 +1,7 @@
 import { Box, Modal } from '@mui/material';
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import { useDeliveryContext } from '../context/DeliveryContext';
+import { useDeliveryContext } from '../../context/DeliveryContext';
 
 const AddressModal = () => {
     const {

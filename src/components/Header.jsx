@@ -7,10 +7,11 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useSearchContext } from '../context/SearchContext';
 import { useLoginContext } from '../context/LoginContext';
-import CustomModal from './CustomModal';
+import CustomModal from './modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logout } from '../redux/login';
 import { search } from '../redux/serach';
+import CartIcon from "./CartIcon";
 
 const StyledInput = styled.input`
     width: 22rem;
@@ -154,8 +155,11 @@ const Header = () => {
                     </form>
                 </Box>
 
+                {/* 장바구니 */}
+                <NavLink to={name === '' ? '/login' : '/cart'} ><CartIcon /></NavLink>
+
                 {/* 아이콘 */}
-                <NavLink to={name === '' ? '/login' : '/myinfo/orderlist'} style={{ color: 'black' }}><BsFillPersonFill size={45} /></NavLink>
+                <NavLink to={name === '' ? '/login' : '/myinfo/orderlist'} style={{ color: 'black' }}><BsFillPersonFill size={45} style={{ marginLeft: '15' }} /></NavLink>
             </Box>
             {
                 modal && <CustomModal closeModal={closeModal} msg={"세션이 만료되었습니다."} />

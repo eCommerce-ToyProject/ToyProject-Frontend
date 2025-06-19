@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react'
-import CustomModal from '../components/CustomModal';
+import CustomModal from '../components/modal/CustomModal';
 import axios from 'axios';
 import { useLoginContext } from '../context/LoginContext';
 import SignUpForm from '../components/SignUpForm';

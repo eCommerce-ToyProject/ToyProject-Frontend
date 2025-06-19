@@ -14,7 +14,15 @@ function App() {
           <Header />
         </SearchProvider>
       </LoginProvider>
-      <Box sx={{ width: 1000, m: 'auto', minHeight: 850 }}>
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '1500px',
+          minHeight: '850px',
+          margin: '0 auto',
+          paddingX: 2, // 좌우 여백
+        }}
+      >
         <Outlet />
       </Box>
       <Footer />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Modal } from '@mui/material';
-import { useDeliveryContext } from '../context/DeliveryContext';
-import TextInput from './TextInput';
+import { useDeliveryContext } from '../../context/DeliveryContext';
+import TextInput from '../TextInput';
 import axios from 'axios';
 import CustomModal from './CustomModal';
 

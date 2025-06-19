@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography } from "@mui/material";
 import { useLocation } from 'react-router-dom';
-import OrderUserinfo from '../components/OrderUserInfo';
-import CustomModal from '../components/CustomModal';
-import OrderPayDetail from '../components/OrderPayDetail';
-import OrdersCard from '../components/OrdersCard';
+import OrderUserinfo from '../components/order/OrderUserInfo';
+import CustomModal from '../components/modal/CustomModal';
+import OrderPayDetail from '../components/order/OrderPayDetail';
+import OrdersCard from '../components/order/OrdersCard';
 import axios from 'axios';
-import BringDeliModal from '../components/BringDeliModal';
-import AddressModal from '../components/AddressModal';
+import BringDeliModal from '../components/modal/BringDeliModal';
+import AddressModal from '../components/modal/AddressModal';
 import DeliveryInput from '../components/DeliveryInput';
 import PayRadio from '../components/PayRadio';
 import { useDeliveryContext } from '../context/DeliveryContext';
 import { useSelector } from 'react-redux';
+import OrderBox from "../components/OrderBox";
 
 const ProOrder = () => {
     const location = useLocation();
@@ -147,13 +148,8 @@ const ProOrder = () => {
                     {/* 결제 수단 라디오 */}
                     <PayRadio selectRadio={selectRadio} />
 
-                    {/* 결제 버튼 */}
-                    <Button size='large' variant="contained" disableRipple sx={{ width: 500, mt: 4 }} onClick={handleOrder}>결제하기</Button>
                 </Box>
-                <Box sx={{ width: '40%' }}>
-                    <OrderUserinfo userData={userData.length !== 0 ? userData : null} />
-                    <OrderPayDetail price={price} />
-                </Box>
+                <OrderBox />
             </Box>
             {
                 modal ? <CustomModal closeModal={closeModal} msg={msg} nav={nav} /> : null

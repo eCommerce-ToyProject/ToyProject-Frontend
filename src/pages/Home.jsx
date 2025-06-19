@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/product/ProductCard';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import SoldOutCard from '../components/SoldOutCard';
+import SoldOutCard from '../components/product/SoldOutCard';
 import Paging from '../utill/Paging'
 import '../utill/Paging.css';
 import { useSelector } from 'react-redux';
 import { useSearchContext } from '../context/SearchContext';
+import Banner from '../components/Banner';
 
 // Math.floor() : 소수점 이하를 버림한다.
 // Math.ceil() : 소수점 이하를 올림한다.
@@ -53,6 +54,7 @@ const Home = () => {
 
     return (
         <Box sx={{ height: 950 }}>
+            <Banner data={['안녕', '반가워']} />
             <Grid container direction="row" justifyContent="center" gap={2}>
                 {product.map(item => {
                     const price = item.gprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

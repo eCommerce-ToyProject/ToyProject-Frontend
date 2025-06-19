@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography, Grid } from '@mui/material';
 import MyinfoNavList from '../components/MyinfoNavList';
-import AddressModal from '../components/AddressModal';
-import AddDeliModal from '../components/AddDeliModal';
-import CustomModal from '../components/CustomModal';
+import AddressModal from '../components/modal/AddressModal';
+import AddDeliModal from '../components/modal/AddDeliModal';
+import CustomModal from '../components/modal/CustomModal';
 import { useDeliveryContext } from '../context/DeliveryContext';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import DeliveryListCard from '../components/DeliveryListCard';
-import ModifyDeliModal from '../components/ModifyDeliModal';
+import ModifyDeliModal from '../components/modal/ModifyDeliModal';
 
 const Delivery = () => {
     const name = useSelector(state => state.name);
