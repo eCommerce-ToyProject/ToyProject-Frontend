@@ -47,6 +47,20 @@ const ProDetail = () => {
     }
   }, [product]);
 
+  useEffect(()=>{
+    console.log(basket)
+    if(basket.length > 0){
+    axios
+      .post(`/cart/${name}/items`, {
+        goodsNo: product[0].gno,
+        itemQty: qty,
+        price: price
+      }).then(() => {
+            navigate('/')
+      })
+    }
+  },[basket, qty, price]);
+
   const handleOpt1 = (e) => {
     setSelectOpt1(e.target.value)
   }
@@ -60,9 +74,9 @@ const ProDetail = () => {
   }
 
   const addCart = () => {
+    console.log(basket)
     const newItem= { ...product, gImg, price, qty }
     setBasket({ ...basket, newItem })
-    navigate('/')
   }
 
   const Order = () => {
