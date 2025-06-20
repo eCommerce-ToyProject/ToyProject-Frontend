@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logout } from '../redux/login';
 import { search } from '../redux/serach';
 import CartIcon from "./CartIcon";
+import useUserStore from "../stores/user";
 
 const StyledInput = styled.input`
     width: 22rem;
@@ -35,6 +36,7 @@ const StyledButton = styled.button`
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { setUserName } = useUserStore()
     const name = useSelector(state => state.name);
     const [cookies] = useCookies("accessToken");
     const {
@@ -53,6 +55,7 @@ const Header = () => {
     const Logout = () => {
         axios.post('/members/logout')
             .then(() => {
+                setUserName('')
                 dispatch(logout());
             })
             .catch(err => {
@@ -79,6 +82,7 @@ const Header = () => {
             .catch(err => {
                 if (err.response.status === 400) {
                     Logout();
+                    setUserName('')
                     console.log("잘못보냄")
                 }
             })
@@ -88,6 +92,7 @@ const Header = () => {
         axios.get('/members/loginCheck')
             .then((res) => {
                 dispatch(loginSuccess(res.data));
+                setUserName(res.data)
             })
             .catch((err) => {
                 if (err.response.status === 403) {

@@ -13,6 +13,7 @@ import { DeliveryProvider } from "../context/DeliveryContext";
 import { SearchProvider } from "../context/SearchContext";
 import { LoginProvider } from "../context/LoginContext";
 import Cart from "../pages/Cart";
+import SetupLive from "../pages/SetupLive";
 
 export const router = createBrowserRouter([
     {
@@ -29,8 +30,12 @@ export const router = createBrowserRouter([
                 element: <LoginProvider><Login /></LoginProvider>,
             },
             {
-                path: "live",
+                path: "live/:id",
                 element: <LoginProvider><Live /></LoginProvider>,
+            },
+            {
+                path: "setUpLive",
+                element: <LoginProvider><SetupLive /></LoginProvider>
             },
             {
                 path: "signup",

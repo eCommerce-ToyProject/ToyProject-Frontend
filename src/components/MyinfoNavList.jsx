@@ -20,7 +20,7 @@ const MyinfoNavList = () => {
             <Grid style={Navstyle}>
                 <MyinfoNavItem page={'/myinfo/orderlist'} title={'주문 내역'} />
                 <MyinfoNavItem page={'/myinfo/delivery'} title={'배송지 추가/수정'} />
-                <MyinfoNavItem page={'/live'} title={'라이브 준비'} />
+                <MyinfoNavItem page={'/setUpLive'} title={'라이브 준비'} />
                 <MyinfoNavItem page={''} title={'계좌 관리'} />
                 <MyinfoNavItem page={''} title={'찜한 상품'} />
                 <MyinfoNavItem page={''} title={'개인 정보 수정'} />

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import StreamPlayer from '../components/StreamPlayer';
 import ChatBox from '../components/ChatBox';
-import SetupLive from "./SetupLive.tsx";
 
 const Live = () => {
-    const [stream, setStream] = useState(false)
 
     return (
     <div
@@ -16,8 +14,6 @@ const Live = () => {
         boxSizing: 'border-box',
       }}
     >
-        {
-            stream ? (<>
                 <div style={{flex: 2, display: 'flex', flexDirection: 'column'}}>
                     <h2>📺 실시간 방송</h2>
                     <div style={{flexGrow: 1, backgroundColor: '#000'}}>
@@ -30,10 +26,6 @@ const Live = () => {
                         <ChatBox/>
                     </div>
                 </div>
-            </>) : (<div>
-                <SetupLive onStart={setStream}/>
-            </div>)
-        }
     </div>
     );
 }
